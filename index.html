@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AA-Bodegón - Sistema de Gestión Integral</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            font-size: 48px;
+            color: #FFD700;
+            background: rgba(0, 0, 0, 0.7);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #FFD700;
+        }
+        
+        .logo-text {
+            font-size: 42px;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            color: #FFFFFF;
+        }
+        
+        .tagline {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #FFD700;
+            font-style: italic;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .category {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+        
+        .category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 22px;
+        }
+        
+        .module-list {
+            list-style: none;
+        }
+        
+        .module-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .module-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .module-item a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-grow: 1;
+        }
+        
+        .module-item i {
+            color: #FFD700;
+            font-size: 18px;
+        }
+        
+        .module-item:hover a {
+            color: #FFD700;
+        }
+        
+        .badge {
+            background: #FFD700;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-text {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <h1 class="logo-text">AA-BODEGÓN</h1>
+            </div>
+            <p class="tagline">Sistema de Gestión Integral - Todo en Uno</p>
+        </header>
+
+        <div class="modules-grid">
+            <!-- Galería Multimedia -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-images"></i> Galería Multimedia</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="00_galeria/galeria.html"><i class="fas fa-photo-video"></i> Galería Principal</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="00_galeria/galeria-productos.html"><i class="fas fa-box-open"></i> Productos</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="00_galeria/galeria-marketing.html"><i class="fas fa-bullhorn"></i> Marketing</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="00_galeria/galeria-videos.html"><i class="fas fa-video"></i> Videos Tutoriales</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Gestión Principal -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-cube"></i> Gestión Principal</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="01_gestion_principal/productos.html"><i class="fas fa-boxes"></i> Productos</a>
+                        <span class="badge">Core</span>
+                    </li>
+                    <li class="module-item">
+                        <a href="01_gestion_principal/inventario.html"><i class="fas fa-warehouse"></i> Inventario</a>
+                        <span class="badge">Core</span>
+                    </li>
+                    <li class="module-item">
+                        <a href="01_gestion_principal/facturacion.html"><i class="fas fa-file-invoice-dollar"></i> Facturación</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="01_gestion_principal/caja.html"><i class="fas fa-cash-register"></i> Caja</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="01_gestion_principal/licoreria.html"><i class="fas fa-glass-martini-alt"></i> Licorería</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Gestión de Entidades -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-address-book"></i> Registros Maestros</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="02_gestion_entidades/clientes.html"><i class="fas fa-users"></i> Clientes</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="02_gestion_entidades/proveedores.html"><i class="fas fa-truck-loading"></i> Proveedores</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="02_gestion_entidades/usuarios.html"><i class="fas fa-user-cog"></i> Usuarios</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="02_gestion_entidades/sucursales.html"><i class="fas fa-code-branch"></i> Sucursales</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Operaciones -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-tasks"></i> Procesos y Logística</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="03_operaciones/compras.html"><i class="fas fa-shopping-cart"></i> Compras</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="03_operaciones/delivery.html"><i class="fas fa-motorcycle"></i> Delivery</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="03_operaciones/mesas.html"><i class="fas fa-chair"></i> Mesas</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="03_operaciones/rutas.html"><i class="fas fa-route"></i> Rutas</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Finanzas -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-chart-line"></i> Administración Financiera</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="04_finanzas/contabilidad.html"><i class="fas fa-calculator"></i> Contabilidad</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="04_finanzas/reportes-financieros.html"><i class="fas fa-file-invoice"></i> Reportes Financieros</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Analytics -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-analytics"></i> Business Intelligence</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="05_analiticas/estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="05_analiticas/dashboard-central.html"><i class="fas fa-tachometer-alt"></i> Dashboard Central</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="05_analiticas/reportes-analiticos.html"><i class="fas fa-chart-pie"></i> Reportes Analíticos</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- E-commerce -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-store"></i> Ventas Online</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="06_ecommerce/tienda-online.html"><i class="fas fa-store-alt"></i> Tienda Online</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="06_ecommerce/pedidos-web.html"><i class="fas fa-laptop"></i> Pedidos Web</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sistema -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-cogs"></i> Configuración y Seguridad</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="07_sistema/configuracion.html"><i class="fas fa-sliders-h"></i> Configuración</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="07_sistema/backup.html"><i class="fas fa-database"></i> Backup</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="07_sistema/auditoria.html"><i class="fas fa-shield-alt"></i> Auditoría</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Marketing -->
+            <div class="category">
+                <h2 class="category-title"><i class="fas fa-bullhorn"></i> Marketing y Fidelización</h2>
+                <ul class="module-list">
+                    <li class="module-item">
+                        <a href="08_marketing/promociones.html"><i class="fas fa-tags"></i> Promociones</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="08_marketing/campanas-marketing.html"><i class="fas fa-megaphone"></i> Campañas Marketing</a>
+                    </li>
+                    <li class="module-item">
+                        <a href="08_marketing/programa-fidelizacion.html"><i class="fas fa-award"></i> Programa Fidelización</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>AA-Bodegón &copy; 2023 - Sistema de Gestión Integral. Todos los derechos reservados.</p>
+            <p>Desarrollado con <i class="fas fa-heart" style="color: #ff0000;"></i> para tu negocio</p>
+        </footer>
+    </div>
+
+    <script>
+        // Efecto de animación para los módulos al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const modules = document.querySelectorAll('.module-item');
+            modules.forEach((module, index) => {
+                setTimeout(() => {
+                    module.style.opacity = 1;
+                    module.style.transform = 'translateX(0)';
+                }, 100 + (index * 100));
+            });
+        });
+    </script>
+</body>
+</html>
