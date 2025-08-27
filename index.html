@@ -103,6 +103,34 @@
             }
         }
         
+        /* Efecto de lluvia */
+        .rain-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+            border-radius: 0 0 5px 5px;
+            opacity: 0.6;
+            animation: rain linear infinite;
+        }
+        
+        @keyframes rain {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -501,6 +529,65 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Estilos para diferentes temas */
+        body[data-theme="classic"] {
+            /* Tema clásico (por defecto) */
+        }
+        
+        body[data-theme="dark"] {
+            --primary-color: #2c3e50;
+            --secondary-color: #1a1a1a;
+            --accent-color: #ecf0f1;
+        }
+        
+        body[data-theme="ocean"] {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #ecf0f1;
+        }
+        
+        body[data-theme="nature"] {
+            --primary-color: #27ae60;
+            --secondary-color: #2ecc71;
+            --accent-color: #ecf0f1;
+        }
+        
+        body[data-theme="royal"] {
+            --primary-color: #8e44ad;
+            --secondary-color: #3498db;
+            --accent-color: #ecf0f1;
+        }
+        
+        body[data-theme="fire"] {
+            --primary-color: #e74c3c;
+            --secondary-color: #f39c12;
+            --accent-color: #ecf0f1;
+        }
+        
+        /* Aplicar tema a elementos específicos */
+        body[data-theme="dark"] header,
+        body[data-theme="dark"] .category-card,
+        body[data-theme="dark"] footer {
+            background: rgba(26, 26, 26, 0.9);
+            border-color: rgba(236, 240, 241, 0.3);
+        }
+        
+        body[data-theme="dark"] .logo-text {
+            background: linear-gradient(45deg, #ecf0f1, #bdc3c7, #ecf0f1);
+            -webkit-background-clip: text;
+        }
+        
+        body[data-theme="dark"] .tagline,
+        body[data-theme="dark"] .category-title,
+        body[data-theme="dark"] footer p {
+            color: #ecf0f1;
+        }
+        
+        body[data-theme="dark"] .category-icon {
+            color: #ecf0f1;
+            border-color: rgba(236, 240, 241, 0.4);
+        }
+        
         /* Responsive - MEJORADO */
         @media (max-width: 1200px) {
             .categories-grid {
@@ -683,13 +770,16 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="classic">
     <div class="glass-effect">
         <div class="glass-panel"></div>
         <div class="glass-panel"></div>
         <div class="glass-panel"></div>
         <div class="glass-panel"></div>
     </div>
+
+    <!-- Efecto de lluvia -->
+    <div class="rain-effect" id="rainEffect"></div>
 
     <div class="loader">
         <div class="loader-spinner"></div>
@@ -810,7 +900,42 @@
             setTimeout(function() {
                 document.querySelector('.loader').classList.add('hidden');
             }, 1500);
+            
+            // Iniciar efecto de lluvia
+            createRainEffect();
         });
+
+        // Crear efecto de lluvia
+        function createRainEffect() {
+            const rainEffect = document.getElementById('rainEffect');
+            const rainCount = 100;
+            
+            for (let i = 0; i < rainCount; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('rain-drop');
+                
+                // Posición aleatoria
+                const left = Math.random() * 100;
+                const top = Math.random() * -100;
+                
+                // Tamaño aleatorio
+                const width = Math.random() * 2 + 1;
+                const height = Math.random() * 20 + 10;
+                
+                // Velocidad aleatoria
+                const duration = Math.random() * 1 + 0.5;
+                const delay = Math.random() * 5;
+                
+                drop.style.left = left + '%';
+                drop.style.top = top + 'px';
+                drop.style.width = width + 'px';
+                drop.style.height = height + 'px';
+                drop.style.animationDuration = duration + 's';
+                drop.style.animationDelay = delay + 's';
+                
+                rainEffect.appendChild(drop);
+            }
+        }
 
         // Efecto de carga progresiva
         document.addEventListener('DOMContentLoaded', function() {
@@ -871,7 +996,7 @@
                 
                 // Mostrar notificación
                 const notification = document.querySelector('.welcome-notification');
-                notification.querySelector('p').innerHTML = `<strong>Tema cambiado:</strong> ${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
+                notification.querySelector('p').innerHTML = `<strong>Tema cambiado:</strong> ${getThemeName(theme)}`;
                 notification.classList.add('show');
                 
                 // Ocultar notificación después de 3 segundos
@@ -881,6 +1006,19 @@
                 
                 // Cerrar panel de temas
                 themePanel.classList.remove('active');
+            }
+            
+            // Obtener nombre del tema para mostrar
+            function getThemeName(theme) {
+                const names = {
+                    'classic': 'Clásico Dorado',
+                    'dark': 'Oscuro Elegante',
+                    'ocean': 'Azul Oceano',
+                    'nature': 'Verde Naturaleza',
+                    'royal': 'Púrpura Real',
+                    'fire': 'Rojo Fuego'
+                };
+                return names[theme] || theme;
             }
             
             // Cargar tema guardado
