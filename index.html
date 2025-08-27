@@ -6,7 +6,6 @@
     <title>AA-Bodegón - Sistema de Gestión Integral</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== ESTILOS COMPLETOS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -25,72 +24,7 @@
             position: relative;
         }
         
-        /* ===== NUEVOS WIDGETS FIJOS ===== */
-        .top-widgets {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-        }
-        
-        .location-btn {
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #000;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-        }
-        
-        .location-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-        }
-        
-        .clock-container {
-            position: fixed;
-            top: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px 30px;
-            border-radius: 15px;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .digital-clock {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
-        }
-        
-        .digital-date {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            letter-spacing: 1px;
-        }
-        
-        /* ===== ESTILOS EXISTENTES COMPLETOS ===== */
+        /* Animación de lluvia */
         .rain-container {
             position: fixed;
             top: 0;
@@ -115,6 +49,7 @@
             }
         }
         
+        /* Efecto de cristal 3D animado */
         .glass-effect {
             position: fixed;
             top: 0;
@@ -199,9 +134,9 @@
             padding: 20px;
             position: relative;
             z-index: 1;
-            padding-top: 140px;
         }
         
+        /* Header con fondo negro */
         header {
             text-align: center;
             padding: 30px;
@@ -279,6 +214,90 @@
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
         }
         
+        /* Botón de ubicación */
+        .location-button {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .location-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FFA500, #FFD700);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .location-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+        }
+        
+        .location-button:hover::before {
+            opacity: 1;
+        }
+        
+        .location-button i {
+            margin-right: 8px;
+        }
+        
+        /* Widget de reloj */
+        .clock-widget {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            z-index: 100;
+            color: #FFD700;
+            text-align: center;
+            min-width: 200px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .clock-time {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .clock-date {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .clock-timezone {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+        
+        /* Categorías con fondo negro - MEJORADO PARA RESPONSIVIDAD */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -402,6 +421,7 @@
             margin-top: 10px;
         }
         
+        /* Footer - Modificado a negro manteniendo dorado */
         footer {
             text-align: center;
             margin-top: 50px;
@@ -431,6 +451,7 @@
             color: #FFD700;
         }
         
+        /* Notificación de bienvenida */
         .welcome-notification {
             position: fixed;
             top: 20px;
@@ -452,6 +473,7 @@
             transform: translateX(0);
         }
         
+        /* Botón de modo claro/oscuro */
         .theme-toggle {
             position: fixed;
             bottom: 20px;
@@ -477,6 +499,7 @@
             background: rgba(0, 0, 0, 0.9);
         }
         
+        /* Panel de temas */
         .theme-panel {
             position: fixed;
             bottom: 80px;
@@ -553,6 +576,7 @@
             background: linear-gradient(45deg, #e74c3c, #f39c12);
         }
         
+        /* Nuevo: Indicador de carga */
         .loader {
             position: fixed;
             top: 0;
@@ -585,7 +609,7 @@
             to { transform: rotate(360deg); }
         }
         
-        /* ===== RESPONSIVE COMPLETO ===== */
+        /* Responsive - MEJORADO PARA MÓVILES */
         @media (max-width: 1200px) {
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -619,32 +643,11 @@
             
             .container {
                 padding: 15px;
-                padding-top: 120px;
             }
             
-            .top-widgets {
-                padding: 5px;
-            }
-            
-            .location-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-            
-            .clock-container {
-                top: 50px;
-                padding: 10px 20px;
-            }
-            
-            .digital-clock {
-                font-size: 1.4rem;
-            }
-            
-            .digital-date {
-                font-size: 0.8rem;
-            }
-            
+            /* MODIFICADO: Ahora es horizontal con 3 por fila */
             .categories-grid {
+                display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: 15px;
                 margin-bottom: 30px;
@@ -708,6 +711,19 @@
                 left: 5%;
                 bottom: 70px;
             }
+            
+            /* Ajustes para el reloj en móviles */
+            .clock-widget {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                padding: 10px 15px;
+            }
+            
+            .clock-time {
+                font-size: 1.5rem;
+            }
         }
         
         @media (max-width: 576px) {
@@ -728,6 +744,7 @@
                 font-size: 1.1rem;
             }
             
+            /* MODIFICADO: 3 por fila en móviles */
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
@@ -770,6 +787,12 @@
                 left: 5%;
                 bottom: 65px;
             }
+            
+            /* Ajustes para el botón de ubicación en móviles */
+            .location-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
         }
         
         @media (max-width: 400px) {
@@ -794,8 +817,17 @@
             .theme-options {
                 grid-template-columns: 1fr;
             }
+            
+            .clock-time {
+                font-size: 1.3rem;
+            }
+            
+            .clock-date {
+                font-size: 0.8rem;
+            }
         }
         
+        /* Temas personalizados */
         body[data-theme="dark"] {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
@@ -828,20 +860,6 @@
     </style>
 </head>
 <body>
-    <!-- ===== WIDGETS FIJOS SUPERIORES ===== -->
-    <div class="top-widgets">
-        <a href="https://maps.google.com/?q=AA-Bodegón" target="_blank" class="location-btn">
-            <i class="fas fa-map-marker-alt"></i>
-            Ubicación del Bodegón
-        </a>
-    </div>
-    
-    <div class="clock-container">
-        <div class="digital-clock" id="digital-clock">00:00:00</div>
-        <div class="digital-date" id="digital-date">Cargando...</div>
-    </div>
-
-    <!-- ===== CONTENIDO EXISTENTE ===== -->
     <div class="rain-container" id="rainContainer"></div>
     
     <div class="glass-effect">
@@ -849,6 +867,13 @@
         <div class="glass-panel"></div>
         <div class="glass-panel"></div>
         <div class="glass-panel"></div>
+    </div>
+
+    <!-- Widget de reloj -->
+    <div class="clock-widget" id="clockWidget">
+        <div class="clock-time" id="clockTime">00:00:00</div>
+        <div class="clock-date" id="clockDate">Cargando...</div>
+        <div class="clock-timezone">Hora de Venezuela</div>
     </div>
 
     <div class="loader">
@@ -865,6 +890,11 @@
                 <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
                 <h1 class="logo-text">AA-BODEGÓN</h1>
                 <p class="tagline">Donde cada detalle cuenta</p>
+                
+                <!-- Botón de ubicación -->
+                <a href="https://www.google.com/maps/search/AA-Bodegón" target="_blank" class="location-button">
+                    <i class="fas fa-map-marker-alt"></i> Ver Ubicación en Maps
+                </a>
             </div>
         </header>
 
@@ -948,7 +978,6 @@
         </footer>
     </div>
 
-    <!-- ===== RESTO DEL CONTENIDO EXISTENTE ===== -->
     <div class="theme-toggle">
         <i class="fas fa-palette"></i>
     </div>
@@ -966,32 +995,7 @@
     </div>
 
     <script>
-        // ===== RELOJ VENEZOLA =====
-        function updateClock() {
-            const now = new Date();
-            const venezuelaTime = new Date(now.getTime() - (4 * 60 * 60 * 1000));
-            
-            const hours = venezuelaTime.getUTCHours().toString().padStart(2, '0');
-            const minutes = venezuelaTime.getUTCMinutes().toString().padStart(2, '0');
-            const seconds = venezuelaTime.getUTCSeconds().toString().padStart(2, '0');
-            
-            const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábados'];
-            const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 
-                           'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-            
-            const dayName = days[venezuelaTime.getUTCDay()];
-            const day = venezuelaTime.getUTCDate();
-            const month = months[venezuelaTime.getUTCMonth()];
-            const year = venezuelaTime.getUTCFullYear();
-            
-            document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
-            document.getElementById('digital-date').textContent = `${dayName}, ${day} de ${month} de ${year}`;
-        }
-        
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // ===== CÓDIGO EXISTENTE =====
+        // Animación de lluvia
         function createRain() {
             const rainContainer = document.getElementById('rainContainer');
             const raindropsCount = 100;
@@ -1000,10 +1004,15 @@
                 const drop = document.createElement('div');
                 drop.classList.add('rain-drop');
                 
+                // Posición aleatoria
                 drop.style.left = Math.random() * 100 + '%';
+                
+                // Tamaño aleatorio
                 const size = Math.random() * 3 + 1;
                 drop.style.width = size + 'px';
                 drop.style.height = Math.random() * 100 + 50 + 'px';
+                
+                // Animación aleatoria
                 drop.style.animationDuration = Math.random() * 2 + 1 + 's';
                 drop.style.animationDelay = Math.random() * 2 + 's';
                 
@@ -1013,12 +1022,46 @@
         
         createRain();
         
+        // Función para actualizar el reloj con la hora de Venezuela
+        function updateClock() {
+            const now = new Date();
+            
+            // Ajustar a la zona horaria de Venezuela (UTC-4)
+            const venezuelaOffset = -4 * 60; // UTC-4 en minutos
+            const localOffset = now.getTimezoneOffset();
+            const venezuelaTime = new Date(now.getTime() + (localOffset - venezuelaOffset) * 60000);
+            
+            // Formatear la hora
+            const hours = venezuelaTime.getHours().toString().padStart(2, '0');
+            const minutes = venezuelaTime.getMinutes().toString().padStart(2, '0');
+            const seconds = venezuelaTime.getSeconds().toString().padStart(2, '0');
+            
+            // Formatear la fecha
+            const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+            
+            const dayName = days[venezuelaTime.getDay()];
+            const day = venezuelaTime.getDate();
+            const monthName = months[venezuelaTime.getMonth()];
+            const year = venezuelaTime.getFullYear();
+            
+            // Actualizar el DOM
+            document.getElementById('clockTime').textContent = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('clockDate').textContent = `${dayName}, ${day} de ${monthName} de ${year}`;
+        }
+        
+        // Actualizar el reloj cada segundo
+        setInterval(updateClock, 1000);
+        updateClock(); // Inicializar inmediatamente
+        
+        // Efecto de carga
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.querySelector('.loader').classList.add('hidden');
             }, 1500);
         });
 
+        // Efecto de carga progresiva
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.category-card');
             cards.forEach((card, index) => {
@@ -1031,13 +1074,17 @@
                 }, 100 + (index * 100));
             });
             
+            // Mostrar notificación de bienvenida
             setTimeout(() => {
                 document.querySelector('.welcome-notification').classList.add('show');
+                
+                // Ocultar después de 5 segundos
                 setTimeout(() => {
                     document.querySelector('.welcome-notification').classList.remove('show');
                 }, 5000);
             }, 2000);
             
+            // Alternar panel de temas - CORREGIDO
             const themeToggle = document.querySelector('.theme-toggle');
             const themePanel = document.querySelector('.theme-panel');
             
@@ -1046,6 +1093,7 @@
                 themePanel.classList.toggle('active');
             });
             
+            // Cerrar panel de temas al hacer clic fuera - CORREGIDO
             document.addEventListener('click', function(e) {
                 if (themePanel.classList.contains('active') && 
                     !themePanel.contains(e.target) && 
@@ -1054,6 +1102,7 @@
                 }
             });
             
+            // Cambiar tema - MEJORADO
             const themeOptions = document.querySelectorAll('.theme-option');
             themeOptions.forEach(option => {
                 option.addEventListener('click', function() {
@@ -1063,35 +1112,43 @@
             });
             
             function changeTheme(theme) {
+                // Guardar preferencia de tema
                 localStorage.setItem('selectedTheme', theme);
                 
+                // Aplicar tema
                 if (theme === 'classic') {
                     document.body.removeAttribute('data-theme');
                 } else {
                     document.body.setAttribute('data-theme', theme);
                 }
                 
+                // Mostrar notificación
                 const notification = document.querySelector('.welcome-notification');
                 notification.querySelector('p').innerHTML = `<strong>Tema cambiado:</strong> ${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
                 notification.classList.add('show');
                 
+                // Ocultar notificación después de 3 segundos
                 setTimeout(() => {
                     notification.classList.remove('show');
                 }, 3000);
                 
+                // Cerrar panel de temas
                 themePanel.classList.remove('active');
             }
             
+            // Cargar tema guardado
             const savedTheme = localStorage.getItem('selectedTheme');
             if (savedTheme) {
                 if (savedTheme !== 'classic') {
                     document.body.setAttribute('data-theme', savedTheme);
                 }
             } else {
+                // Tema oscuro por defecto
                 document.body.setAttribute('data-theme', 'dark');
                 localStorage.setItem('selectedTheme', 'dark');
             }
             
+            // Prevenir que el clic en el panel de temas se propague
             themePanel.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
