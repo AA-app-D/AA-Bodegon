@@ -189,7 +189,7 @@
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
         }
         
-        /* Categorías con fondo negro */
+        /* Categorías con fondo negro - MODIFICADO PARA RESPONSIVIDAD */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -501,7 +501,7 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Responsive */
+        /* Responsive - MEJORADO */
         @media (max-width: 1200px) {
             .categories-grid {
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -537,9 +537,36 @@
                 padding: 15px;
             }
             
+            /* MODIFICADO: Ahora es horizontal con scroll */
             .categories-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-                gap: 20px;
+                display: flex;
+                overflow-x: auto;
+                gap: 15px;
+                padding-bottom: 15px;
+                scrollbar-width: thin;
+                scrollbar-color: #FFD700 rgba(0, 0, 0, 0.2);
+                margin-bottom: 30px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .categories-grid::-webkit-scrollbar {
+                height: 8px;
+            }
+            
+            .categories-grid::-webkit-scrollbar-track {
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+            }
+            
+            .categories-grid::-webkit-scrollbar-thumb {
+                background: #FFD700;
+                border-radius: 10px;
+            }
+            
+            .category-card {
+                min-width: 250px;
+                flex-shrink: 0;
+                padding: 20px;
             }
             
             .logo-text {
@@ -553,10 +580,6 @@
             
             .tagline {
                 font-size: 1.2rem;
-            }
-            
-            .category-card {
-                padding: 25px 20px;
             }
             
             .welcome-notification {
@@ -601,10 +624,15 @@
                 font-size: 1.1rem;
             }
             
+            .category-card {
+                min-width: 220px;
+                padding: 15px;
+            }
+            
             .category-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 2.5rem;
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
             }
             
             .category-title {
@@ -612,7 +640,7 @@
             }
             
             .category-desc {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
             
             footer {
@@ -626,6 +654,13 @@
                 bottom: 15px;
                 right: 15px;
             }
+            
+            .theme-panel {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+                bottom: 65px;
+            }
         }
         
         @media (max-width: 400px) {
@@ -638,7 +673,8 @@
             }
             
             .category-card {
-                padding: 20px 15px;
+                min-width: 200px;
+                padding: 15px;
             }
             
             .theme-options {
@@ -709,7 +745,7 @@
             <a href="05_analiticas/estadisticas.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-analytics"></i></div>
                 <h3 class="category-title">Business Intelligence</h3>
-                <p class="category-desc">Estadísticas, dashboards y reportes analíticos</p>
+                <p class="category-desc">Estadísticas, dashboards và reportes analíticos</p>
                 <span class="module-count">3 módulos</span>
             </a>
 
@@ -799,42 +835,64 @@
                 }, 5000);
             }, 2000);
             
-            // Alternar panel de temas
+            // Alternar panel de temas - CORREGIDO
             const themeToggle = document.querySelector('.theme-toggle');
             const themePanel = document.querySelector('.theme-panel');
             
-            themeToggle.addEventListener('click', () => {
+            themeToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
                 themePanel.classList.toggle('active');
             });
             
-            // Cerrar panel de temas al hacer clic fuera
-            document.addEventListener('click', (e) => {
-                if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) {
+            // Cerrar panel de temas al hacer clic fuera - CORREGIDO
+            document.addEventListener('click', function(e) {
+                if (themePanel.classList.contains('active') && 
+                    !themePanel.contains(e.target) && 
+                    !themeToggle.contains(e.target)) {
                     themePanel.classList.remove('active');
                 }
             });
             
-            // Cambiar tema
+            // Cambiar tema - MEJORADO
             const themeOptions = document.querySelectorAll('.theme-option');
             themeOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    const theme = option.getAttribute('data-theme');
+                option.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
                     changeTheme(theme);
-                    themePanel.classList.remove('active');
                 });
             });
             
             function changeTheme(theme) {
-                // Aquí puedes implementar la lógica para cambiar temas
-                // Por ahora solo mostraremos un mensaje
+                // Guardar preferencia de tema
+                localStorage.setItem('selectedTheme', theme);
+                
+                // Aplicar tema
+                document.body.setAttribute('data-theme', theme);
+                
+                // Mostrar notificación
                 const notification = document.querySelector('.welcome-notification');
                 notification.querySelector('p').innerHTML = `<strong>Tema cambiado:</strong> ${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
                 notification.classList.add('show');
                 
+                // Ocultar notificación después de 3 segundos
                 setTimeout(() => {
                     notification.classList.remove('show');
                 }, 3000);
+                
+                // Cerrar panel de temas
+                themePanel.classList.remove('active');
             }
+            
+            // Cargar tema guardado
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+            }
+            
+            // Prevenir que el clic en el panel de temas se propague
+            themePanel.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
         });
     </script>
 </body>
