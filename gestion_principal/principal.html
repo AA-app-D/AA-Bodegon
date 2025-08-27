@@ -6,6 +6,7 @@
     <title>AA-Bodegón - Módulos de Gestión Principal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ===== ESTILOS BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -20,17 +21,15 @@
             color: #fff;
             min-height: 100vh;
             overflow-x: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .desktop-wrapper {
             width: 1200px;
             margin: 0 auto;
-            transform-origin: center top;
+            transform-origin: top left;
         }
 
+        /* ===== BOTÓN DE INICIO ===== */
         .home-button {
             position: fixed;
             top: 20px;
@@ -73,6 +72,7 @@
             position: absolute;
             top: -10px;
             color: #fff;
+            user-select: none;
             animation: snowfall linear infinite;
             opacity: 0.8;
             z-index: 1;
@@ -103,7 +103,7 @@
             width: 400px;
             height: 400px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 70%);
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
             animation: orbit 20s linear infinite;
             top: 50%;
             left: 50%;
@@ -115,7 +115,7 @@
             animation-direction: reverse;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(255, 165, 0, 0.08), transparent 70%);
+            background: radial-gradient(circle, rgba(255, 165, 0, 0.08) 0%, transparent 70%);
         }
 
         @keyframes orbit {
@@ -127,6 +127,7 @@
             }
         }
 
+        /* ===== CONTENEDOR PRINCIPAL ===== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -173,6 +174,8 @@
             border: 4px solid #FFD700;
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.3);
             margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
             animation: pulse 2s ease-in-out infinite;
         }
 
@@ -206,6 +209,7 @@
             z-index: 1;
         }
 
+        /* ===== GRID DE MÓDULOS ===== */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -228,10 +232,38 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            border-radius: 27px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
         .category-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3), 0 0 60px rgba(255, 215, 0, 0.15);
             border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .category-card:hover::before {
+            opacity: 0.3;
         }
 
         .category-icon {
@@ -254,6 +286,11 @@
             }
         }
 
+        .category-card:hover .category-icon {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+        }
+
         .category-title {
             font-size: 1.8rem;
             font-weight: 700;
@@ -273,6 +310,7 @@
             transition: all 0.4s ease;
         }
 
+        /* ===== LLUVIA DE EMOJIS ===== */
         .emoji-rain-container {
             position: absolute;
             top: 0;
@@ -310,6 +348,7 @@
             }
         }
 
+        /* ===== FOOTER ===== */
         footer {
             text-align: center;
             padding: 30px;
@@ -321,6 +360,7 @@
             z-index: 2;
         }
 
+        /* ===== EFECTO SPARKLE ===== */
         @keyframes sparkle {
             0% {
                 opacity: 1;
@@ -340,11 +380,15 @@
 <body>
 
     <div class="desktop-wrapper" id="desktopWrapper">
+        <!-- BOTÓN DE INICIO -->
         <a href="https://aa-app-d.github.io/AA-Bodegon/index.html" class="home-button">
             <i class="fas fa-home"></i> Inicio
         </a>
 
+        <!-- EFECTO NIEVE -->
         <div class="snow-container" id="snowContainer"></div>
+
+        <!-- EFECTOS DE BRILLO -->
         <div class="glow-container">
             <div class="glow-orbit"></div>
             <div class="glow-orbit"></div>
@@ -398,22 +442,27 @@
     </div>
 
     <script>
+        // ===== EFECTO NIEVE DINÁMICO =====
         function createSnow() {
             const snowContainer = document.getElementById('snowContainer');
-            const symbols = ['❄', '❅', '❆', '✦', '✧'];
-            for (let i = 0; i < 50; i++) {
-                const s = document.createElement('div');
-                s.className = 'snowflake';
-                s.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-                s.style.left = Math.random() * 100 + '%';
-                s.style.fontSize = Math.random() * 20 + 10 + 'px';
-                s.style.animationDuration = Math.random() * 5 + 3 + 's';
-                s.style.animationDelay = Math.random() * 5 + 's';
-                s.style.opacity = Math.random() * 0.7 + 0.3;
-                snowContainer.appendChild(s);
+            const snowflakeSymbols = ['❄', '❅', '❆', '✦', '✧'];
+            const snowflakesCount = 50;
+
+            for (let i = 0; i < snowflakesCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
+                snowflake.innerHTML = symbol;
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                snowflake.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                snowContainer.appendChild(snowflake);
             }
         }
 
+        // ===== LLUVIA DE EMOJIS =====
         function createEmojiRain() {
             const emojiContainer = document.getElementById('emojiRain');
             const emojis = ['📦', '📊', '📋', '📇', '🧾', '📑', '📈', '📉', '💰', '💵', '💳', '🧮', '📱', '💻', '🖥️', '🖨️', '🔍', '📌', '📍', '📎', '🛒', '🛍️', '🧴', '🧃', '🧉', '🍷', '🍺', '🍾'];
@@ -430,10 +479,11 @@
             }
         }
 
+        // ===== EFECTOS ADICIONALES =====
         function addInteractiveEffects() {
             const cards = document.querySelectorAll('.category-card');
             cards.forEach(card => {
-                card.addEventListener('mouseenter', function () {
+                card.addEventListener('mouseenter', function() {
                     const sparkle = document.createElement('div');
                     sparkle.innerHTML = '✨';
                     sparkle.style.position = 'absolute';
@@ -448,19 +498,22 @@
             });
         }
 
+        // ===== ESCALADO RESPONSIVO =====
         function scaleLayout() {
             const wrapper = document.getElementById('desktopWrapper');
-            const scale = Math.min(window.innerWidth / 1200, window.innerHeight / 700);
+            const scale = Math.min(window.innerWidth / 1200, window.innerHeight / 900);
             wrapper.style.transform = `scale(${scale})`;
-            document.body.style.height = `${700 * scale}px`;
+            document.body.style.height = `${900 * scale}px`;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', function() {
             createSnow();
             createEmojiRain();
             addInteractiveEffects();
             scaleLayout();
 
+            // Animación de entrada de tarjetas
             const cards = document.querySelectorAll('.category-card');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
@@ -475,5 +528,7 @@
 
         window.addEventListener('resize', scaleLayout);
     </script>
+
 </body>
 </html>
+
