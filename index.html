@@ -6,7 +6,7 @@
     <title>AA-Bodegón - Sistema de Gestión Integral</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== ESTILOS COMPLETOS ===== */
+        /* ===== ESTILOS ORIGINALES (sin cambios) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -613,7 +613,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVE COMPLETO ===== */
+        /* ===== RESPONSIVE ORIGINAL (sin cambios) ===== */
         @media (max-width: 1200px) {
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -671,6 +671,81 @@
         @media (max-width: 576px) {
             .categories-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== NUEVO: RESPONSIVE “PC-STYLE” EN MÓVIL (adaptado) ===== */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding-top: 100px;
+            }
+
+            header {
+                padding: 20px 10px;
+            }
+
+            .logo-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .logo-text {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .category-card {
+                padding: 20px;
+            }
+
+            .category-icon {
+                font-size: 2.5rem;
+                width: 70px;
+                height: 70px;
+            }
+
+            .category-title {
+                font-size: 1.2rem;
+            }
+
+            .category-desc {
+                font-size: 0.9rem;
+            }
+
+            .top-widgets {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .location-btn {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+
+            .clock-container {
+                top: 50px;
+                padding: 10px 15px;
+            }
+
+            .digital-clock {
+                font-size: 1.4rem;
+            }
+
+            .digital-date {
+                font-size: 0.8rem;
             }
         }
 
@@ -747,7 +822,6 @@
         </header>
 
         <div class="categories-grid">
-            <!-- ✅ ENLACE CORREGIDO AQUÍ -->
             <a href="https://aa-app-d.github.io/AA-Bodegon/gestion_principal/principal.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-cube"></i></div>
                 <h3 class="category-title">Gestión Principal</h3>
