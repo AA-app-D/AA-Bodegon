@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos - Bodegón App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .sidebar {
+            background-color: var(--primary-color);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 60px;
+        }
+        
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .sidebar a:hover {
+            background-color: var(--secondary-color);
+            padding-left: 25px;
+        }
+        
+        .sidebar a.active {
+            background-color: var(--secondary-color);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .top-bar {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 20px;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .card-dashboard {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card-dashboard:hover {
+            transform: translateY(-5px);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .badge-success {
+            background-color: #2ecc71;
+        }
+        
+        .badge-warning {
+            background-color: #f39c12;
+        }
+        
+        .badge-danger {
+            background-color: var(--accent-color);
+        }
+        
+        .table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .product-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #6c757d;
+        }
+        
+        .search-container input {
+            padding-left: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding-top: 15px;
+            }
+            
+            .sidebar a {
+                float: left;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-sm me-3 d-md-none">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h4 class="mb-0"><i class="fas fa-store me-2"></i>Bodegón App</h4>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="search-container me-3">
+                <i class="fas fa-search"></i>
+                <input type="text" class="form-control form-control-sm" placeholder="Buscar...">
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle me-1"></i>Admin
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Perfil</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar col-md-3 col-lg-2 d-md-block">
+        <a href="../index.html" class="mb-2"><i class="fas fa-home me-2"></i>Inicio</a>
+        
+        <p class="text-uppercase small px-3 mt-4 mb-1 text-muted">Módulos Core</p>
+        <a href="productos.html" class="active"><i class="fas fa-box me-2"></i>Productos</a>
+        <a href="inventario.html"><i class="fas fa-warehouse me-2"></i>Inventario</a>
+        <a href="facturacion.html"><i class="fas fa-file-invoice me-2"></i>Facturación</a>
+        <a href="caja.html"><i class="fas fa-cash-register me-2"></i>Caja</a>
+        <a href="licoreria.html"><i class="fas fa-glass-martini-alt me-2"></i>Licorería</a>
+        
+        <p class="text-uppercase small px-3 mt-4 mb-1 text-muted">Registros Maestros</p>
+        <a href="../02_gestion_entidades/clientes.html"><i class="fas fa-users me-2"></i>Clientes</a>
+        <a href="../02_gestion_entidades/proveedores.html"><i class="fas fa-truck me-2"></i>Proveedores</a>
+        
+        <p class="text-uppercase small px-3 mt-4 mb-1 text-muted">Sistema</p>
+        <a href="../07_sistema/configuracion.html"><i class="fas fa-cog me-2"></i>Configuración</a>
+        <a href="../07_sistema/auditoria.html"><i class="fas fa-shield-alt me-2"></i>Auditoría</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-box me-2"></i>Gestión de Productos</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                <i class="fas fa-plus me-1"></i> Nuevo Producto
+            </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Total Productos</h6>
+                                <h3>248</h3>
+                            </div>
+                            <div>
+                                <i class="fas fa-boxes fa-2x opacity-50"></i>
+                            </div>
+                        </div>
+                        <p class="card-text small"><i class="fas fa-arrow-up me-1"></i>12% desde el mes pasado</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">En Stock</h6>
+                                <h3>192</h3>
+                            </div>
+                            <div>
+                                <i class="fas fa-check-circle fa-2x opacity-50"></i>
+                            </div>
+                        </div>
+                        <p class="card-text small"><i class="fas fa-arrow-up me-1"></i>8% desde el mes pasado</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-warning text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Stock Bajo</h6>
+                                <h3>24</h3>
+                            </div>
+                            <div>
+                                <i class="fas fa-exclamation-triangle fa-2x opacity-50"></i>
+                            </div>
+                        </div>
+                        <p class="card-text small"><i class="fas fa-arrow-down me-1"></i>3% desde el mes pasado</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-danger text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Agotados</h6>
+                                <h3>12</h3>
+                            </div>
+                            <div>
+                                <i class="fas fa-times-circle fa-2x opacity-50"></i>
+                            </div>
+                        </div>
+                        <p class="card-text small"><i class="fas fa-arrow-up me-1"></i>2% desde el mes pasado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Lista de Productos</h5>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-file-export me-1"></i> Exportar</button>
+                        <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-print me-1"></i> Imprimir</button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Arroz"></td>
+                                <td>Arroz Diana 1kg</td>
+                                <td>Abarrotes</td>
+                                <td>$2.50</td>
+                                <td>45</td>
+                                <td><span class="badge bg-success">Disponible</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Aceite"></td>
+                                <td>Aceite Gourmet 900ml</td>
+                                <td>Abarrotes</td>
+                                <td>$4.20</td>
+                                <td>32</td>
+                                <td><span class="badge bg-success">Disponible</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Atún"></td>
+                                <td>Atún Van Camps 180gr</td>
+                                <td>Enlatados</td>
+                                <td>$1.80</td>
+                                <td>18</td>
+                                <td><span class="badge bg-warning">Stock Bajo</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Leche"></td>
+                                <td>Leche Alpina 1L</td>
+                                <td>Lácteos</td>
+                                <td>$2.10</td>
+                                <td>0</td>
+                                <td><span class="badge bg-danger">Agotado</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Jabón"></td>
+                                <td>Jabón Lux 3 unidades</td>
+                                <td>Aseo</td>
+                                <td>$3.50</td>
+                                <td>67</td>
+                                <td><span class="badge bg-success">Disponible</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Agregar Nuevo Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="productName" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="productName" placeholder="Ej: Arroz Diana 1kg">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productCategory" class="form-label">Categoría</label>
+                                <select class="form-select" id="productCategory">
+                                    <option selected>Seleccionar categoría</option>
+                                    <option value="1">Abarrotes</option>
+                                    <option value="2">Lácteos</option>
+                                    <option value="3">Enlatados</option>
+                                    <option value="4">Aseo</option>
+                                    <option value="5">Bebidas</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="productPrice" class="form-label">Precio de Venta ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="0.00">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="productCost" class="form-label">Precio de Costo ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="productCost" placeholder="0.00">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="productStock" class="form-label">Stock Inicial</label>
+                                <input type="number" class="form-control" id="productStock" placeholder="0">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="productSupplier" class="form-label">Proveedor</label>
+                                <select class="form-select" id="productSupplier">
+                                    <option selected>Seleccionar proveedor</option>
+                                    <option value="1">Distribuidora Alimentos S.A.</option>
+                                    <option value="2">Productos Selectos Ltda.</option>
+                                    <option value="3">Importaciones Delicias</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productBarcode" class="form-label">Código de Barras</label>
+                                <input type="text" class="form-control" id="productBarcode" placeholder="Ej: 1234567890123">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="productDescription" rows="3" placeholder="Descripción del producto"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Imagen del Producto</label>
+                            <input class="form-control" type="file" id="productImage">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Guardar Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple JavaScript for demonstration purposes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search functionality
+            const searchInput = document.querySelector('input[type="search"]');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function() {
+                    const searchText = this.value.toLowerCase();
+                    const rows = document.querySelectorAll('table tbody tr');
+                    
+                    rows.forEach(row => {
+                        const productName = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                        if (productName.includes(searchText)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
