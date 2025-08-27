@@ -598,6 +598,7 @@
         .loader.hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
 
         .loader-spinner {
@@ -622,7 +623,7 @@
 
         @media (max-width: 992px) {
             .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
             }
 
@@ -638,6 +639,19 @@
             .tagline {
                 font-size: 1.3rem;
             }
+            
+            .clock-container {
+                top: 50px;
+                padding: 10px 20px;
+            }
+            
+            .digital-clock {
+                font-size: 1.5rem;
+            }
+            
+            .digital-date {
+                font-size: 0.8rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -651,7 +665,8 @@
             }
 
             .categories-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
 
             .logo-text {
@@ -666,11 +681,115 @@
             .tagline {
                 font-size: 1.2rem;
             }
+            
+            .clock-container {
+                position: relative;
+                top: 0;
+                margin: 70px auto 20px;
+                width: 90%;
+            }
+            
+            .top-widgets {
+                position: relative;
+                margin-bottom: 15px;
+            }
+            
+            .category-card {
+                padding: 20px;
+            }
+            
+            .category-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2.5rem;
+            }
+            
+            .category-title {
+                font-size: 1.2rem;
+            }
+            
+            .category-desc {
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 576px) {
-            .categories-grid {
-                grid-template-columns: 1fr;
+            .logo-text {
+                font-size: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .location-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .clock-container {
+                padding: 8px 15px;
+            }
+            
+            .digital-clock {
+                font-size: 1.3rem;
+            }
+            
+            .digital-date {
+                font-size: 0.75rem;
+            }
+            
+            .category-card {
+                padding: 15px;
+            }
+            
+            .category-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .category-title {
+                font-size: 1.1rem;
+            }
+            
+            footer {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .theme-panel {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo-text {
+                font-size: 1.6rem;
+            }
+            
+            .logo-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .location-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .clock-container {
+                padding: 5px 10px;
+            }
+            
+            .digital-clock {
+                font-size: 1.1rem;
+            }
+            
+            .digital-date {
+                font-size: 0.7rem;
             }
         }
 
