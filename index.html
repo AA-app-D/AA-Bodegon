@@ -984,8 +984,14 @@
             
             // Cargar tema guardado
             const savedTheme = localStorage.getItem('selectedTheme');
-            if (savedTheme && savedTheme !== 'classic') {
-                document.body.setAttribute('data-theme', savedTheme);
+            if (savedTheme) {
+                if (savedTheme !== 'classic') {
+                    document.body.setAttribute('data-theme', savedTheme);
+                }
+            } else {
+                // Tema oscuro por defecto
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('selectedTheme', 'dark');
             }
             
             // Prevenir que el clic en el panel de temas se propague
