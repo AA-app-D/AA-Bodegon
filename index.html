@@ -19,28 +19,20 @@
             background-size: cover;
             color: #fff;
             min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
         }
         
-        .main-container {
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         /* Header */
         header {
             text-align: center;
             padding: 30px;
-            margin-bottom: 30px;
-            width: 100%;
+            margin-bottom: 40px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -86,104 +78,19 @@
             margin-top: 5px;
         }
         
-        /* Acordeón de categorías */
-        .accordion {
-            width: 100%;
-            max-width: 800px;
+        /* Grid de módulos */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 0 auto;
         }
         
-        .accordion-item {
-            margin-bottom: 15px;
-            border-radius: 15px;
-            overflow: hidden;
+        .module-card {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .accordion-header {
-            padding: 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.6);
-            transition: background 0.3s ease;
-        }
-        
-        .accordion-header:hover {
-            background: rgba(255, 215, 0, 0.1);
-        }
-        
-        .accordion-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.2rem;
-            color: #FFD700;
-        }
-        
-        .accordion-icon {
-            font-size: 1.3rem;
-            width: 30px;
-            text-align: center;
-        }
-        
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-        
-        .accordion-content-inner {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .module-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            text-decoration: none;
-            color: #fff;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .module-link:hover {
-            background: rgba(255, 215, 0, 0.15);
-            transform: translateX(5px);
-            border-color: rgba(255, 215, 0, 0.3);
-            color: #FFD700;
-        }
-        
-        .module-link i {
-            color: #FFD700;
-            width: 20px;
-            text-align: center;
-        }
-        
-        /* Módulos principales rápidos */
-        .quick-access {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 30px;
-        }
-        
-        .quick-module {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 25px 20px;
+            border-radius: 20px;
+            padding: 30px 25px;
             text-align: center;
             text-decoration: none;
             color: #fff;
@@ -192,63 +99,125 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .quick-module:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            background: rgba(255, 215, 0, 0.1);
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, #ffd700, #ffa500, #ffd700, #ffa500);
+            border-radius: 22px;
+            animation: borderAnimation 3s linear infinite;
+            background-size: 400%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .module-card:hover::before {
+            opacity: 1;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.8);
             border-color: rgba(255, 215, 0, 0.4);
         }
         
-        .quick-icon {
-            font-size: 2rem;
-            color: #FFD700;
-            margin-bottom: 8px;
+        @keyframes borderAnimation {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
         }
         
-        .quick-title {
+        .module-icon {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .module-title {
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .module-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
         /* Footer */
         footer {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            width: 100%;
-            max-width: 800px;
+            margin-top: 50px;
+            padding: 25px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
         
+        /* Responsive */
         @media (max-width: 768px) {
-            .accordion-content-inner {
-                grid-template-columns: 1fr;
-            }
-            
-            .quick-access {
-                grid-template-columns: 1fr 1fr;
+            .modules-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
             }
             
             .logo-text {
                 font-size: 2.2rem;
             }
+            
+            .module-card {
+                padding: 25px 20px;
+            }
         }
         
         @media (max-width: 480px) {
-            .quick-access {
+            .modules-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
+    <div class="container">
         <header>
             <div class="logo">
                 <div class="logo-icon">
@@ -259,142 +228,215 @@
             </div>
         </header>
 
-        <!-- Acceso rápido a módulos principales -->
-        <div class="quick-access">
-            <a href="01_gestion_principal/productos.html" class="quick-module">
-                <div class="quick-icon"><i class="fas fa-boxes"></i></div>
-                <div class="quick-title">Productos</div>
-            </a>
-            
-            <a href="01_gestion_principal/facturacion.html" class="quick-module">
-                <div class="quick-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                <div class="quick-title">Facturación</div>
-            </a>
-            
-            <a href="01_gestion_principal/inventario.html" class="quick-module">
-                <div class="quick-icon"><i class="fas fa-warehouse"></i></div>
-                <div class="quick-title">Inventario</div>
-            </a>
-            
-            <a href="02_gestion_entidades/clientes.html" class="quick-module">
-                <div class="quick-icon"><i class="fas fa-users"></i></div>
-                <div class="quick-title">Clientes</div>
-            </a>
-        </div>
-
-        <!-- Acordeón de categorías -->
-        <div class="accordion">
+        <div class="modules-grid">
             <!-- Gestión Principal -->
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="accordion-title">
-                        <i class="fas fa-cube accordion-icon"></i>
-                        Gestión Principal
-                    </div>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-content-inner">
-                        <a href="01_gestion_principal/productos.html" class="module-link">
-                            <i class="fas fa-boxes"></i>Productos
-                        </a>
-                        <a href="01_gestion_principal/inventario.html" class="module-link">
-                            <i class="fas fa-warehouse"></i>Inventario
-                        </a>
-                        <a href="01_gestion_principal/facturacion.html" class="module-link">
-                            <i class="fas fa-file-invoice-dollar"></i>Facturación
-                        </a>
-                        <a href="01_gestion_principal/caja.html" class="module-link">
-                            <i class="fas fa-cash-register"></i>Caja
-                        </a>
-                        <a href="01_gestion_principal/licoreria.html" class="module-link">
-                            <i class="fas fa-glass-martini-alt"></i>Licorería
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <a href="01_gestion_principal/productos.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-boxes"></i></div>
+                <h3 class="module-title">Productos</h3>
+                <p class="module-desc">Gestión completa de productos y precios</p>
+                <span class="badge">CORE</span>
+            </a>
+            
+            <a href="01_gestion_principal/inventario.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-warehouse"></i></div>
+                <h3 class="module-title">Inventario</h3>
+                <p class="module-desc">Control de stock y existencias</p>
+                <span class="badge">CORE</span>
+            </a>
+            
+            <a href="01_gestion_principal/facturacion.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <h3 class="module-title">Facturación</h3>
+                <p class="module-desc">Sistema de facturación y ventas</p>
+            </a>
+            
+            <a href="01_gestion_principal/caja.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-cash-register"></i></div>
+                <h3 class="module-title">Caja</h3>
+                <p class="module-desc">Control de ingresos y egresos</p>
+            </a>
+            
+            <a href="01_gestion_principal/licoreria.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-glass-martini-alt"></i></div>
+                <h3 class="module-title">Licorería</h3>
+                <p class="module-desc">Gestión especializada de licores</p>
+            </a>
 
-            <!-- Registros Maestros -->
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="accordion-title">
-                        <i class="fas fa-address-book accordion-icon"></i>
-                        Registros Maestros
-                    </div>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-content-inner">
-                        <a href="02_gestion_entidades/clientes.html" class="module-link">
-                            <i class="fas fa-users"></i>Clientes
-                        </a>
-                        <a href="02_gestion_entidades/proveedores.html" class="module-link">
-                            <i class="fas fa-truck-loading"></i>Proveedores
-                        </a>
-                        <a href="02_gestion_entidades/usuarios.html" class="module-link">
-                            <i class="fas fa-user-cog"></i>Usuarios
-                        </a>
-                        <a href="02_gestion_entidades/sucursales.html" class="module-link">
-                            <i class="fas fa-code-branch"></i>Sucursales
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <!-- Gestión de Entidades -->
+            <a href="02_gestion_entidades/clientes.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-users"></i></div>
+                <h3 class="module-title">Clientes</h3>
+                <p class="module-desc">Base de datos de clientes</p>
+            </a>
+            
+            <a href="02_gestion_entidades/proveedores.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-truck-loading"></i></div>
+                <h3 class="module-title">Proveedores</h3>
+                <p class="module-desc">Gestión de proveedores</p>
+            </a>
+            
+            <a href="02_gestion_entidades/usuarios.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-user-cog"></i></div>
+                <h3 class="module-title">Usuarios</h3>
+                <p class="module-desc">Control de acceso al sistema</p>
+            </a>
+            
+            <a href="02_gestion_entidades/sucursales.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-code-branch"></i></div>
+                <h3 class="module-title">Sucursales</h3>
+                <p class="module-desc">Gestión multi-sucursal</p>
+            </a>
 
-            <!-- Más categorías (se pueden agregar así) -->
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="accordion-title">
-                        <i class="fas fa-tasks accordion-icon"></i>
-                        Operaciones
-                    </div>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-content-inner">
-                        <a href="03_operaciones/compras.html" class="module-link">
-                            <i class="fas fa-shopping-cart"></i>Compras
-                        </a>
-                        <a href="03_operaciones/delivery.html" class="module-link">
-                            <i class="fas fa-motorcycle"></i>Delivery
-                        </a>
-                        <a href="03_operaciones/mesas.html" class="module-link">
-                            <i class="fas fa-chair"></i>Mesas
-                        </a>
-                        <a href="03_operaciones/rutas.html" class="module-link">
-                            <i class="fas fa-route"></i>Rutas
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <!-- Operaciones -->
+            <a href="03_operaciones/compras.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-shopping-cart"></i></div>
+                <h3 class="module-title">Compras</h3>
+                <p class="module-desc">Gestión de órdenes de compra</p>
+            </a>
+            
+            <a href="03_operaciones/delivery.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-motorcycle"></i></div>
+                <h3 class="module-title">Delivery</h3>
+                <p class="module-desc">Gestión de entregas a domicilio</p>
+            </a>
+            
+            <a href="03_operaciones/mesas.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-chair"></i></div>
+                <h3 class="module-title">Mesas</h3>
+                <p class="module-desc">Control de consumo en local</p>
+            </a>
+            
+            <a href="03_operaciones/rutas.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-route"></i></div>
+                <h3 class="module-title">Rutas</h3>
+                <p class="module-desc">Optimización de entregas</p>
+            </a>
+
+            <!-- Finanzas -->
+            <a href="04_finanzas/contabilidad.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-calculator"></i></div>
+                <h3 class="module-title">Contabilidad</h3>
+                <p class="module-desc">Gestión financiera completa</p>
+            </a>
+            
+            <a href="04_finanzas/reportes-financieros.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-file-invoice"></i></div>
+                <h3 class="module-title">Reportes Financieros</h3>
+                <p class="module-desc">Reportes y estados financieros</p>
+            </a>
+
+            <!-- Analytics -->
+            <a href="05_analiticas/estadisticas.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-chart-bar"></i></div>
+                <h3 class="module-title">Estadísticas</h3>
+                <p class="module-desc">Métricas y análisis de datos</p>
+            </a>
+            
+            <a href="05_analiticas/dashboard-central.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <h3 class="module-title">Dashboard Central</h3>
+                <p class="module-desc">Vista general del negocio</p>
+            </a>
+            
+            <a href="05_analiticas/reportes-analiticos.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-chart-pie"></i></div>
+                <h3 class="module-title">Reportes Analíticos</h3>
+                <p class="module-desc">Análisis avanzado de datos</p>
+            </a>
+
+            <!-- E-commerce -->
+            <a href="06_ecommerce/tienda-online.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-store-alt"></i></div>
+                <h3 class="module-title">Tienda Online</h3>
+                <p class="module-desc">E-commerce integrado</p>
+            </a>
+            
+            <a href="06_ecommerce/pedidos-web.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-laptop"></i></div>
+                <h3 class="module-title">Pedidos Web</h3>
+                <p class="module-desc">Gestión de pedidos online</p>
+            </a>
+
+            <!-- Sistema -->
+            <a href="07_sistema/configuracion.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-sliders-h"></i></div>
+                <h3 class="module-title">Configuración</h3>
+                <p class="module-desc">Ajustes del sistema</p>
+            </a>
+            
+            <a href="07_sistema/backup.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-database"></i></div>
+                <h3 class="module-title">Backup</h3>
+                <p class="module-desc">Copias de seguridad</p>
+            </a>
+            
+            <a href="07_sistema/auditoria.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="module-title">Auditoría</h3>
+                <p class="module-desc">Control y seguridad</p>
+            </a>
+
+            <!-- Marketing -->
+            <a href="08_marketing/promociones.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-tags"></i></div>
+                <h3 class="module-title">Promociones</h3>
+                <p class="module-desc">Ofertas y descuentos</p>
+            </a>
+            
+            <a href="08_marketing/campanas-marketing.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-megaphone"></i></div>
+                <h3 class="module-title">Campañas Marketing</h3>
+                <p class="module-desc">Estrategias publicitarias</p>
+            </a>
+            
+            <a href="08_marketing/programa-fidelizacion.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-award"></i></div>
+                <h3 class="module-title">Programa Fidelización</h3>
+                <p class="module-desc">Clientes frecuentes</p>
+            </a>
+
+            <!-- Galería Multimedia -->
+            <a href="00_galeria/galeria.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-photo-video"></i></div>
+                <h3 class="module-title">Galería Principal</h3>
+                <p class="module-desc">Multimedia y archivos</p>
+            </a>
+            
+            <a href="00_galeria/galeria-productos.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-box-open"></i></div>
+                <h3 class="module-title">Galería Productos</h3>
+                <p class="module-desc">Imágenes de productos</p>
+            </a>
+            
+            <a href="00_galeria/galeria-marketing.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-bullhorn"></i></div>
+                <h3 class="module-title">Galería Marketing</h3>
+                <p class="module-desc">Material promocional</p>
+            </a>
+            
+            <a href="00_galeria/galeria-videos.html" class="module-card">
+                <div class="module-icon"><i class="fas fa-video"></i></div>
+                <h3 class="module-title">Galería Videos</h3>
+                <p class="module-desc">Tutoriales y contenido</p>
+            </a>
         </div>
 
         <footer>
-            <p>AA-Bodegón &copy; 2023 - Sistema de Gestión Integral</p>
+            <p>AA-Bodegón &copy; 2023 - Sistema de Gestión Integral. Todos los derechos reservados.</p>
             <p>Desarrollado con <i class="fas fa-heart" style="color: #ff3366;"></i> para tu negocio</p>
         </footer>
     </div>
 
     <script>
-        function toggleAccordion(header) {
-            const content = header.nextElementSibling;
-            const icon = header.querySelector('.fa-chevron-down');
-            
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-                icon.style.transform = 'rotate(180deg)';
-            }
-        }
-
-        // Abrir el primer acordeón por defecto
+        // Efecto de carga progresiva
         document.addEventListener('DOMContentLoaded', function() {
-            const firstAccordion = document.querySelector('.accordion-header');
-            if (firstAccordion) {
-                toggleAccordion(firstAccordion);
-            }
+            const cards = document.querySelectorAll('.module-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0)';
+                }, 100 + (index * 50));
+            });
         });
     </script>
 </body>
