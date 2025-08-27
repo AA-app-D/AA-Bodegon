@@ -20,12 +20,95 @@
             color: #fff;
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Efecto de cristal 3D animado */
+        .glass-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .glass-panel {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: float 20s infinite ease-in-out;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateX(40deg) rotateY(20deg);
+        }
+        
+        .glass-panel:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+        
+        .glass-panel:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -5s;
+            background: rgba(255, 165, 0, 0.05);
+            border: 1px solid rgba(255, 165, 0, 0.15);
+        }
+        
+        .glass-panel:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            top: 30%;
+            left: 70%;
+            animation-delay: -10s;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .glass-panel:nth-child(4) {
+            width: 200px;
+            height: 200px;
+            top: 70%;
+            left: 10%;
+            animation-delay: -15s;
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: perspective(1000px) rotateX(40deg) rotateY(20deg) translate(0, 0);
+            }
+            25% {
+                transform: perspective(1000px) rotateX(45deg) rotateY(25deg) translate(10px, 15px);
+            }
+            50% {
+                transform: perspective(1000px) rotateX(35deg) rotateY(15deg) translate(-5px, 20px);
+            }
+            75% {
+                transform: perspective(1000px) rotateX(42deg) rotateY(22deg) translate(5px, -10px);
+            }
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         /* Header */
@@ -38,6 +121,19 @@
             border-radius: 20px;
             border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), transparent, rgba(255, 165, 0, 0.1));
+            z-index: -1;
         }
         
         .logo {
@@ -70,6 +166,18 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
             margin-top: 15px;
+            position: relative;
+        }
+        
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
         }
         
         .tagline {
@@ -105,16 +213,30 @@
             gap: 15px;
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
         
         .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), transparent, rgba(255, 165, 0, 0.1));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .category-card::after {
             content: '';
             position: absolute;
             top: -2px;
             left: -2px;
             right: -2px;
             bottom: -2px;
-            z-index: -1;
+            z-index: -2;
             background: linear-gradient(45deg, #ffd700, #ffa500, #ffd700, #ffa500);
             border-radius: 22px;
             animation: borderAnimation 3s linear infinite;
@@ -124,6 +246,10 @@
         }
         
         .category-card:hover::before {
+            opacity: 1;
+        }
+        
+        .category-card:hover::after {
             opacity: 1;
         }
         
@@ -196,6 +322,19 @@
             border-radius: 15px;
             border: 1px solid rgba(255, 215, 0, 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), transparent, rgba(255, 165, 0, 0.1));
+            z-index: -1;
+            border-radius: 15px;
         }
         
         /* Notificación de bienvenida */
@@ -245,6 +384,39 @@
             background: rgba(0, 0, 0, 0.9);
         }
         
+        /* Nuevo: Indicador de carga */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #FFD700;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .categories-grid {
@@ -275,6 +447,10 @@
                 left: 10px;
                 max-width: none;
             }
+            
+            .glass-panel {
+                display: none; /* Ocultar paneles de cristal en móviles para mejor rendimiento */
+            }
         }
         
         @media (max-width: 480px) {
@@ -302,6 +478,17 @@
     </style>
 </head>
 <body>
+    <div class="glass-effect">
+        <div class="glass-panel"></div>
+        <div class="glass-panel"></div>
+        <div class="glass-panel"></div>
+        <div class="glass-panel"></div>
+    </div>
+
+    <div class="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
     <div class="welcome-notification">
         <p><strong>¡Bienvenido a AA-Bodegón!</strong> Sistema de gestión integral para tu negocio.</p>
     </div>
@@ -400,6 +587,13 @@
     </div>
 
     <script>
+        // Efecto de carga
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 1500);
+        });
+
         // Efecto de carga progresiva
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.category-card');
@@ -421,7 +615,7 @@
                 setTimeout(() => {
                     document.querySelector('.welcome-notification').classList.remove('show');
                 }, 5000);
-            }, 1000);
+            }, 2000);
             
             // Alternar tema claro/oscuro
             const themeToggle = document.querySelector('.theme-toggle');
