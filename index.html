@@ -613,9 +613,34 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVE MEJORADO ===== */
-        /* Tablets: 3 columnas pero más espacio */
+        /* ===== RESPONSIVE COMPLETO ===== */
+        @media (max-width: 1200px) {
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 992px) {
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .logo-text {
+                font-size: 2.4rem;
+            }
+
+            .logo-img {
+                width: 160px;
+                height: 160px;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
             body {
                 padding: 15px;
             }
@@ -626,113 +651,26 @@
             }
 
             .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-
-            .logo-img {
-                width: 150px;
-                height: 150px;
-            }
-
-            .logo-text {
-                font-size: 2.4rem;
-            }
-
-            .category-card {
-                padding: 25px 15px;
-            }
-
-            .category-icon {
-                font-size: 2.5rem;
-                width: 70px;
-                height: 70px;
-            }
-        }
-
-        /* Móviles grandes: 2 columnas */
-        @media (max-width: 768px) {
-            .categories-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .logo-img {
-                width: 130px;
-                height: 130px;
             }
 
             .logo-text {
                 font-size: 2.2rem;
             }
 
-            .category-card {
-                padding: 20px 10px;
-            }
-
-            .category-icon {
-                font-size: 2.2rem;
-                width: 60px;
-                height: 60px;
-            }
-
-            .digital-clock {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Móviles pequeños: 1 columna pero sin perder estilo */
-        @media (max-width: 480px) {
-            .categories-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
             .logo-img {
-                width: 120px;
-                height: 120px;
-            }
-
-            .logo-text {
-                font-size: 2rem;
+                width: 140px;
+                height: 140px;
             }
 
             .tagline {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
+        }
 
-            .category-card {
-                padding: 25px;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-
-            .category-icon {
-                font-size: 2.5rem;
-                width: 75px;
-                height: 75px;
-            }
-
-            .digital-clock {
-                font-size: 1.4rem;
-            }
-
-            .top-widgets {
-                padding: 5px;
-            }
-
-            .location-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            body {
-                padding: 10px;
-            }
-
-            .container {
-                padding: 10px;
-                padding-top: 110px;
+        @media (max-width: 576px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -809,6 +747,7 @@
         </header>
 
         <div class="categories-grid">
+            <!-- ✅ ENLACE CORREGIDO AQUÍ -->
             <a href="https://aa-app-d.github.io/AA-Bodegon/gestion_principal/principal.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-cube"></i></div>
                 <h3 class="category-title">Gestión Principal</h3>
