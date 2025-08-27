@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AA-Bodegón - Módulos de Gestión</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== ESTILOS COMPLETOS COPIADOS DEL ORIGINAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
+                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 60px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px;
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 15px;
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #FFD700;
+            opacity: 0.9;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .category-card {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .category-desc {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            color: #FFD700;
+        }
+
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
+            <h1 class="logo-text">AA-BODEGÓN</h1>
+            <p class="tagline">Módulos de Gestión Principal</p>
+        </header>
+
+        <div class="categories-grid">
+            <!-- Módulo 1: Productos -->
+            <a href="productos.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-box-open"></i></div>
+                <h3 class="category-title">Productos</h3>
+                <p class="category-desc">Gestión completa de productos, precios, categorías y variantes.</p>
+            </a>
+
+            <!-- Módulo 2: Inventario -->
+            <a href="inventario.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-warehouse"></i></div>
+                <h3 class="category-title">Inventario</h3>
+                <p class="category-desc">Control de stock, entradas, salidas y alertas en tiempo real.</p>
+            </a>
+
+            <!-- Módulo 3: Facturación -->
+            <a href="facturacion.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <h3 class="category-title">Facturación</h3>
+                <p class="category-desc">Emisión de facturas, notas de crédito, débito y control fiscal.</p>
+            </a>
+
+            <!-- Módulo 4: Caja -->
+            <a href="caja.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-cash-register"></i></div>
+                <h3 class="category-title">Caja</h3>
+                <p class="category-desc">Apertura, cierre, arqueos y control de efectivo diario.</p>
+            </a>
+
+            <!-- Módulo 5: Licorería -->
+            <a href="licoreria.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-wine-bottle"></i></div>
+                <h3 class="category-title">Licorería</h3>
+                <p class="category-desc">Gestión especializada de licores, marcas y rotación de inventario.</p>
+            </a>
+        </div>
+
+        <footer>
+            <p>AA-Bodegón telf:(424)1345912 &copy; 2025 - Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
