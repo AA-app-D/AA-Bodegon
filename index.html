@@ -10,103 +10,145 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
             color: #fff;
             min-height: 100vh;
-            padding: 20px;
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
         
+        /* Header con efecto vidrio */
         header {
             text-align: center;
-            padding: 30px 0;
-            margin-bottom: 30px;
+            padding: 30px;
+            margin: 20px auto;
+            width: 90%;
             background: rgba(0, 0, 0, 0.6);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
         
         .logo {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-bottom: 20px;
         }
         
         .logo-icon {
             font-size: 48px;
             color: #FFD700;
-            background: rgba(0, 0, 0, 0.7);
-            width: 80px;
-            height: 80px;
+            background: rgba(0, 0, 0, 0.8);
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 3px solid #FFD700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
         }
         
         .logo-text {
-            font-size: 42px;
-            font-weight: bold;
-            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
             color: #FFFFFF;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .tagline {
-            font-size: 20px;
+            font-size: 1.2rem;
             margin-top: 10px;
             color: #FFD700;
             font-style: italic;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
-        .modules-grid {
+        /* Grid de módulos con efecto vidrio */
+        .modules-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
-            margin-top: 40px;
+            margin: 40px 20px;
         }
         
         .category {
             background: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease;
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, #ffd700, #ffa500, #ffd700, #ffa500);
+            border-radius: 22px;
+            animation: borderAnimation 3s linear infinite;
+            background-size: 400%;
+        }
+        
+        .category::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            border-radius: 20px;
+            z-index: -1;
+        }
+        
+        @keyframes borderAnimation {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
         }
         
         .category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
         }
         
         .category-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #FFD700;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.5);
             color: #FFD700;
-            font-size: 22px;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
         .module-list {
@@ -115,18 +157,20 @@
         
         .module-item {
             margin-bottom: 12px;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .module-item:hover {
-            background: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 215, 0, 0.15);
             transform: translateX(5px);
+            border-color: rgba(255, 215, 0, 0.3);
         }
         
         .module-item a {
@@ -135,49 +179,104 @@
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex-grow: 1;
+            font-size: 1.1rem;
         }
         
         .module-item i {
             color: #FFD700;
-            font-size: 18px;
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
         }
         
         .module-item:hover a {
             color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
         }
         
         .badge {
-            background: #FFD700;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
             color: #000;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 0.8rem;
             font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
+        /* Footer con efecto vidrio */
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
+            margin: 50px auto 20px;
+            padding: 25px;
+            width: 90%;
             background: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            font-size: 14px;
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
         
+        /* Efectos de partículas en el fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .modules-grid {
+            .modules-container {
                 grid-template-columns: 1fr;
+                margin: 20px 10px;
             }
             
             .logo-text {
-                font-size: 32px;
+                font-size: 2.5rem;
+            }
+            
+            .logo-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 36px;
+            }
+            
+            .category {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Efecto de partículas -->
+    <div class="particles" id="particles"></div>
+
     <div class="container">
         <header>
             <div class="logo">
@@ -189,7 +288,7 @@
             <p class="tagline">Sistema de Gestión Integral - Todo en Uno</p>
         </header>
 
-        <div class="modules-grid">
+        <div class="modules-container">
             <!-- Galería Multimedia -->
             <div class="category">
                 <h2 class="category-title"><i class="fas fa-images"></i> Galería Multimedia</h2>
@@ -348,13 +447,36 @@
 
         <footer>
             <p>AA-Bodegón &copy; 2023 - Sistema de Gestión Integral. Todos los derechos reservados.</p>
-            <p>Desarrollado con <i class="fas fa-heart" style="color: #ff0000;"></i> para tu negocio</p>
+            <p>Desarrollado con <i class="fas fa-heart" style="color: #ff3366;"></i> para tu negocio</p>
         </footer>
     </div>
 
     <script>
-        // Efecto de animación para los módulos al cargar la página
+        // Crear efecto de partículas
         document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamaño y posición aleatorios
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Animación de aparición para los módulos
             const modules = document.querySelectorAll('.module-item');
             modules.forEach((module, index) => {
                 setTimeout(() => {
