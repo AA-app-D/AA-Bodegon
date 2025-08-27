@@ -32,7 +32,7 @@
         header {
             text-align: center;
             padding: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -78,101 +78,152 @@
             margin-top: 5px;
         }
         
-        /* Categorías */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        
-        .category-card {
+        /* Sistema de Pestañas */
+        .tabs-container {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .tabs-header {
+            display: flex;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 0 20px;
+        }
+        
+        .tab-btn {
+            padding: 18px 25px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tab-btn:hover {
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .tab-btn.active {
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.15);
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+        }
+        
+        .tab-icon {
+            font-size: 1.2rem;
+            width: 25px;
+        }
+        
+        .tab-content {
+            display: none;
             padding: 30px;
-            text-align: center;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Grid de módulos dentro de las pestañas */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .module-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
             text-decoration: none;
             color: #fff;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 15px;
+            gap: 12px;
             position: relative;
             overflow: hidden;
         }
         
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            z-index: -1;
-            background: linear-gradient(45deg, #ffd700, #ffa500, #ffd700, #ffa500);
-            border-radius: 22px;
-            animation: borderAnimation 3s linear infinite;
-            background-size: 400%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
         }
         
-        .category-card:hover::before {
-            opacity: 1;
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
-        .category-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            background: rgba(0, 0, 0, 0.8);
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-        
-        @keyframes borderAnimation {
-            0% { background-position: 0 0; }
-            50% { background-position: 400% 0; }
-            100% { background-position: 0 0; }
-        }
-        
-        .category-icon {
-            font-size: 3rem;
+        .module-icon {
+            font-size: 2rem;
             color: #FFD700;
-            margin-bottom: 15px;
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 50%;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
         
-        .category-title {
-            font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 10px;
+        .module-title {
+            font-weight: 600;
+            font-size: 1.1rem;
             color: #FFD700;
         }
         
-        .category-desc {
-            font-size: 0.95rem;
+        .module-desc {
+            font-size: 0.9rem;
             opacity: 0.9;
             line-height: 1.5;
+            margin-top: 5px;
         }
         
-        .module-count {
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
             background: linear-gradient(45deg, #FFD700, #FFA500);
             color: #000;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
             font-weight: bold;
-            margin-top: 10px;
         }
         
         /* Footer */
@@ -188,28 +239,42 @@
         }
         
         /* Responsive */
+        @media (max-width: 968px) {
+            .tabs-header {
+                flex-direction: column;
+                padding: 0;
+            }
+            
+            .tab-btn {
+                padding: 15px 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .tab-btn.active::after {
+                width: 4px;
+                height: 100%;
+                bottom: 0;
+                left: 0;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .categories-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
+            .modules-grid {
+                grid-template-columns: 1fr;
             }
             
             .logo-text {
                 font-size: 2.2rem;
             }
-            
-            .category-card {
-                padding: 25px 20px;
-            }
         }
         
         @media (max-width: 480px) {
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .container {
                 padding: 10px;
+            }
+            
+            .tab-content {
+                padding: 20px;
             }
         }
     </style>
@@ -226,78 +291,220 @@
             </div>
         </header>
 
-        <div class="categories-grid">
-            <!-- Gestión Principal -->
-            <a href="01_gestion_principal/productos.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-cube"></i></div>
-                <h3 class="category-title">Gestión Principal</h3>
-                <p class="category-desc">Módulos core del negocio: productos, inventario, facturación y más</p>
-                <span class="module-count">5 módulos</span>
-            </a>
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="openTab('tab-gestion')">
+                    <i class="fas fa-cube tab-icon"></i>
+                    Gestión
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-entidades')">
+                    <i class="fas fa-address-book tab-icon"></i>
+                    Entidades
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-operaciones')">
+                    <i class="fas fa-tasks tab-icon"></i>
+                    Operaciones
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-finanzas')">
+                    <i class="fas fa-chart-line tab-icon"></i>
+                    Finanzas
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-analytics')">
+                    <i class="fas fa-analytics tab-icon"></i>
+                    Analytics
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-ecommerce')">
+                    <i class="fas fa-store tab-icon"></i>
+                    E-commerce
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-sistema')">
+                    <i class="fas fa-cogs tab-icon"></i>
+                    Sistema
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-marketing')">
+                    <i class="fas fa-bullhorn tab-icon"></i>
+                    Marketing
+                </button>
+                <button class="tab-btn" onclick="openTab('tab-galeria')">
+                    <i class="fas fa-images tab-icon"></i>
+                    Galería
+                </button>
+            </div>
 
-            <!-- Registros Maestros -->
-            <a href="02_gestion_entidades/clientes.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-address-book"></i></div>
-                <h3 class="category-title">Registros Maestros</h3>
-                <p class="category-desc">Gestión de clientes, proveedores, usuarios y sucursales</p>
-                <span class="module-count">4 módulos</span>
-            </a>
+            <!-- Pestaña Gestión Principal -->
+            <div id="tab-gestion" class="tab-content active">
+                <div class="modules-grid">
+                    <a href="01_gestion_principal/productos.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-boxes"></i></div>
+                            <h3 class="module-title">Productos</h3>
+                        </div>
+                        <p class="module-desc">Gestión completa de productos, precios y categorías</p>
+                        <span class="badge">CORE</span>
+                    </a>
+                    
+                    <a href="01_gestion_principal/inventario.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-warehouse"></i></div>
+                            <h3 class="module-title">Inventario</h3>
+                        </div>
+                        <p class="module-desc">Control de stock, existencias y alertas</p>
+                        <span class="badge">CORE</span>
+                    </a>
+                    
+                    <a href="01_gestion_principal/facturacion.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                            <h3 class="module-title">Facturación</h3>
+                        </div>
+                        <p class="module-desc">Sistema completo de facturación electrónica</p>
+                    </a>
+                    
+                    <a href="01_gestion_principal/caja.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-cash-register"></i></div>
+                            <h3 class="module-title">Caja</h3>
+                        </div>
+                        <p class="module-desc">Control de ingresos, egresos y arqueos</p>
+                    </a>
+                    
+                    <a href="01_gestion_principal/licoreria.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-glass-martini-alt"></i></div>
+                            <h3 class="module-title">Licorería</h3>
+                        </div>
+                        <p class="module-desc">Gestión especializada de productos licoreros</p>
+                    </a>
+                </div>
+            </div>
 
-            <!-- Operaciones -->
-            <a href="03_operaciones/compras.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-tasks"></i></div>
-                <h3 class="category-title">Operaciones</h3>
-                <p class="category-desc">Procesos y logística: compras, delivery, mesas y rutas</p>
-                <span class="module-count">4 módulos</span>
-            </a>
+            <!-- Pestaña Entidades -->
+            <div id="tab-entidades" class="tab-content">
+                <div class="modules-grid">
+                    <a href="02_gestion_entidades/clientes.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-users"></i></div>
+                            <h3 class="module-title">Clientes</h3>
+                        </div>
+                        <p class="module-desc">Base de datos y gestión de clientes</p>
+                    </a>
+                    
+                    <a href="02_gestion_entidades/proveedores.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-truck-loading"></i></div>
+                            <h3 class="module-title">Proveedores</h3>
+                        </div>
+                        <p class="module-desc">Gestión de proveedores y contactos</p>
+                    </a>
+                    
+                    <a href="02_gestion_entidades/usuarios.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-user-cog"></i></div>
+                            <h3 class="module-title">Usuarios</h3>
+                        </div>
+                        <p class="module-desc">Control de acceso y permisos del sistema</p>
+                    </a>
+                    
+                    <a href="02_gestion_entidades/sucursales.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-code-branch"></i></div>
+                            <h3 class="module-title">Sucursales</h3>
+                        </div>
+                        <p class="module-desc">Gestión multi-sucursal y transferencias</p>
+                    </a>
+                </div>
+            </div>
 
-            <!-- Finanzas -->
-            <a href="04_finanzas/contabilidad.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-chart-line"></i></div>
-                <h3 class="category-title">Finanzas</h3>
-                <p class="category-desc">Administración financiera y reportes económicos</p>
-                <span class="module-count">2 módulos</span>
-            </a>
+            <!-- Pestaña Operaciones -->
+            <div id="tab-operaciones" class="tab-content">
+                <div class="modules-grid">
+                    <a href="03_operaciones/compras.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-shopping-cart"></i></div>
+                            <h3 class="module-title">Compras</h3>
+                        </div>
+                        <p class="module-desc">Órdenes de compra y gestión de proveedores</p>
+                    </a>
+                    
+                    <a href="03_operaciones/delivery.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-motorcycle"></i></div>
+                            <h3 class="module-title">Delivery</h3>
+                        </div>
+                        <p class="module-desc">Gestión de entregas a domicilio</p>
+                    </a>
+                    
+                    <a href="03_operaciones/mesas.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-chair"></i></div>
+                            <h3 class="module-title">Mesas</h3>
+                        </div>
+                        <p class="module-desc">Control de consumo en el local</p>
+                    </a>
+                    
+                    <a href="03_operaciones/rutas.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-route"></i></div>
+                            <h3 class="module-title">Rutas</h3>
+                        </div>
+                        <p class="module-desc">Optimización de rutas de entrega</p>
+                    </a>
+                </div>
+            </div>
 
-            <!-- Analytics -->
-            <a href="05_analiticas/estadisticas.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-analytics"></i></div>
-                <h3 class="category-title">Business Intelligence</h3>
-                <p class="category-desc">Estadísticas, dashboards y reportes analíticos</p>
-                <span class="module-count">3 módulos</span>
-            </a>
+            <!-- Las demás pestañas seguirían la misma estructura -->
+            <!-- Pestaña Finanzas -->
+            <div id="tab-finanzas" class="tab-content">
+                <div class="modules-grid">
+                    <a href="04_finanzas/contabilidad.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-calculator"></i></div>
+                            <h3 class="module-title">Contabilidad</h3>
+                        </div>
+                        <p class="module-desc">Gestión financiera completa</p>
+                    </a>
+                    
+                    <a href="04_finanzas/reportes-financieros.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-file-invoice"></i></div>
+                            <h3 class="module-title">Reportes Financieros</h3>
+                        </div>
+                        <p class="module-desc">Estados financieros y reportes</p>
+                    </a>
+                </div>
+            </div>
 
-            <!-- E-commerce -->
-            <a href="06_ecommerce/tienda-online.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-store"></i></div>
-                <h3 class="category-title">E-commerce</h3>
-                <p class="category-desc">Ventas online y gestión de pedidos web</p>
-                <span class="module-count">2 módulos</span>
-            </a>
+            <!-- Pestaña Analytics -->
+            <div id="tab-analytics" class="tab-content">
+                <div class="modules-grid">
+                    <a href="05_analiticas/estadisticas.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-chart-bar"></i></div>
+                            <h3 class="module-title">Estadísticas</h3>
+                        </div>
+                        <p class="module-desc">Métricas y análisis de datos</p>
+                    </a>
+                    
+                    <a href="05_analiticas/dashboard-central.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <h3 class="module-title">Dashboard Central</h3>
+                        </div>
+                        <p class="module-desc">Vista general del negocio</p>
+                    </a>
+                    
+                    <a href="05_analiticas/reportes-analiticos.html" class="module-card">
+                        <div class="module-header">
+                            <div class="module-icon"><i class="fas fa-chart-pie"></i></div>
+                            <h3 class="module-title">Reportes Analíticos</h3>
+                        </div>
+                        <p class="module-desc">Análisis avanzado de datos</p>
+                    </a>
+                </div>
+            </div>
 
-            <!-- Sistema -->
-            <a href="07_sistema/configuracion.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-cogs"></i></div>
-                <h3 class="category-title">Sistema</h3>
-                <p class="category-desc">Configuración, backup y seguridad del sistema</p>
-                <span class="module-count">3 módulos</span>
-            </a>
+            <!-- Las demás pestañas (E-commerce, Sistema, Marketing, Galería) seguirían el mismo patrón -->
 
-            <!-- Marketing -->
-            <a href="08_marketing/promociones.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
-                <h3 class="category-title">Marketing</h3>
-                <p class="category-desc">Promociones, campañas y programa de fidelización</p>
-                <span class="module-count">3 módulos</span>
-            </a>
-
-            <!-- Galería Multimedia -->
-            <a href="00_galeria/galeria.html" class="category-card">
-                <div class="category-icon"><i class="fas fa-images"></i></div>
-                <h3 class="category-title">Galería Multimedia</h3>
-                <p class="category-desc">Fotos, videos y material promocional</p>
-                <span class="module-count">4 módulos</span>
-            </a>
         </div>
 
         <footer>
@@ -307,14 +514,30 @@
     </div>
 
     <script>
-        // Efecto de carga progresiva
+        function openTab(tabId) {
+            // Ocultar todos los contenidos de pestañas
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Desactivar todos los botones
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Activar la pestaña seleccionada
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activar el botón correspondiente
+            event.currentTarget.classList.add('active');
+        }
+
+        // Efecto de carga inicial
         document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.category-card');
+            const cards = document.querySelectorAll('.module-card');
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.style.opacity = 1;
                     card.style.transform = 'translateY(0)';
-                }, 100 + (index * 100));
+                }, 100 + (index * 50));
             });
         });
     </script>
