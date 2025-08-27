@@ -13,10 +13,10 @@
             box-sizing: border-box;
             font-family: 'Poppins', 'Segoe UI', sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)), 
-                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)),
+                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
             background-size: cover;
             color: #333;
             min-height: 100vh;
@@ -24,8 +24,35 @@
             overflow-x: hidden;
             position: relative;
         }
-        
-        /* ===== NUEVOS WIDGETS FIJOS ===== */
+
+        /* ===== ANIMACIÓN DE COMIDA EN EL CUADRO AA-BODEGÓN ===== */
+        .food-animation-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .food-item {
+            position: absolute;
+            top: -50px;
+            font-size: 24px;
+            animation: fallFood 4s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes fallFood {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* ===== RESTO DE ESTILOS SIN CAMBIOS ===== */
         .top-widgets {
             position: fixed;
             top: 0;
@@ -38,7 +65,7 @@
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
         }
-        
+
         .location-btn {
             background: linear-gradient(45deg, #FFD700, #FFA500);
             color: #000;
@@ -55,12 +82,12 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
         }
-        
+
         .location-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
         }
-        
+
         .clock-container {
             position: fixed;
             top: 60px;
@@ -76,21 +103,20 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .digital-clock {
             font-size: 1.8rem;
             font-weight: bold;
             margin-bottom: 5px;
             letter-spacing: 2px;
         }
-        
+
         .digital-date {
             font-size: 0.9rem;
             opacity: 0.9;
             letter-spacing: 1px;
         }
-        
-        /* ===== ESTILOS EXISTENTES COMPLETOS ===== */
+
         .rain-container {
             position: fixed;
             top: 0;
@@ -101,20 +127,20 @@
             z-index: -2;
             overflow: hidden;
         }
-        
+
         .rain-drop {
             position: absolute;
             width: 2px;
             background: linear-gradient(to bottom, rgba(255, 215, 0, 0.5), rgba(255, 215, 0, 0));
             animation: fall linear infinite;
         }
-        
+
         @keyframes fall {
             to {
                 transform: translateY(100vh);
             }
         }
-        
+
         .glass-effect {
             position: fixed;
             top: 0;
@@ -125,7 +151,7 @@
             z-index: -1;
             overflow: hidden;
         }
-        
+
         .glass-panel {
             position: absolute;
             background: rgba(255, 255, 255, 0.15);
@@ -137,7 +163,7 @@
             transform-style: preserve-3d;
             transform: perspective(1000px) rotateX(40deg) rotateY(20deg);
         }
-        
+
         .glass-panel:nth-child(1) {
             width: 300px;
             height: 300px;
@@ -147,7 +173,7 @@
             background: rgba(255, 215, 0, 0.1);
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
-        
+
         .glass-panel:nth-child(2) {
             width: 250px;
             height: 250px;
@@ -157,7 +183,7 @@
             background: rgba(255, 165, 0, 0.1);
             border: 1px solid rgba(255, 165, 0, 0.2);
         }
-        
+
         .glass-panel:nth-child(3) {
             width: 350px;
             height: 350px;
@@ -167,7 +193,7 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         .glass-panel:nth-child(4) {
             width: 200px;
             height: 200px;
@@ -177,7 +203,7 @@
             background: rgba(255, 215, 0, 0.1);
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
-        
+
         @keyframes float {
             0%, 100% {
                 transform: perspective(1000px) rotateX(40deg) rotateY(20deg) translate(0, 0);
@@ -192,7 +218,7 @@
                 transform: perspective(1000px) rotateX(42deg) rotateY(22deg) translate(5px, -10px);
             }
         }
-        
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -201,7 +227,7 @@
             z-index: 1;
             padding-top: 140px;
         }
-        
+
         header {
             text-align: center;
             padding: 30px;
@@ -214,7 +240,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         header::before {
             content: '';
             position: absolute;
@@ -225,7 +251,7 @@
             background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), transparent, rgba(255, 165, 0, 0.2));
             z-index: -1;
         }
-        
+
         .logo {
             display: flex;
             flex-direction: column;
@@ -233,9 +259,9 @@
             gap: 15px;
             margin-bottom: 15px;
             position: relative;
-            overflow: hidden;
+            z-index: 2;
         }
-        
+
         .logo-img {
             width: 180px;
             height: 180px;
@@ -244,14 +270,12 @@
             border: 4px solid #FFD700;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
             transition: transform 0.5s ease;
-            position: relative;
-            z-index: 2;
         }
-        
+
         .logo-img:hover {
             transform: scale(1.05) rotate(5deg);
         }
-        
+
         .logo-text {
             font-size: 2.8rem;
             font-weight: 800;
@@ -261,9 +285,8 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
             margin-top: 15px;
             position: relative;
-            z-index: 2;
         }
-        
+
         .logo-text::after {
             content: '';
             position: absolute;
@@ -274,7 +297,7 @@
             height: 3px;
             background: linear-gradient(90deg, transparent, #FFD700, transparent);
         }
-        
+
         .tagline {
             font-size: 1.4rem;
             color: #FFD700;
@@ -282,49 +305,15 @@
             margin-top: 5px;
             font-weight: 500;
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
-            position: relative;
-            z-index: 2;
         }
-        
-        /* ===== ANIMACIÓN DE PARTÍCULAS PARA EL LOGO ===== */
-        .particles-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: 20px;
-        }
-        
-        .particle {
-            position: absolute;
-            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.8), rgba(255, 215, 0, 0.4));
-            border-radius: 50%;
-            opacity: 0;
-            animation: particle-fall linear infinite;
-        }
-        
-        @keyframes particle-fall {
-            0% {
-                transform: translateY(-10px) rotate(0deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(350px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
+
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             margin-bottom: 40px;
         }
-        
+
         .category-card {
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
@@ -343,7 +332,7 @@
             overflow: hidden;
             z-index: 1;
         }
-        
+
         .category-card::before {
             content: '';
             position: absolute;
@@ -356,7 +345,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .category-card::after {
             content: '';
             position: absolute;
@@ -372,28 +361,28 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .category-card:hover::before {
             opacity: 1;
         }
-        
+
         .category-card:hover::after {
             opacity: 1;
         }
-        
+
         .category-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
             background: rgba(0, 0, 0, 0.9);
             border-color: rgba(255, 215, 0, 0.6);
         }
-        
+
         @keyframes borderAnimation {
             0% { background-position: 0 0; }
             50% { background-position: 400% 0; }
             100% { background-position: 0 0; }
         }
-        
+
         .category-icon {
             font-size: 3rem;
             color: #FFD700;
@@ -409,28 +398,28 @@
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
             transition: all 0.3s ease;
         }
-        
+
         .category-card:hover .category-icon {
             transform: scale(1.1) rotate(5deg);
             color: #FFD700;
             background: rgba(0, 0, 0, 1);
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
         }
-        
+
         .category-title {
             font-weight: 700;
             font-size: 1.4rem;
             margin-bottom: 10px;
             color: #FFD700;
         }
-        
+
         .category-desc {
             font-size: 0.95rem;
             opacity: 0.9;
             line-height: 1.5;
             color: #ddd;
         }
-        
+
         .module-count {
             background: linear-gradient(45deg, #FFD700, #FFA500);
             color: #000;
@@ -440,7 +429,7 @@
             font-weight: bold;
             margin-top: 10px;
         }
-        
+
         footer {
             text-align: center;
             margin-top: 50px;
@@ -453,7 +442,7 @@
             position: relative;
             color: #FFFFFF;
         }
-        
+
         footer::before {
             content: '';
             position: absolute;
@@ -465,11 +454,11 @@
             z-index: -1;
             border-radius: 15px;
         }
-        
+
         footer p {
             color: #FFD700;
         }
-        
+
         .welcome-notification {
             position: fixed;
             top: 20px;
@@ -486,11 +475,11 @@
             max-width: 300px;
             color: #fff;
         }
-        
+
         .welcome-notification.show {
             transform: translateX(0);
         }
-        
+
         .theme-toggle {
             position: fixed;
             bottom: 20px;
@@ -510,12 +499,12 @@
             transition: all 0.3s ease;
             color: #FFD700;
         }
-        
+
         .theme-toggle:hover {
             transform: rotate(30deg);
             background: rgba(0, 0, 0, 0.9);
         }
-        
+
         .theme-panel {
             position: fixed;
             bottom: 80px;
@@ -532,25 +521,25 @@
             transition: all 0.3s ease;
             width: 250px;
         }
-        
+
         .theme-panel.active {
             transform: translateY(0);
             opacity: 1;
         }
-        
+
         .theme-panel h3 {
             color: #FFD700;
             margin-bottom: 15px;
             text-align: center;
             font-size: 1.2rem;
         }
-        
+
         .theme-options {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
-        
+
         .theme-option {
             height: 40px;
             border-radius: 8px;
@@ -563,35 +552,35 @@
             font-size: 0.9rem;
             transition: all 0.2s ease;
         }
-        
+
         .theme-option:hover {
             transform: scale(1.05);
         }
-        
+
         .theme-classic {
             background: linear-gradient(45deg, #FFD700, #FFA500);
         }
-        
+
         .theme-dark {
             background: linear-gradient(45deg, #2c3e50, #1a1a1a);
         }
-        
+
         .theme-ocean {
             background: linear-gradient(45deg, #3498db, #2c3e50);
         }
-        
+
         .theme-nature {
             background: linear-gradient(45deg, #27ae60, #2ecc71);
         }
-        
+
         .theme-royal {
             background: linear-gradient(45deg, #8e44ad, #3498db);
         }
-        
+
         .theme-fire {
             background: linear-gradient(45deg, #e74c3c, #f39c12);
         }
-        
+
         .loader {
             position: fixed;
             top: 0;
@@ -605,12 +594,12 @@
             z-index: 9999;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        
+
         .loader.hidden {
             opacity: 0;
             visibility: hidden;
         }
-        
+
         .loader-spinner {
             width: 60px;
             height: 60px;
@@ -619,248 +608,98 @@
             border-top-color: #FFD700;
             animation: spin 1s ease-in-out infinite;
         }
-        
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
+
         /* ===== RESPONSIVE COMPLETO ===== */
         @media (max-width: 1200px) {
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-        
+
         @media (max-width: 992px) {
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 20px;
             }
-            
+
             .logo-text {
                 font-size: 2.4rem;
             }
-            
+
             .logo-img {
                 width: 160px;
                 height: 160px;
             }
-            
+
             .tagline {
                 font-size: 1.3rem;
             }
         }
-        
+
         @media (max-width: 768px) {
             body {
                 padding: 15px;
             }
-            
+
             .container {
                 padding: 15px;
                 padding-top: 120px;
             }
-            
-            .top-widgets {
-                padding: 5px;
-            }
-            
-            .location-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-            
-            .clock-container {
-                top: 50px;
-                padding: 10px 20px;
-            }
-            
-            .digital-clock {
-                font-size: 1.4rem;
-            }
-            
-            .digital-date {
-                font-size: 0.8rem;
-            }
-            
+
             .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 15px;
-                margin-bottom: 30px;
-                overflow-x: auto;
-                scrollbar-width: thin;
-                scrollbar-color: #FFD700 rgba(0, 0, 0, 0.2);
-                -webkit-overflow-scrolling: touch;
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .categories-grid::-webkit-scrollbar {
-                height: 8px;
-            }
-            
-            .categories-grid::-webkit-scrollbar-track {
-                background: rgba(0, 0, 0, 0.2);
-                border-radius: 10px;
-            }
-            
-            .categories-grid::-webkit-scrollbar-thumb {
-                background: #FFD700;
-                border-radius: 10px;
-            }
-            
-            .category-card {
-                min-width: auto;
-                padding: 20px;
-            }
-            
+
             .logo-text {
                 font-size: 2.2rem;
             }
-            
+
             .logo-img {
                 width: 140px;
                 height: 140px;
             }
-            
+
             .tagline {
                 font-size: 1.2rem;
             }
-            
-            .welcome-notification {
-                top: 10px;
-                right: 10px;
-                left: 10px;
-                max-width: none;
-            }
-            
-            .glass-panel {
-                display: none;
-            }
-            
-            header {
-                padding: 20px;
-                margin-bottom: 30px;
-            }
-            
-            .theme-panel {
-                width: 90%;
-                right: 5%;
-                left: 5%;
-                bottom: 70px;
-            }
         }
-        
+
         @media (max-width: 576px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .logo-text {
-                font-size: 1.8rem;
-            }
-            
-            .logo-img {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .tagline {
-                font-size: 1.1rem;
-            }
-            
             .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-            
-            .category-card {
-                padding: 15px;
-                min-width: auto;
-            }
-            
-            .category-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 2rem;
-            }
-            
-            .category-title {
-                font-size: 1.2rem;
-            }
-            
-            .category-desc {
-                font-size: 0.85rem;
-            }
-            
-            footer {
-                padding: 20px 15px;
-                margin-top: 40px;
-            }
-            
-            .theme-toggle {
-                width: 45px;
-                height: 45px;
-                bottom: 15px;
-                right: 15px;
-            }
-            
-            .theme-panel {
-                width: 90%;
-                right: 5%;
-                left: 5%;
-                bottom: 65px;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .logo-text {
-                font-size: 1.6rem;
-            }
-            
-            .tagline {
-                font-size: 1rem;
-            }
-            
-            .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-            
-            .category-card {
-                padding: 12px;
-                min-width: auto;
-            }
-            
-            .theme-options {
                 grid-template-columns: 1fr;
             }
         }
-        
+
         body[data-theme="dark"] {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
-        
+
         body[data-theme="ocean"] {
-            background: linear-gradient(rgba(52, 152, 219, 0.3), rgba(44, 62, 80, 0.8)), 
+            background: linear-gradient(rgba(52, 152, 219, 0.3), rgba(44, 62, 80, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
-        
+
         body[data-theme="nature"] {
-            background: linear-gradient(rgba(39, 174, 96, 0.3), rgba(46, 204, 113, 0.8)), 
+            background: linear-gradient(rgba(39, 174, 96, 0.3), rgba(46, 204, 113, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
-        
+
         body[data-theme="royal"] {
-            background: linear-gradient(rgba(142, 68, 173, 0.3), rgba(52, 152, 219, 0.8)), 
+            background: linear-gradient(rgba(142, 68, 173, 0.3), rgba(52, 152, 219, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
-        
+
         body[data-theme="fire"] {
-            background: linear-gradient(rgba(231, 76, 60, 0.3), rgba(243, 156, 18, 0.8)), 
+            background: linear-gradient(rgba(231, 76, 60, 0.3), rgba(243, 156, 18, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
@@ -870,19 +709,17 @@
     <!-- ===== WIDGETS FIJOS SUPERIORES ===== -->
     <div class="top-widgets">
         <a href="https://maps.google.com/?q=AA-Bodegón" target="_blank" class="location-btn">
-            <i class="fas fa-map-marker-alt"></i>
-            Ubicación del Bodegón
+            <i class="fas fa-map-marker-alt"></i> Ubicación del Bodegón
         </a>
     </div>
-    
+
     <div class="clock-container">
         <div class="digital-clock" id="digital-clock">00:00:00</div>
         <div class="digital-date" id="digital-date">Cargando...</div>
     </div>
 
-    <!-- ===== CONTENIDO EXISTENTE ===== -->
     <div class="rain-container" id="rainContainer"></div>
-    
+
     <div class="glass-effect">
         <div class="glass-panel"></div>
         <div class="glass-panel"></div>
@@ -901,9 +738,8 @@
     <div class="container">
         <header>
             <div class="logo">
-                <!-- Contenedor de partículas para el logo -->
-                <div class="particles-container" id="logo-particles"></div>
-                
+                <!-- Animación de comida solo aquí -->
+                <div class="food-animation-container" id="foodContainer"></div>
                 <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
                 <h1 class="logo-text">AA-BODEGÓN</h1>
                 <p class="tagline">Donde cada detalle cuenta</p>
@@ -911,15 +747,14 @@
         </header>
 
         <div class="categories-grid">
-            <!-- Gestión Principal -->
-            <a href="01_gestion_principal/productos.html" class="category-card">
+            <!-- ✅ ENLACE CORREGIDO AQUÍ -->
+            <a href="https://aa-app-d.github.io/AA-Bodegon/gestion_principal/principal.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-cube"></i></div>
                 <h3 class="category-title">Gestión Principal</h3>
                 <p class="category-desc">Módulos core del negocio: productos, inventario, facturación y más</p>
                 <span class="module-count">5 módulos</span>
             </a>
 
-            <!-- Registros Maestros -->
             <a href="02_gestion_entidades/clientes.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-address-book"></i></div>
                 <h3 class="category-title">Registros Maestros</h3>
@@ -927,7 +762,6 @@
                 <span class="module-count">4 módulos</span>
             </a>
 
-            <!-- Operaciones -->
             <a href="03_operaciones/compras.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-tasks"></i></div>
                 <h3 class="category-title">Operaciones</h3>
@@ -935,7 +769,6 @@
                 <span class="module-count">4 módulos</span>
             </a>
 
-            <!-- Finanzas -->
             <a href="04_finanzas/contabilidad.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-chart-line"></i></div>
                 <h3 class="category-title">Finanzas</h3>
@@ -943,15 +776,13 @@
                 <span class="module-count">2 módulos</span>
             </a>
 
-            <!-- Analytics -->
             <a href="05_analiticas/estadisticas.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-analytics"></i></div>
                 <h3 class="category-title">Business Intelligence</h3>
-                <p class="category-desc">Estadísticas, dashboards và reportes analíticos</p>
+                <p class="category-desc">Estadísticas, dashboards y reportes analíticos</p>
                 <span class="module-count">3 módulos</span>
             </a>
 
-            <!-- E-commerce -->
             <a href="06_ecommerce/tienda-online.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-store"></i></div>
                 <h3 class="category-title">E-commerce</h3>
@@ -959,7 +790,6 @@
                 <span class="module-count">2 módulos</span>
             </a>
 
-            <!-- Sistema -->
             <a href="07_sistema/configuracion.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-cogs"></i></div>
                 <h3 class="category-title">Sistema</h3>
@@ -967,7 +797,6 @@
                 <span class="module-count">3 módulos</span>
             </a>
 
-            <!-- Marketing -->
             <a href="08_marketing/promociones.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
                 <h3 class="category-title">Marketing</h3>
@@ -975,7 +804,6 @@
                 <span class="module-count">3 módulos</span>
             </a>
 
-            <!-- Galería Multimedia -->
             <a href="00_galeria/galeria.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-images"></i></div>
                 <h3 class="category-title">Galería Multimedia</h3>
@@ -990,11 +818,10 @@
         </footer>
     </div>
 
-    <!-- ===== RESTO DEL CONTENIDO EXISTENTE ===== -->
     <div class="theme-toggle">
         <i class="fas fa-palette"></i>
     </div>
-    
+
     <div class="theme-panel">
         <h3>Elige un Tema</h3>
         <div class="theme-options">
@@ -1008,89 +835,76 @@
     </div>
 
     <script>
-        // ===== RELOJ VENEZOLA =====
+        // ===== RELOJ VENEZOLANO =====
         function updateClock() {
             const now = new Date();
             const venezuelaTime = new Date(now.getTime() - (4 * 60 * 60 * 1000));
-            
+
             const hours = venezuelaTime.getUTCHours().toString().padStart(2, '0');
             const minutes = venezuelaTime.getUTCMinutes().toString().padStart(2, '0');
             const seconds = venezuelaTime.getUTCSeconds().toString().padStart(2, '0');
-            
+
             const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábados'];
-            const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 
+            const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
                            'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-            
+
             const dayName = days[venezuelaTime.getUTCDay()];
             const day = venezuelaTime.getUTCDate();
             const month = months[venezuelaTime.getUTCMonth()];
             const year = venezuelaTime.getUTCFullYear();
-            
+
             document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
             document.getElementById('digital-date').textContent = `${dayName}, ${day} de ${month} de ${year}`;
         }
-        
+
         setInterval(updateClock, 1000);
         updateClock();
+
+        // ===== ANIMACIÓN DE COMIDA =====
+        function createFoodAnimation() {
+            const foodContainer = document.getElementById('foodContainer');
+            const foodItems = ['🍔', '🍟', '🍕', '🌮', '🥤', '🍗', '🧃', '🍰'];
+            const count = 10;
+
+            for (let i = 0; i < count; i++) {
+                const item = document.createElement('div');
+                item.classList.add('food-item');
+                item.textContent = foodItems[Math.floor(Math.random() * foodItems.length)];
+                item.style.left = Math.random() * 100 + '%';
+                item.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                item.style.animationDelay = (Math.random() * 5) + 's';
+                foodContainer.appendChild(item);
+            }
+        }
+
+        createFoodAnimation();
 
         // ===== CÓDIGO EXISTENTE =====
         function createRain() {
             const rainContainer = document.getElementById('rainContainer');
             const raindropsCount = 100;
-            
+
             for (let i = 0; i < raindropsCount; i++) {
                 const drop = document.createElement('div');
                 drop.classList.add('rain-drop');
-                
+
                 drop.style.left = Math.random() * 100 + '%';
                 const size = Math.random() * 3 + 1;
                 drop.style.width = size + 'px';
                 drop.style.height = Math.random() * 100 + 50 + 'px';
                 drop.style.animationDuration = Math.random() * 2 + 1 + 's';
                 drop.style.animationDelay = Math.random() * 2 + 's';
-                
+
                 rainContainer.appendChild(drop);
             }
         }
-        
+
         createRain();
-        
-        // ===== ANIMACIÓN DE PARTÍCULAS PARA EL LOGO =====
-        function createLogoParticles() {
-            const particlesContainer = document.getElementById('logo-particles');
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Tamaño aleatorio entre 2 y 5px
-                const size = Math.random() * 3 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Posición horizontal aleatoria dentro del contenedor
-                particle.style.left = `${Math.random() * 100}%`;
-                
-                // Retraso de animación aleatorio
-                const delay = Math.random() * 5;
-                particle.style.animationDelay = `${delay}s`;
-                
-                // Duración de animación aleatoria
-                const duration = Math.random() * 5 + 5;
-                particle.style.animationDuration = `${duration}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
+
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.querySelector('.loader').classList.add('hidden');
             }, 1500);
-            
-            // Iniciar partículas del logo después de que la página cargue
-            createLogoParticles();
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1104,30 +918,30 @@
                     card.style.transform = 'translateY(0)';
                 }, 100 + (index * 100));
             });
-            
+
             setTimeout(() => {
                 document.querySelector('.welcome-notification').classList.add('show');
                 setTimeout(() => {
                     document.querySelector('.welcome-notification').classList.remove('show');
                 }, 5000);
             }, 2000);
-            
+
             const themeToggle = document.querySelector('.theme-toggle');
             const themePanel = document.querySelector('.theme-panel');
-            
+
             themeToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 themePanel.classList.toggle('active');
             });
-            
+
             document.addEventListener('click', function(e) {
-                if (themePanel.classList.contains('active') && 
-                    !themePanel.contains(e.target) && 
+                if (themePanel.classList.contains('active') &&
+                    !themePanel.contains(e.target) &&
                     !themeToggle.contains(e.target)) {
                     themePanel.classList.remove('active');
                 }
             });
-            
+
             const themeOptions = document.querySelectorAll('.theme-option');
             themeOptions.forEach(option => {
                 option.addEventListener('click', function() {
@@ -1135,27 +949,27 @@
                     changeTheme(theme);
                 });
             });
-            
+
             function changeTheme(theme) {
                 localStorage.setItem('selectedTheme', theme);
-                
+
                 if (theme === 'classic') {
                     document.body.removeAttribute('data-theme');
                 } else {
                     document.body.setAttribute('data-theme', theme);
                 }
-                
+
                 const notification = document.querySelector('.welcome-notification');
                 notification.querySelector('p').innerHTML = `<strong>Tema cambiado:</strong> ${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
                 notification.classList.add('show');
-                
+
                 setTimeout(() => {
                     notification.classList.remove('show');
                 }, 3000);
-                
+
                 themePanel.classList.remove('active');
             }
-            
+
             const savedTheme = localStorage.getItem('selectedTheme');
             if (savedTheme) {
                 if (savedTheme !== 'classic') {
@@ -1165,7 +979,7 @@
                 document.body.setAttribute('data-theme', 'dark');
                 localStorage.setItem('selectedTheme', 'dark');
             }
-            
+
             themePanel.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
