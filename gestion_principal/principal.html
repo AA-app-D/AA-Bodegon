@@ -24,6 +24,33 @@
             position: relative;
         }
 
+        /* ===== BOTÓN DE INICIO ===== */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 215, 0, 0.9);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            background: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
         /* ===== EFECTO NIEVE ===== */
         .snow-container {
             position: fixed;
@@ -287,6 +314,44 @@
             }
         }
 
+        /* ===== LLUVIA DE EMOJIS ===== */
+        .emoji-rain-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 30px;
+            z-index: -1;
+        }
+
+        .emoji-drop {
+            position: absolute;
+            top: -50px;
+            font-size: 24px;
+            animation: emojiRain 5s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes emojiRain {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(500px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         /* ===== FOOTER ===== */
         footer {
             text-align: center;
@@ -313,10 +378,22 @@
             .category-card {
                 padding: 30px 20px;
             }
+            
+            .home-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- BOTÓN DE INICIO -->
+    <a href="https://aa-app-d.github.io/AA-Bodegon/index.html" class="home-button">
+        <i class="fas fa-home"></i> Inicio
+    </a>
 
     <!-- EFECTO NIEVE -->
     <div class="snow-container" id="snowContainer"></div>
@@ -329,6 +406,9 @@
 
     <div class="container">
         <header>
+            <!-- Contenedor para lluvia de emojis -->
+            <div class="emoji-rain-container" id="emojiRain"></div>
+            
             <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
             <h1 class="logo-text">AA-BODEGÓN</h1>
             <p class="tagline">Módulos de Gestión Principal</p>
@@ -401,6 +481,32 @@
             }
         }
 
+        // ===== LLUVIA DE EMOJIS =====
+        function createEmojiRain() {
+            const emojiContainer = document.getElementById('emojiRain');
+            const emojis = ['📦', '📊', '📋', '📇', '🧾', '📑', '📈', '📉', '💰', '💵', '💳', '🧮', '📱', '💻', '🖥️', '🖨️', '🔍', '📌', '📍', '📎', '🛒', '🛍️', '🧴', '🧃', '🧉', '🍷', '🍺', '🍾'];
+            
+            // Crear emojis de lluvia
+            for (let i = 0; i < 30; i++) {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji-drop');
+                emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                // Posición aleatoria
+                emoji.style.left = Math.random() * 100 + '%';
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 20 + 15;
+                emoji.style.fontSize = size + 'px';
+                
+                // Duración y retardo aleatorio
+                emoji.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                emoji.style.animationDelay = (Math.random() * 5) + 's';
+                
+                emojiContainer.appendChild(emoji);
+            }
+        }
+
         // ===== EFECTOS ADICIONALES =====
         function addInteractiveEffects() {
             const cards = document.querySelectorAll('.category-card');
@@ -426,6 +532,7 @@
         // ===== INICIALIZACIÓN =====
         document.addEventListener('DOMContentLoaded', function() {
             createSnow();
+            createEmojiRain();
             addInteractiveEffects();
             
             // Animación de entrada de tarjetas
