@@ -20,19 +20,12 @@
             background-size: cover;
             color: #333;
             min-height: 100vh;
-            overflow-x: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .desktop-wrapper {
-            width: 1400px;
-            margin: 0 auto;
-            transform-origin: center top;
-        }
-
-        /* ===== ANIMACIÓN DE COMIDA ===== */
+        /* ===== ANIMACIÓN DE COMIDA EN EL CUADRO AA-BODEGÓN ===== */
         .food-animation-container {
             position: absolute;
             top: 0;
@@ -248,6 +241,17 @@
             overflow: hidden;
         }
 
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), transparent, rgba(255, 165, 0, 0.2));
+            z-index: -1;
+        }
+
         .logo {
             display: flex;
             flex-direction: column;
@@ -329,11 +333,54 @@
             z-index: 1;
         }
 
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), transparent, rgba(255, 165, 0, 0.2));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -2;
+            background: linear-gradient(45deg, #ffd700, #ffa500, #ffd700, #ffa500);
+            border-radius: 22px;
+            animation: borderAnimation 3s linear infinite;
+            background-size: 400%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-card:hover::after {
+            opacity: 1;
+        }
+
         .category-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
             background: rgba(0, 0, 0, 0.9);
             border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        @keyframes borderAnimation {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
         }
 
         .category-icon {
@@ -566,7 +613,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVE SIN CAMBIOS ===== */
+        /* ===== RESPONSIVE COMPLETO ===== */
         @media (max-width: 1200px) {
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -578,13 +625,16 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 20px;
             }
+
             .logo-text {
                 font-size: 2.4rem;
             }
+
             .logo-img {
                 width: 160px;
                 height: 160px;
             }
+
             .tagline {
                 font-size: 1.3rem;
             }
@@ -594,20 +644,25 @@
             body {
                 padding: 15px;
             }
+
             .container {
                 padding: 15px;
                 padding-top: 120px;
             }
+
             .categories-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
             .logo-text {
                 font-size: 2.2rem;
             }
+
             .logo-img {
                 width: 140px;
                 height: 140px;
             }
+
             .tagline {
                 font-size: 1.2rem;
             }
@@ -619,27 +674,30 @@
             }
         }
 
-        /* ===== TEMAS ===== */
         body[data-theme="dark"] {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
+
         body[data-theme="ocean"] {
             background: linear-gradient(rgba(52, 152, 219, 0.3), rgba(44, 62, 80, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
+
         body[data-theme="nature"] {
             background: linear-gradient(rgba(39, 174, 96, 0.3), rgba(46, 204, 113, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
+
         body[data-theme="royal"] {
             background: linear-gradient(rgba(142, 68, 173, 0.3), rgba(52, 152, 219, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
+
         body[data-theme="fire"] {
             background: linear-gradient(rgba(231, 76, 60, 0.3), rgba(243, 156, 18, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
@@ -648,7 +706,6 @@
     </style>
 </head>
 <body>
-
     <!-- ===== WIDGETS FIJOS SUPERIORES ===== -->
     <div class="top-widgets">
         <a href="https://maps.google.com/?q=AA-Bodegón" target="_blank" class="location-btn">
@@ -678,87 +735,87 @@
         <p><strong>¡Bienvenido a AA-Bodegón!</strong> Sistema de gestión integral para tu negocio.</p>
     </div>
 
-    <div class="desktop-wrapper" id="desktopWrapper">
-        <div class="container">
-            <header>
-                <div class="logo">
-                    <div class="food-animation-container" id="foodContainer"></div>
-                    <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
-                    <h1 class="logo-text">AA-BODEGÓN</h1>
-                    <p class="tagline">Donde cada detalle cuenta</p>
-                </div>
-            </header>
-
-            <div class="categories-grid">
-                <a href="https://aa-app-d.github.io/AA-Bodegon/gestion_principal/principal.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-cube"></i></div>
-                    <h3 class="category-title">Gestión Principal</h3>
-                    <p class="category-desc">Módulos core del negocio: productos, inventario, facturación y más</p>
-                    <span class="module-count">5 módulos</span>
-                </a>
-
-                <a href="02_gestion_entidades/clientes.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-address-book"></i></div>
-                    <h3 class="category-title">Registros Maestros</h3>
-                    <p class="category-desc">Gestión de clientes, proveedores, usuarios y sucursales</p>
-                    <span class="module-count">4 módulos</span>
-                </a>
-
-                <a href="03_operaciones/compras.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-tasks"></i></div>
-                    <h3 class="category-title">Operaciones</h3>
-                    <p class="category-desc">Procesos y logística: compras, delivery, mesas y rutas</p>
-                    <span class="module-count">4 módulos</span>
-                </a>
-
-                <a href="04_finanzas/contabilidad.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-chart-line"></i></div>
-                    <h3 class="category-title">Finanzas</h3>
-                    <p class="category-desc">Administración financiera y reportes económicos</p>
-                    <span class="module-count">2 módulos</span>
-                </a>
-
-                <a href="05_analiticas/estadisticas.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-analytics"></i></div>
-                    <h3 class="category-title">Business Intelligence</h3>
-                    <p class="category-desc">Estadísticas, dashboards y reportes analíticos</p>
-                    <span class="module-count">3 módulos</span>
-                </a>
-
-                <a href="06_ecommerce/tienda-online.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-store"></i></div>
-                    <h3 class="category-title">E-commerce</h3>
-                    <p class="category-desc">Ventas online y gestión de pedidos web</p>
-                    <span class="module-count">2 módulos</span>
-                </a>
-
-                <a href="07_sistema/configuracion.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-cogs"></i></div>
-                    <h3 class="category-title">Sistema</h3>
-                    <p class="category-desc">Configuración, backup y seguridad del sistema</p>
-                    <span class="module-count">3 módulos</span>
-                </a>
-
-                <a href="08_marketing/promociones.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
-                    <h3 class="category-title">Marketing</h3>
-                    <p class="category-desc">Promociones, campañas y programa de fidelización</p>
-                    <span class="module-count">3 módulos</span>
-                </a>
-
-                <a href="00_galeria/galeria.html" class="category-card">
-                    <div class="category-icon"><i class="fas fa-images"></i></div>
-                    <h3 class="category-title">Galería Multimedia</h3>
-                    <p class="category-desc">Fotos, videos y material promocional</p>
-                    <span class="module-count">4 módulos</span>
-                </a>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <!-- Animación de comida solo aquí -->
+                <div class="food-animation-container" id="foodContainer"></div>
+                <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
+                <h1 class="logo-text">AA-BODEGÓN</h1>
+                <p class="tagline">Donde cada detalle cuenta</p>
             </div>
+        </header>
 
-            <footer>
-                <p>AA-Bodegón telf:(424)1345912 &copy; 2025 - Sistema de Gestión Integral. Todos los derechos reservados.</p>
-                <p>Desarrollado con <i class="fas fa-heart" style="color: #ff3366;"></i> para tu negocio</p>
-            </footer>
+        <div class="categories-grid">
+            <!-- ✅ ENLACE CORREGIDO AQUÍ -->
+            <a href="https://aa-app-d.github.io/AA-Bodegon/gestion_principal/principal.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-cube"></i></div>
+                <h3 class="category-title">Gestión Principal</h3>
+                <p class="category-desc">Módulos core del negocio: productos, inventario, facturación y más</p>
+                <span class="module-count">5 módulos</span>
+            </a>
+
+            <a href="02_gestion_entidades/clientes.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-address-book"></i></div>
+                <h3 class="category-title">Registros Maestros</h3>
+                <p class="category-desc">Gestión de clientes, proveedores, usuarios y sucursales</p>
+                <span class="module-count">4 módulos</span>
+            </a>
+
+            <a href="03_operaciones/compras.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-tasks"></i></div>
+                <h3 class="category-title">Operaciones</h3>
+                <p class="category-desc">Procesos y logística: compras, delivery, mesas y rutas</p>
+                <span class="module-count">4 módulos</span>
+            </a>
+
+            <a href="04_finanzas/contabilidad.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-chart-line"></i></div>
+                <h3 class="category-title">Finanzas</h3>
+                <p class="category-desc">Administración financiera y reportes económicos</p>
+                <span class="module-count">2 módulos</span>
+            </a>
+
+            <a href="05_analiticas/estadisticas.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-analytics"></i></div>
+                <h3 class="category-title">Business Intelligence</h3>
+                <p class="category-desc">Estadísticas, dashboards y reportes analíticos</p>
+                <span class="module-count">3 módulos</span>
+            </a>
+
+            <a href="06_ecommerce/tienda-online.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-store"></i></div>
+                <h3 class="category-title">E-commerce</h3>
+                <p class="category-desc">Ventas online y gestión de pedidos web</p>
+                <span class="module-count">2 módulos</span>
+            </a>
+
+            <a href="07_sistema/configuracion.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-cogs"></i></div>
+                <h3 class="category-title">Sistema</h3>
+                <p class="category-desc">Configuración, backup y seguridad del sistema</p>
+                <span class="module-count">3 módulos</span>
+            </a>
+
+            <a href="08_marketing/promociones.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
+                <h3 class="category-title">Marketing</h3>
+                <p class="category-desc">Promociones, campañas y programa de fidelización</p>
+                <span class="module-count">3 módulos</span>
+            </a>
+
+            <a href="00_galeria/galeria.html" class="category-card">
+                <div class="category-icon"><i class="fas fa-images"></i></div>
+                <h3 class="category-title">Galería Multimedia</h3>
+                <p class="category-desc">Fotos, videos y material promocional</p>
+                <span class="module-count">4 módulos</span>
+            </a>
         </div>
+
+        <footer>
+            <p>AA-Bodegón telf:(424)1345912 &copy; 2025 - Sistema de Gestión Integral. Todos los derechos reservados.</p>
+            <p>Desarrollado con <i class="fas fa-heart" style="color: #ff3366;"></i> para tu negocio</p>
+        </footer>
     </div>
 
     <div class="theme-toggle">
@@ -822,7 +879,7 @@
 
         createFoodAnimation();
 
-        // ===== LLUVIA =====
+        // ===== CÓDIGO EXISTENTE =====
         function createRain() {
             const rainContainer = document.getElementById('rainContainer');
             const raindropsCount = 100;
@@ -830,39 +887,26 @@
             for (let i = 0; i < raindropsCount; i++) {
                 const drop = document.createElement('div');
                 drop.classList.add('rain-drop');
+
                 drop.style.left = Math.random() * 100 + '%';
                 const size = Math.random() * 3 + 1;
                 drop.style.width = size + 'px';
                 drop.style.height = Math.random() * 100 + 50 + 'px';
                 drop.style.animationDuration = Math.random() * 2 + 1 + 's';
                 drop.style.animationDelay = Math.random() * 2 + 's';
+
                 rainContainer.appendChild(drop);
             }
         }
 
         createRain();
 
-        // ===== LOADER =====
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.querySelector('.loader').classList.add('hidden');
             }, 1500);
         });
 
-        // ===== ESCALADO RESPONSIVO =====
-        function scaleLayout() {
-            const wrapper = document.getElementById('desktopWrapper');
-            const scale = Math.min(window.innerWidth / 1400, window.innerHeight / 700);
-            wrapper.style.transform = `scale(${scale})`;
-            document.body.style.height = `${700 * scale}px`;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            scaleLayout();
-            window.addEventListener('resize', scaleLayout);
-        });
-
-        // ===== ANIMACIÓN DE ENTRADA =====
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.category-card');
             cards.forEach((card, index) => {
@@ -908,17 +952,21 @@
 
             function changeTheme(theme) {
                 localStorage.setItem('selectedTheme', theme);
+
                 if (theme === 'classic') {
                     document.body.removeAttribute('data-theme');
                 } else {
                     document.body.setAttribute('data-theme', theme);
                 }
-                document.querySelector('.welcome-notification').querySelector('p').innerHTML =
-                    `<strong>Tema cambiado:</strong> ${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
-                document.querySelector('.welcome-notification').classList.add('show');
+
+                const notification = document.querySelector('.welcome-notification');
+                notification.querySelector('p').innerHTML = `<strong>Tema cambiado:</strong> ${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
+                notification.classList.add('show');
+
                 setTimeout(() => {
-                    document.querySelector('.welcome-notification').classList.remove('show');
+                    notification.classList.remove('show');
                 }, 3000);
+
                 themePanel.classList.remove('active');
             }
 
@@ -931,6 +979,10 @@
                 document.body.setAttribute('data-theme', 'dark');
                 localStorage.setItem('selectedTheme', 'dark');
             }
+
+            themePanel.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
         });
     </script>
 </body>
