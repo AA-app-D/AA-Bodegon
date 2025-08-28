@@ -15,8 +15,8 @@
         }
 
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-            url('https://image.pollinations.ai/prompt/cenital%20dark%20wooden%20table%20golden%20light%20lines%20bottles%20boxes%20receipt%20cash%20register%20minimalist%20bodegon%20style%20low%20key%20lighting%20ultra%20hd%204k?width=1920&height=1080&nologo=true&style=photo') no-repeat center center fixed;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
+                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             min-height: 100vh;
@@ -207,6 +207,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
+        /* MODIFICACIÓN: Centrar los últimos 2 módulos en la segunda fila */
         .category-card:nth-child(4),
         .category-card:nth-child(5) {
             grid-column: span 1;
@@ -251,12 +252,13 @@
             filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
         }
 
+        /* MODIFICACIÓN: Títulos en blanco fuerte */
         .category-title {
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 15px;
-            color: #FFFFFF;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            color: #FFFFFF; /* Cambiado a blanco puro */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Sombra blanca para destacar */
             transition: all 0.4s ease;
         }
 
@@ -265,22 +267,25 @@
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
         }
 
+        /* MODIFICACIÓN: Subtítulos en blanco fuerte */
         .category-desc {
             font-size: 0.95rem;
-            color: #FFFFFF;
+            color: #FFFFFF; /* Cambiado a blanco puro */
             line-height: 1.5;
-            font-weight: 500;
+            font-weight: 500; /* Más peso para mejor visibilidad */
             transition: all 0.4s ease;
         }
 
+        /* ===== CONTENEDOR PARA LOS DOS MÓDULOS INFERIORES ===== */
         .bottom-modules {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
-            max-width: 66.66%;
+            max-width: 66.66%; /* 2/3 del ancho total para centrar */
             margin: 0 auto;
         }
 
+        /* ===== FOOTER ===== */
         footer {
             text-align: center;
             padding: 25px;
@@ -293,6 +298,7 @@
             margin-top: 40px;
         }
 
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 1200px) {
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -442,6 +448,7 @@
         }
 
         @media (max-width: 480px) {
+            /* Vista móvil: 3 módulos en una fila */
             .categories-grid {
                 grid-template-columns: repeat(3, 1fr);
                 overflow-x: auto;
@@ -467,9 +474,10 @@
             }
             
             .category-desc {
-                display: none;
+                display: none; /* Ocultar descripción en móvil para ahorrar espacio */
             }
             
+            /* Segunda fila con 2 módulos centrados */
             .bottom-modules {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -577,6 +585,7 @@
             
             cards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
+                    // Agregar partículas de brillo
                     const sparkle = document.createElement('div');
                     sparkle.innerHTML = '✨';
                     sparkle.style.position = 'absolute';
@@ -596,6 +605,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             addInteractiveEffects();
             
+            // Animación de entrada de tarjetas
             const cards = document.querySelectorAll('.category-card');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
@@ -631,4 +641,3 @@
 
 </body>
 </html>
-
