@@ -408,22 +408,23 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
 
-        /* ===== TITULOS MÁS GRANDES Y BLANCOS ===== */
+        /* ===== MODIFICACIONES SOLICITADAS ===== */
         .category-title {
             font-weight: 700;
-            font-size: 1.5rem; /* AUMENTADO */
+            font-size: 1.4rem; /* Tamaño aumentado de 1.1rem a 1.4rem */
             margin-bottom: 8px;
-            color: #FFFFFF !important; /* BLANCO PURO */
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            color: #FFD700;
         }
 
-        /* ===== DESCRIPCIÓN MÁS BLANCA ===== */
         .category-desc {
-            font-size: 0.85rem;
-            opacity: 0.95; /* MÁS OPACO */
+            font-size: 0.9rem; /* Tamaño ligeramente aumentado */
+            opacity: 1; /* Cambiado de 0.9 a 1 para mayor visibilidad */
             line-height: 1.4;
-            color: #FFFFFF !important; /* BLANCO PURO */
-            font-weight: 400;
+            color: #ffffff; /* Cambiado de #ddd a #ffffff para más blanco */
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0); /* Gradiente blanco */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
         .module-count {
@@ -645,11 +646,11 @@
             }
             
             .category-title {
-                font-size: 1.3rem; /* AJUSTADO */
+                font-size: 1.2rem; /* Ajuste para tamaño responsive */
             }
             
             .category-desc {
-                font-size: 0.8rem;
+                font-size: 0.85rem; /* Ajuste para tamaño responsive */
             }
 
             .logo-text {
@@ -694,11 +695,11 @@
             }
             
             .category-title {
-                font-size: 1.2rem;
+                font-size: 1.1rem; /* Ajuste para tamaño responsive */
             }
             
             .category-desc {
-                font-size: 0.75rem;
+                font-size: 0.8rem; /* Ajuste para tamaño responsive */
                 line-height: 1.3;
             }
             
@@ -753,12 +754,12 @@
             }
             
             .category-title {
-                font-size: 1.1rem;
+                font-size: 1rem; /* Ajuste para tamaño responsive */
                 margin-bottom: 5px;
             }
             
             .category-desc {
-                font-size: 0.7rem;
+                font-size: 0.75rem; /* Ajuste para tamaño responsive */
             }
             
             .module-count {
@@ -786,7 +787,7 @@
             }
             
             .category-title {
-                font-size: 1rem;
+                font-size: 0.95rem; /* Ajuste para tamaño responsive */
             }
             
             .category-desc {
@@ -812,7 +813,7 @@
             }
             
             .category-title {
-                font-size: 0.9rem;
+                font-size: 0.9rem; /* Ajuste para tamaño responsive */
             }
             
             .category-icon {
@@ -846,14 +847,15 @@
         }
 
         body[data-theme="royal"] {
-            background: linear-gradient(rgba(142, 68, 173, 0.3), rgba(52, 152, 219, 0.8)),
+            background: linear-gradient(rgab(142, 68, 173, 0.3), rgba(52, 152, 219, 0.8)),
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
 
         body[data-theme="fire"] {
             background: linear-gradient(rgba(231, 76, 60, 0.3), rgba(243, 156, 18, 0.8)),
-                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
+                        url('https://images.unsplash.com/-
+photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
     </style>
