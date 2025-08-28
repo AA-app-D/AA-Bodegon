@@ -25,6 +25,11 @@
             padding: 20px;
         }
 
+        /* Mejora de contraste para accesibilidad */
+        .category-desc, .tagline, footer p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
         /* ===== BOTÓN DE INICIO ===== */
         .home-button {
             position: fixed;
@@ -46,13 +51,14 @@
             text-decoration: none;
         }
 
-        .home-button:hover {
+        .home-button:hover, .home-button:focus {
             background: #FFD700;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            outline: none;
         }
 
-        /* ===== EFECTO NIEVE ===== */
+        /* ===== EFECTO NIEVE (OPTIMIZADO) ===== */
         .snow-container {
             position: fixed;
             top: 0;
@@ -72,6 +78,7 @@
             animation: snowfall linear infinite;
             opacity: 0.8;
             z-index: 1;
+            will-change: transform;
         }
 
         @keyframes snowfall {
@@ -265,10 +272,11 @@
             }
         }
 
-        .category-card:hover {
+        .category-card:hover, .category-card:focus {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3), 0 0 60px rgba(255, 215, 0, 0.15);
             border-color: rgba(255, 215, 0, 0.4);
+            outline: none;
         }
 
         .category-card:hover::before {
@@ -295,7 +303,8 @@
             }
         }
 
-        .category-card:hover .category-icon {
+        .category-card:hover .category-icon,
+        .category-card:focus .category-icon {
             transform: scale(1.1) rotate(5deg);
             filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
         }
@@ -308,7 +317,8 @@
             transition: all 0.4s ease;
         }
 
-        .category-card:hover .category-title {
+        .category-card:hover .category-title,
+        .category-card:focus .category-title {
             text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
         }
 
@@ -319,7 +329,7 @@
             transition: all 0.4s ease;
         }
 
-        /* ===== LLUVIA DE EMOJIS ===== */
+        /* ===== LLUVIA DE EMOJIS (OPTIMIZADO) ===== */
         .emoji-rain-container {
             position: absolute;
             top: 0;
@@ -338,6 +348,7 @@
             font-size: 24px;
             animation: emojiRain 5s linear infinite;
             opacity: 0.7;
+            will-change: transform;
         }
 
         @keyframes emojiRain {
@@ -367,6 +378,30 @@
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
             position: relative;
             z-index: 2;
+        }
+
+        /* ===== TOGGLE PARA ANIMACIONES ===== */
+        .toggle-animations {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            color: #FFD700;
+            border: 1px solid #FFD700;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .toggle-animations:hover {
+            background: rgba(255, 215, 0, 0.2);
         }
 
         /* ===== RESPONSIVE ===== */
@@ -445,11 +480,14 @@
                 font-size: 1.3rem;
             }
             
-            .home-button {
+            .home-button, .toggle-animations {
                 top: 15px;
-                left: 15px;
                 padding: 10px 15px;
                 font-size: 0.9rem;
+            }
+            
+            .toggle-animations {
+                right: 15px;
             }
         }
 
@@ -513,6 +551,13 @@
             footer p {
                 font-size: 0.9rem;
             }
+            
+            .toggle-animations {
+                top: 70px;
+                right: 15px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
         }
 
         @media (max-width: 380px) {
@@ -540,6 +585,22 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* Modo reducido de animaciones */
+        .reduced-motion .snowflake,
+        .reduced-motion .emoji-drop,
+        .reduced-motion .glow-orbit,
+        .reduced-motion .category-icon,
+        .reduced-motion .logo-img,
+        .reduced-motion header::before,
+        .reduced-motion .category-card::before {
+            animation: none !important;
+        }
+        
+        .reduced-motion .category-card:hover .category-icon {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+        }
     </style>
 </head>
 <body>
@@ -548,6 +609,11 @@
     <a href="https://aa-app-d.github.io/AA-Bodegon/index.html" class="home-button">
         <i class="fas fa-home"></i> Inicio
     </a>
+
+    <!-- BOTÓN PARA CONTROLAR ANIMACIONES -->
+    <button class="toggle-animations" id="toggleAnimations">
+        <i class="fas fa-pause"></i> <span>Pausar animaciones</span>
+    </button>
 
     <!-- EFECTO NIEVE -->
     <div class="snow-container" id="snowContainer"></div>
@@ -683,11 +749,37 @@
             });
         }
 
+        // ===== CONTROL DE ANIMACIONES =====
+        function setupAnimationToggle() {
+            const toggleBtn = document.getElementById('toggleAnimations');
+            let animationsReduced = false;
+            
+            // Verificar preferencia del usuario
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.body.classList.add('reduced-motion');
+                toggleBtn.innerHTML = '<i class="fas fa-play"></i> <span>Activar animaciones</span>';
+                animationsReduced = true;
+            }
+            
+            toggleBtn.addEventListener('click', function() {
+                animationsReduced = !animationsReduced;
+                
+                if (animationsReduced) {
+                    document.body.classList.add('reduced-motion');
+                    toggleBtn.innerHTML = '<i class="fas fa-play"></i> <span>Activar animaciones</span>';
+                } else {
+                    document.body.classList.remove('reduced-motion');
+                    toggleBtn.innerHTML = '<i class="fas fa-pause"></i> <span>Pausar animaciones</span>';
+                }
+            });
+        }
+
         // ===== INICIALIZACIÓN =====
         document.addEventListener('DOMContentLoaded', function() {
             createSnow();
             createEmojiRain();
             addInteractiveEffects();
+            setupAnimationToggle();
             
             // Animación de entrada de tarjetas
             const cards = document.querySelectorAll('.category-card');
