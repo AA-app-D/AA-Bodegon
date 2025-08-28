@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AA-Bodegón - Módulos de Gestión Principal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
     <style>
         /* ===== ESTILOS BASE ===== */
         * {
@@ -16,10 +16,12 @@
 
         body {
             background: 
-                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)),
-                url('https://image.pollinations.ai/prompt/cenital%20dark%20wooden%20table%20golden%20light%20lines%20bottles%20boxes%20receipt%20cash%20register%20minimalist%20bodegon%20style%20low%20key%20lighting%20ultra%20hd%204k?width=1920&height=1080&nologo=true&style=photo') no-repeat center center fixed;
+                /* Fondo blanco transparente cristal 3D */
+                linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+                /* Manteniendo la imagen original pero con menor opacidad */
+                url('https://image.pollinations.ai/prompt/cenital%20dark%20wooden%20table%20golden%20light%20lines%20bottles%20boxes%20receipt%20cash%20register%20minimalist%20bodegon%20style%20low%20key%20lighting%20ultra%20hd%204k?width=1920&height=1080&nologo=true&style=photo ') no-repeat center center fixed;
             background-size: cover;
-            color: #fff;
+            color: #333; /* Cambiado a color oscuro para mejor contraste con fondo claro */
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -28,7 +30,7 @@
 
         /* Mejora de contraste para accesibilidad */
         .category-desc, .tagline, footer p {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 0, 0, 0.8); /* Cambiado a color oscuro */
         }
 
         /* ===== BOTÓN DE INICIO ===== */
@@ -47,7 +49,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             text-decoration: none;
         }
@@ -112,7 +114,7 @@
             text-align: center;
             padding: 40px 30px;
             margin-bottom: 40px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.9); /* Cambiado a fondo blanco */
             backdrop-filter: blur(15px);
             border-radius: 30px;
             border: 2px solid rgba(255, 215, 0, 0.3);
@@ -194,18 +196,18 @@
         }
 
         .category-card {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.9); /* Cambiado a fondo blanco */
             backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 30px 25px;
             text-align: center;
             text-decoration: none;
-            color: #fff;
+            color: #333; /* Cambiado a color oscuro */
             border: 1px solid rgba(255, 215, 0, 0.2);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .category-card:nth-child(4),
@@ -256,19 +258,19 @@
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 15px;
-            color: #FFFFFF;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            color: #333; /* Cambiado a color oscuro */
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             transition: all 0.4s ease;
         }
 
         .category-card:hover .category-title,
         .category-card:focus .category-title {
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
         .category-desc {
             font-size: 0.95rem;
-            color: #FFFFFF;
+            color: #333; /* Cambiado a color oscuro */
             line-height: 1.5;
             font-weight: 500;
             transition: all 0.4s ease;
@@ -285,7 +287,7 @@
         footer {
             text-align: center;
             padding: 25px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.9); /* Cambiado a fondo blanco */
             border-radius: 20px;
             color: #FFD700;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
@@ -508,7 +510,7 @@
 <body>
 
     <!-- BOTÓN DE INICIO -->
-    <a href="https://aa-app-d.github.io/AA-Bodegon/index.html" class="home-button">
+    <a href="https://aa-app-d.github.io/AA-Bodegon/index.html " class="home-button">
         <i class="fas fa-home"></i> Inicio
     </a>
 
@@ -520,7 +522,7 @@
 
     <div class="container">
         <header>
-            <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
+            <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg " alt="AA-Bodegón Logo" class="logo-img">
             <h1 class="logo-text">AA-BODEGÓN</h1>
             <p class="tagline">Módulos de Gestión Principal</p>
         </header>
