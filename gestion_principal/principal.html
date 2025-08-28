@@ -252,27 +252,28 @@
             filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
         }
 
+        /* MODIFICACIÓN: Títulos en blanco fuerte */
         .category-title {
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 15px;
-            color: #ffffff !important; /* CAMBIO: Ahora es blanco fuerte */
+            color: #FFFFFF; /* Cambiado a blanco puro */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Sombra blanca para destacar */
             transition: all 0.4s ease;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Añadido sombra blanca */
         }
 
         .category-card:hover .category-title,
         .category-card:focus .category-title {
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.8); /* Intensificado en hover */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
         }
 
+        /* MODIFICACIÓN: Subtítulos en blanco fuerte */
         .category-desc {
             font-size: 0.95rem;
-            opacity: 0.9;
+            color: #FFFFFF; /* Cambiado a blanco puro */
             line-height: 1.5;
+            font-weight: 500; /* Más peso para mejor visibilidad */
             transition: all 0.4s ease;
-            color: #ffffff !important; /* CAMBIO: Ahora es blanco fuerte */
-            font-weight: 500; /* Aumentado peso para mejor legibilidad */
         }
 
         /* ===== CONTENEDOR PARA LOS DOS MÓDULOS INFERIORES ===== */
