@@ -1,486 +1,961 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Gestión de Productos – Bodegón App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos - AA-Bodegón</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== ESTILOS BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <!-- DataTables -->
-  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-  <!-- SweetAlert -->
-  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+        body {
+            background: 
+                /* Efecto verde transparente */
+                linear-gradient(135deg, 
+                    rgba(104, 191, 75, 0.1) 0%, 
+                    rgba(104, 191, 75, 0.15) 25%, 
+                    rgba(104, 191, 75, 0.1) 50%, 
+                    rgba(104, 191, 75, 0.15) 75%, 
+                    rgba(104, 191, 75, 0.1) 100%),
+                /* Imagen de fondo para bodegón */
+                url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            background-attachment: fixed;
+            color: #2c3e50;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-  <style>
-    body { background:#f8f9fa; }
-    .sidebar {
-      position:fixed;
-      top:0;
-      right:-450px;
-      width:450px;
-      height:100%;
-      background:#fff;
-      box-shadow:-2px 0 8px rgba(0,0,0,.15);
-      transition:right .3s;
-      z-index:1050;
-      overflow-y:auto;
-    }
-    .sidebar.open { right:0; }
-    .overlay {
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      background:rgba(0,0,0,.4);
-      z-index:1040;
-      display:none;
-    }
-    .img-thumbnail { cursor:pointer; }
-    .img-preview { width:60px;height:60px;object-fit:cover;border-radius:.25rem;margin-right:.25rem; }
-    .nav-tabs .nav-link { font-size:.875rem; }
-    .dt-buttons { margin-bottom:1rem; }
-    .badge { font-size:.7rem; }
-  </style>
+        /* ===== BOTÓN DE INICIO ===== */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(104, 191, 75, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 1000;
+        }
+
+        .home-button:hover, .home-button:focus {
+            background: #68BF4B;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(104, 191, 75, 0.4);
+            outline: none;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            background: linear-gradient(135deg, #4a8c31, #68BF4B);
+            color: white;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            background-color: rgba(74, 140, 49, 0.85);
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #ffdf33;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: #4a8c31;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #3d7428;
+            transform: translateY(-2px);
+        }
+
+        /* ===== PANEL DE ESTADÍSTICAS ===== */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(104, 191, 75, 0.2);
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: #5a6b7c;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .stat-trend {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trend-up {
+            color: #27ae60;
+        }
+
+        .trend-down {
+            color: #e74c3c;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .content-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+        }
+
+        /* ===== FILTROS Y CATEGORÍAS ===== */
+        .filters-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(104, 191, 75, 0.2);
+        }
+
+        .filters-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(104, 191, 75, 0.3);
+            color: #2c3e50;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #68BF4B;
+            box-shadow: 0 0 0 2px rgba(104, 191, 75, 0.2);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-item:hover {
+            background: rgba(104, 191, 75, 0.1);
+        }
+
+        .category-item.active {
+            background: #68BF4B;
+            color: white;
+            font-weight: 600;
+        }
+
+        .category-count {
+            background: rgba(104, 191, 75, 0.2);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .category-item.active .category-count {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        /* ===== TABLA DE PRODUCTOS ===== */
+        .products-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(104, 191, 75, 0.2);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products-table th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid rgba(104, 191, 75, 0.3);
+            color: #5a6b7c;
+            font-weight: 600;
+        }
+
+        .products-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(104, 191, 75, 0.2);
+        }
+
+        .products-table tr:hover {
+            background: rgba(104, 191, 75, 0.05);
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: rgba(104, 191, 75, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #68BF4B;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .product-category {
+            font-size: 0.9rem;
+            color: #5a6b7c;
+        }
+
+        .stock-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .stock-high {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+        }
+
+        .stock-medium {
+            background: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+        }
+
+        .stock-low {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+        }
+
+        .status-active {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .status-inactive {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            background: rgba(104, 191, 75, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-right: 5px;
+        }
+
+        .action-btn:hover {
+            background: rgba(104, 191, 75, 0.2);
+        }
+
+        .edit-btn {
+            color: #3498db;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+        }
+
+        /* ===== PAGINACIÓN ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .pagination-btn {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn.active {
+            background: #68BF4B;
+            border-color: #68BF4B;
+            color: white;
+            font-weight: 600;
+        }
+
+        .pagination-btn:hover:not(.active) {
+            background: rgba(104, 191, 75, 0.1);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #f1f1f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #68BF4B;
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #68BF4B;
+            box-shadow: 0 0 0 2px rgba(104, 191, 75, 0.2);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #f1f1f1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-panel {
+                order: 2;
+            }
+            
+            .products-panel {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .page-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .stats-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- Barra superior -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-  <span class="navbar-brand mb-0 h1"><i class="fa-solid fa-boxes-stacked me-2"></i>Gestión de Productos</span>
-  <div class="ms-auto d-flex gap-2">
-    <input class="form-control form-control-sm" id="searchBox" placeholder="Buscar…" style="width:220px;">
-    <button class="btn btn-success btn-sm" id="btnNuevo"><i class="fa-solid fa-plus"></i> Nuevo Producto</button>
-  </div>
-</nav>
+    <!-- BOTÓN DE INICIO -->
+    <a href="../index.html" class="home-button">
+        <i class="fas fa-arrow-left"></i> Volver
+    </a>
 
-<div class="container-fluid mt-4">
-  <!-- Filtros rápidos -->
-  <div class="row mb-3">
-    <div class="col-md-3">
-      <select id="filtroCategoria" class="form-select form-select-sm">
-        <option value="">Todas las categorías</option>
-      </select>
+    <div class="container">
+        <!-- HEADER DE LA PÁGINA -->
+        <header class="page-header">
+            <h1 class="page-title">Gestión de Productos</h1>
+            <div class="page-actions">
+                <button class="btn btn-primary" id="addProductBtn">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-file-export"></i> Exportar
+                </button>
+            </div>
+        </header>
+
+        <!-- PANEL DE ESTADÍSTICAS -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <span class="stat-title">Total de Productos</span>
+                <span class="stat-value">248</span>
+                <span class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i> 12% desde el mes pasado
+                </span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Productos Activos</span>
+                <span class="stat-value">215</span>
+                <span class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i> 8% desde el mes pasado
+                </span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Categorías</span>
+                <span class="stat-value">14</span>
+                <span class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i> 2 nuevas categorías
+                </span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Stock Bajo</span>
+                <span class="stat-value">12</span>
+                <span class="stat-trend trend-down">
+                    <i class="fas fa-arrow-down"></i> Necesita atención
+                </span>
+            </div>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="content-container">
+            <!-- PANEL DE FILTROS Y CATEGORÍAS -->
+            <aside class="filters-panel">
+                <h2 class="filters-title">Filtros</h2>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Buscar Producto</label>
+                    <input type="text" class="search-input" placeholder="Nombre, código, etc.">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Categorías</label>
+                    <ul class="category-list">
+                        <li class="category-item active">
+                            <span>Todas las categorías</span>
+                            <span class="category-count">248</span>
+                        </li>
+                        <li class="category-item">
+                            <span>Bebidas Alcohólicas</span>
+                            <span class="category-count">86</span>
+                        </li>
+                        <li class="category-item">
+                            <span>Snacks y Botanas</span>
+                            <span class="category-count">42</span>
+                        </li>
+                        <li class="category-item">
+                            <span>Conservas</span>
+                            <span class="category-count">35</span>
+                        </li>
+                        <li class="category-item">
+                            <span>Lácteos</span>
+                            <span class="category-count">28</span>
+                        </li>
+                        <li class="category-item">
+                            <span>Panadería</span>
+                            <span class="category-count">22</span>
+                        </li>
+                        <li class="category-item">
+                            <span>Otros</span>
+                            <span class="category-count">35</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Estado</label>
+                    <select class="form-select">
+                        <option>Todos</option>
+                        <option>Activo</option>
+                        <option>Inactivo</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Nivel de Stock</label>
+                    <select class="form-select">
+                        <option>Todos</option>
+                        <option>Stock Alto</option>
+                        <option>Stock Medio</option>
+                        <option>Stock Bajo</option>
+                    </select>
+                </div>
+            </aside>
+
+            <!-- PANEL DE PRODUCTOS -->
+            <main class="products-panel">
+                <div class="table-header">
+                    <h2 class="table-title">Lista de Productos</h2>
+                    <div>
+                        <span>Mostrando 1-10 de 248 productos</span>
+                    </div>
+                </div>
+                
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">
+                                        <i class="fas fa-wine-bottle"></i>
+                                    </div>
+                                    <div>
+                                        <div class="product-name">Vino Tinto Reserva</div>
+                                        <div class="product-category">COD: VN001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Bebidas Alcohólicas</td>
+                            <td>$18.99</td>
+                            <td>
+                                <span class="stock-indicator stock-high">125 unidades</span>
+                            </td>
+                            <td>
+                                <span class="status-active">Activo</span>
+                            </td>
+                            <td>
+                                <button class="action-btn edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">
+                                        <i class="fas fa-cookie"></i>
+                                    </div>
+                                    <div>
+                                        <div class="product-name">Galletas de Chocolate</div>
+                                        <div class="product-category">COD: GL002</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Snacks y Botanas</td>
+                            <td>$3.50</td>
+                            <td>
+                                <span class="stock-indicator stock-medium">42 unidades</span>
+                            </td>
+                            <td>
+                                <span class="status-active">Activo</span>
+                            </td>
+                            <td>
+                                <button class="action-btn edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">
+                                        <i class="fas fa-cheese"></i>
+                                    </div>
+                                    <div>
+                                        <div class="product-name">Queso Parmesano</div>
+                                        <div class="product-category">COD: QS003</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Lácteos</td>
+                            <td>$8.75</td>
+                            <td>
+                                <span class="stock-indicator stock-low">5 unidades</span>
+                            </td>
+                            <td>
+                                <span class="status-active">Activo</span>
+                            </td>
+                            <td>
+                                <button class="action-btn edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">
+                                        <i class="fas fa-fish"></i>
+                                    </div>
+                                    <div>
+                                        <div class="product-name">Atún en Lata</div>
+                                        <div class="product-category">COD: CN004</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Conservas</td>
+                            <td>$2.99</td>
+                            <td>
+                                <span class="stock-indicator stock-high">78 unidades</span>
+                            </td>
+                            <td>
+                                <span class="status-active">Activo</span>
+                            </td>
+                            <td>
+                                <button class="action-btn edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-image">
+                                        <i class="fas fa-beer"></i>
+                                    </div>
+                                    <div>
+                                        <div class="product-name">Cerveza Artesanal</div>
+                                        <div class="product-category">COD: CV005</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Bebidas Alcohólicas</td>
+                            <td>$4.50</td>
+                            <td>
+                                <span class="stock-indicator stock-medium">35 unidades</span>
+                            </td>
+                            <td>
+                                <span class="status-inactive">Inactivo</span>
+                            </td>
+                            <td>
+                                <button class="action-btn edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- PAGINACIÓN -->
+                <div class="pagination">
+                    <button class="pagination-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <button class="pagination-btn">4</button>
+                    <button class="pagination-btn">5</button>
+                    <button class="pagination-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </main>
+        </div>
     </div>
-    <div class="col-md-2">
-      <select id="filtroEstado" class="form-select form-select-sm">
-        <option value="">Estado</option>
-        <option value="1">Activo</option>
-        <option value="0">Inactivo</option>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <select id="filtroStock" class="form-select form-select-sm">
-        <option value="">Stock</option>
-        <option value="con">Con stock</option>
-        <option value="bajo">Bajo stock</option>
-        <option value="sin">Sin stock</option>
-      </select>
-    </div>
-  </div>
 
-  <!-- Tabla -->
-  <table class="table table-hover table-sm align-middle" id="tablaProductos" style="width:100%">
-    <thead class="table-light">
-      <tr>
-        <th></th>
-        <th>Nombre</th>
-        <th>Categoría</th>
-        <th>Precio</th>
-        <th>Stock</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<!-- Fondo oscuro al abrir sidebar -->
-<div class="overlay" id="overlay"></div>
-
-<!-- Sidebar -->
-<div class="sidebar p-4" id="sidebar">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h5 id="tituloSidebar">Nuevo Producto</h5>
-    <button class="btn-close" id="btnCerrarSidebar"></button>
-  </div>
-
-  <!-- Tabs -->
-  <ul class="nav nav-tabs" id="tabs" role="tablist">
-    <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-info">Info</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-precios">Precios</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-variantes">Variantes</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-imagenes">Imágenes</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-historial">Historial</button></li>
-  </ul>
-
-  <div class="tab-content mt-3">
-    <!-- 1. Info General -->
-    <div class="tab-pane fade show active" id="tab-info">
-      <div class="mb-3">
-        <label class="form-label">Nombre del producto</label>
-        <input type="text" class="form-control form-control-sm" id="prodNombre">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Descripción corta</label>
-        <input type="text" class="form-control form-control-sm" id="prodDescCorta">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Descripción larga</label>
-        <textarea class="form-control form-control-sm" rows="3" id="prodDescLarga"></textarea>
-      </div>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Categoría</label>
-          <select class="form-select form-select-sm" id="prodCategoria"></select>
+    <!-- MODAL PARA AGREGAR/EDITAR PRODUCTO -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Agregar Nuevo Producto</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Nombre del Producto</label>
+                    <input type="text" class="form-input" placeholder="Ej: Vino Tinto Reserva">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Categoría</label>
+                    <select class="form-select">
+                        <option>Seleccione una categoría</option>
+                        <option>Bebidas Alcohólicas</option>
+                        <option>Snacks y Botanas</option>
+                        <option>Conservas</option>
+                        <option>Lácteos</option>
+                        <option>Panadería</option>
+                        <option>Otros</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Precio</label>
+                    <input type="number" class="form-input" placeholder="0.00" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Stock Inicial</label>
+                    <input type="number" class="form-input" placeholder="0">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-input" rows="3" placeholder="Descripción del producto"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="cancelModal">Cancelar</button>
+                <button class="btn btn-primary">Guardar Producto</button>
+            </div>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">Marca</label>
-          <input type="text" class="form-control form-control-sm" id="prodMarca">
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Código interno</label>
-          <input type="text" class="form-control form-control-sm" id="prodCodInterno">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Código de barras</label>
-          <input type="text" class="form-control form-control-sm" id="prodCodBarras">
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Unidad de medida</label>
-          <select class="form-select form-select-sm" id="prodUnidad">
-            <option>Unidad</option><option>Litro</option><option>Kg</option><option>Pack</option>
-          </select>
-        </div>
-        <div class="col-md-6 d-flex align-items-end">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="prodActivo" checked>
-            <label class="form-check-label">Activo</label>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- 2. Precios -->
-    <div class="tab-pane fade" id="tab-precios">
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <label class="form-label">Costo ($)</label>
-          <input type="number" step="0.01" class="form-control form-control-sm" id="precioCosto">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Margen (%)</label>
-          <input type="number" step="0.1" class="form-control form-control-sm" id="precioMargen">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Precio venta ($)</label>
-          <input type="number" step="0.01" class="form-control form-control-sm" id="precioVenta">
-        </div>
-      </div>
-      <small class="text-muted">Precios por canal (opcional)</small>
-      <div class="row mt-2">
-        <div class="col-md-4">
-          <label class="form-label">Local</label>
-          <input type="number" step="0.01" class="form-control form-control-sm" id="precioLocal">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Delivery</label>
-          <input type="number" step="0.01" class="form-control form-control-sm" id="precioDelivery">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Tienda online</label>
-          <input type="number" step="0.01" class="form-control form-control-sm" id="precioOnline">
-        </div>
-      </div>
-      <hr>
-      <label class="form-label">Historial de precios</label>
-      <div style="max-height:200px;overflow-y:auto">
-        <table class="table table-sm table-striped" id="tablaHistorialPrecios">
-          <thead><tr><th>Fecha</th><th>Precio</th><th>Motivo</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 3. Variantes -->
-    <div class="tab-pane fade" id="tab-variantes">
-      <button class="btn btn-outline-primary btn-sm mb-2" id="btnAddVariante"><i class="fa-solid fa-plus"></i> Agregar variante</button>
-      <div id="listaVariantes"></div>
-    </div>
-
-    <!-- 4. Imágenes -->
-    <div class="tab-pane fade" id="tab-imagenes">
-      <input type="file" id="inputImagenes" multiple accept="image/*" class="form-control form-control-sm mb-2">
-      <div id="previewImagenes" class="d-flex flex-wrap"></div>
-    </div>
-
-    <!-- 5. Historial -->
-    <div class="tab-pane fade" id="tab-historial">
-      <div id="logCambios"></div>
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-end gap-2 mt-4">
-    <button class="btn btn-outline-secondary btn-sm" id="btnCancelar">Cancelar</button>
-    <button class="btn btn-primary btn-sm" id="btnGuardar">Guardar</button>
-  </div>
-</div>
-
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-/* Datos de ejemplo */
-let categorias = ['Bebidas','Cervezas','Artesanales','Rubias','500ml'];
-let productos = [
-  { id:1, nombre:'Cerveza Rubia 500ml', categoria:'Cervezas', precio:1200, stock:24, activo:true,
-    descCorta:'Cerveza artesanal rubia', descLarga:'Descripción larga...', marca:'Patagonia',
-    codInterno:'CR500', codBarras:'1234567890123', unidad:'Unidad',
-    costo:800, margen:50, precios:{ local:1200, delivery:1300, online:1250 },
-    variantes:[ { nombre:'500ml', codBarras:'1234567890123', stock:24, precio:1200 } ],
-    imagenes:['https://via.placeholder.com/150'], historialPrecios:[ { fecha:'29/08/2025', precio:1200, motivo:'Alta producto' } ],
-    log:[ { fecha:'29/08/2025 10:00', usuario:'Admin', cambio:'Alta producto' } ]
-  }
-];
-let idGlobal = 2;
-
-/* Inicializar */
-$(function(){
-  initTabla();
-  llenarSelectCategorias();
-  listeners();
-});
-
-function initTabla(){
-  window.tabla = $('#tablaProductos').DataTable({
-    dom: 'Bfrtip',
-    buttons: ['excelHtml5','pdfHtml5'],
-    language: { url:'//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
-    data: productos,
-    columns: [
-      { data:'imagenes', render: url => `<img src="${url[0]}" class="rounded" width="40">`, orderable:false },
-      { data:'nombre' },
-      { data:'categoria' },
-      { data:'precio', render: p => `$${p.toLocaleString()}` },
-      { data:'stock' },
-      { data:'activo', render: v => v ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-secondary">Inactivo</span>' },
-      { data:null, render: acciones, orderable:false }
-    ]
-  });
-}
-
-function acciones(data){
-  return `
-    <button class="btn btn-sm btn-outline-primary" onclick="editar(${data.id})"><i class="fa-solid fa-edit"></i></button>
-    <button class="btn btn-sm btn-outline-secondary" onclick="clonar(${data.id})"><i class="fa-solid fa-copy"></i></button>
-    <button class="btn btn-sm ${data.activo?'btn-outline-danger':'btn-outline-success'}" onclick="toggleActivo(${data.id})">
-      <i class="fa-solid fa-${data.activo?'times':'check'}"></i>
-    </button>`;
-}
-
-function llenarSelectCategorias(){
-  $('#prodCategoria, #filtroCategoria').html('<option value="">Seleccione</option>');
-  categorias.forEach(c=>{
-    $('#prodCategoria, #filtroCategoria').append(`<option value="${c}">${c}</option>`);
-  });
-}
-
-function listeners(){
-  $('#btnNuevo, #btnCancelar, #btnCerrarSidebar, #overlay').on('click', cerrarSidebar);
-  $('#btnGuardar').on('click', guardarProducto);
-  $('#btnAddVariante').on('click', addVarianteUI);
-  $('#inputImagenes').on('change', previewImagenes);
-  $('#searchBox').on('keyup', ()=> tabla.search($('#searchBox').val()).draw());
-  $('#filtroCategoria, #filtroEstado, #filtroStock').on('change', filtrosTabla);
-  $('#precioCosto, #precioMargen').on('input', calcularPrecioVenta);
-}
-
-function abrirSidebar(){
-  $('#sidebar, #overlay').fadeIn();
-  $('#sidebar').addClass('open');
-}
-function cerrarSidebar(){
-  $('#sidebar, #overlay').fadeOut(()=> $('#sidebar').removeClass('open'));
-  limpiarForm();
-}
-
-function limpiarForm(){
-  $('#prodNombre, #prodDescCorta, #prodDescLarga, #prodMarca, #prodCodInterno, #prodCodBarras').val('');
-  $('#prodCategoria').val('');
-  $('#prodActivo').prop('checked',true);
-  $('#precioCosto, #precioMargen, #precioVenta, #precioLocal, #precioDelivery, #precioOnline').val('');
-  $('#tablaHistorialPrecios tbody').empty();
-  $('#listaVariantes').empty();
-  $('#previewImagenes').empty();
-  $('#logCambios').empty();
-}
-
-function addVarianteUI(){
-  const id = Date.now();
-  $('#listaVariantes').append(`
-    <div class="card mb-2" data-id="${id}">
-      <div class="card-body py-2">
-        <div class="row g-2">
-          <div class="col-md-4"><input class="form-control form-control-sm" placeholder="Nombre variante"></div>
-          <div class="col-md-3"><input class="form-control form-control-sm" placeholder="Código barras"></div>
-          <div class="col-md-2"><input type="number" class="form-control form-control-sm" placeholder="Stock"></div>
-          <div class="col-md-2"><input type="number" step="0.01" class="form-control form-control-sm" placeholder="Precio"></div>
-          <div class="col-md-1"><button class="btn btn-sm btn-outline-danger" onclick="this.closest('.card').remove()"><i class="fa-solid fa-trash"></i></button></div>
-        </div>
-      </div>
-    </div>`);
-}
-
-function previewImagenes(e){
-  [...e.target.files].forEach(file=>{
-    const url = URL.createObjectURL(file);
-    $('#previewImagenes').append(`<img src="${url}" class="img-preview">`);
-  });
-}
-
-function calcularPrecioVenta(){
-  const costo = parseFloat($('#precioCosto').val())||0;
-  const margen = parseFloat($('#precioMargen').val())||0;
-  if(costo && margen){
-    const venta = costo * (1 + margen/100);
-    $('#precioVenta').val(venta.toFixed(2));
-  }
-}
-
-function editar(id){
-  const p = productos.find(p=>p.id===id);
-  llenarForm(p);
-  abrirSidebar();
-}
-function clonar(id){
-  const p = {...productos.find(p=>p.id===id)};
-  p.id = idGlobal++;
-  p.nombre += ' (copia)';
-  productos.push(p);
-  tabla.row.add(p).draw();
-  Swal.fire('Clonado','Producto duplicado','success');
-}
-function toggleActivo(id){
-  const p = productos.find(p=>p.id===id);
-  p.activo = !p.activo;
-  tabla.row( productos.indexOf(p) ).data(p).draw();
-}
-
-function llenarForm(p){
-  $('#prodNombre').val(p.nombre);
-  $('#prodDescCorta').val(p.descCorta);
-  $('#prodDescLarga').val(p.descLarga);
-  $('#prodCategoria').val(p.categoria);
-  $('#prodMarca').val(p.marca);
-  $('#prodCodInterno').val(p.codInterno);
-  $('#prodCodBarras').val(p.codBarras);
-  $('#prodUnidad').val(p.unidad);
-  $('#prodActivo').prop('checked', p.activo);
-  $('#precioCosto').val(p.costo);
-  $('#precioMargen').val(p.margen);
-  $('#precioVenta').val(p.precio);
-  $('#precioLocal').val(p.precios.local);
-  $('#precioDelivery').val(p.precios.delivery);
-  $('#precioOnline').val(p.precios.online);
-
-  // Historial
-  $('#tablaHistorialPrecios tbody').html(
-    p.historialPrecios.map(h=>`<tr><td>${h.fecha}</td><td>$${h.precio}</td><td>${h.motivo}</td></tr>`).join('')
-  );
-
-  // Variantes
-  $('#listaVariantes').empty();
-  p.variantes.forEach(v=> addVarianteUI(v));
-
-  // Imágenes
-  $('#previewImagenes').html(p.imagenes.map(img=>`<img src="${img}" class="img-preview">`).join(''));
-
-  // Log
-  $('#logCambios').html(p.log.map(l=>`<p class="mb-1 small">${l.fecha} - ${l.usuario}: ${l.cambio}</p>`).join(''));
-}
-
-function guardarProducto(){
-  const p = {
-    id: $('#prodNombre').data('id') || idGlobal++,
-    nombre: $('#prodNombre').val().trim(),
-    descCorta: $('#prodDescCorta').val().trim(),
-    descLarga: $('#prodDescLarga').val().trim(),
-    categoria: $('#prodCategoria').val(),
-    marca: $('#prodMarca').val().trim(),
-    codInterno: $('#prodCodInterno').val().trim(),
-    codBarras: $('#prodCodBarras').val().trim(),
-    unidad: $('#prodUnidad').val(),
-    activo: $('#prodActivo').is(':checked'),
-    costo: parseFloat($('#precioCosto').val())||0,
-    margen: parseFloat($('#precioMargen').val())||0,
-    precio: parseFloat($('#precioVenta').val())||0,
-    precios:{
-      local: parseFloat($('#precioLocal').val())||0,
-      delivery: parseFloat($('#precioDelivery').val())||0,
-      online: parseFloat($('#precioOnline').val())||0
-    },
-    variantes: [],
-    imagenes: [...$('#previewImagenes img')].map(img=>img.src),
-    historialPrecios: [{ fecha:'29/08/2025', precio:parseFloat($('#precioVenta').val())||0, motivo:'Alta/Edición manual' }],
-    log: [{ fecha:'29/08/2025 10:00', usuario:'Admin', cambio:'Alta/Edición manual' }]
-  };
-
-  // Capturar variantes
-  $('#listaVariantes .card').each((_,c)=>{
-    const fields = $(c).find('input');
-    p.variantes.push({
-      nombre: fields.eq(0).val(),
-      codBarras: fields.eq(1).val(),
-      stock: parseInt(fields.eq(2).val())||0,
-      precio: parseFloat(fields.eq(3).val())||0
-    });
-  });
-
-  // Validación básica
-  if(!p.nombre){ Swal.fire('Error','Nombre requerido','warning'); return; }
-
-  // Agregar o actualizar
-  const idx = productos.findIndex(prod=>prod.id===p.id);
-  if(idx>=0){
-    productos[idx]=p;
-    tabla.row(idx).data(p).draw();
-  }else{
-    productos.push(p);
-    tabla.row.add(p).draw();
-  }
-
-  cerrarSidebar();
-  Swal.fire('Guardado','Producto guardado correctamente','success');
-}
-
-function filtrosTabla(){
-  const cat = $('#filtroCategoria').val();
-  const est = $('#filtroEstado').val();
-  const st  = $('#filtroStock').val();
-  tabla.columns().search('');
-  if(cat) tabla.column(2).search(cat);
-  if(est!=='') tabla.column(5).search(est==1?'Activo':'Inactivo');
-  if(st==='con') tabla.column(4).search('[1-9]');
-  if(st==='sin') tabla.column(4).search('^0$');
-  if(st==='bajo') tabla.column(4).search('^[1-9]$|^1[0-9]$');
-  tabla.draw();
-}
-</script>
-
+    <script>
+        // Funcionalidad para el modal
+        const modal = document.getElementById('productModal');
+        const addProductBtn = document.getElementById('addProductBtn');
+        const closeModal = document.getElementById('closeModal');
+        const cancelModal = document.getElementById('cancelModal');
+        
+        addProductBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        cancelModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        // Cerrar modal al hacer clic fuera del contenido
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Funcionalidad para las categorías
+        const categoryItems = document.querySelectorAll('.category-item');
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                categoryItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
