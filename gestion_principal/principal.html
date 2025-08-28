@@ -207,13 +207,10 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        /* Centrar los últimos 2 módulos en la segunda fila */
-        .category-card:nth-child(4) {
-            grid-column: 1 / 2;
-        }
-
+        /* MODIFICACIÓN: Centrar los últimos 2 módulos en la segunda fila */
+        .category-card:nth-child(4),
         .category-card:nth-child(5) {
-            grid-column: 2 / 3;
+            grid-column: span 1;
         }
 
         .category-card::before {
@@ -257,18 +254,7 @@
             margin-bottom: 20px;
             transition: all 0.4s ease;
             filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
-            animation: iconFlicker 2s ease-in-out infinite;
-        }
-
-        @keyframes iconFlicker {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.8;
-                transform: scale(1.05);
-            }
+            /* ELIMINADO: Animación de parpadeo */
         }
 
         .category-card:hover .category-icon,
@@ -297,6 +283,15 @@
             transition: all 0.4s ease;
         }
 
+        /* ===== CONTENEDOR PARA LOS DOS MÓDULOS INFERIORES ===== */
+        .bottom-modules {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 66.66%; /* 2/3 del ancho total para centrar */
+            margin: 0 auto;
+        }
+
         /* ===== FOOTER ===== */
         footer {
             text-align: center;
@@ -307,6 +302,7 @@
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
             position: relative;
             z-index: 2;
+            margin-top: 40px;
         }
 
         /* ===== TOGGLE PARA ANIMACIONES ===== */
@@ -390,10 +386,9 @@
                 gap: 20px;
             }
             
-            /* Ajustar para que los últimos 2 módulos estén centrados */
-            .category-card:nth-child(4),
-            .category-card:nth-child(5) {
-                grid-column: auto;
+            .bottom-modules {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 100%;
             }
             
             .category-card {
@@ -448,6 +443,11 @@
             }
             
             .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .bottom-modules {
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
@@ -520,21 +520,7 @@
             }
             
             /* Segunda fila con 2 módulos centrados */
-            .categories-grid::after {
-                content: '';
-                display: block;
-                width: 100%;
-                height: 0;
-                grid-column: 1 / -1;
-            }
-            
-            .category-card:nth-child(4),
-            .category-card:nth-child(5) {
-                grid-column: span 1;
-            }
-            
-            /* Contenedor para la segunda fila */
-            .second-row {
+            .bottom-modules {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
@@ -630,8 +616,8 @@
             </a>
         </div>
 
-        <!-- Segunda fila con 2 módulos -->
-        <div class="second-row">
+        <!-- Segunda fila con 2 módulos centrados -->
+        <div class="bottom-modules">
             <!-- Módulo 4: Caja -->
             <a href="caja.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-cash-register"></i></div>
