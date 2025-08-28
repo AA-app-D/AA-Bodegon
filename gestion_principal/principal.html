@@ -58,38 +58,6 @@
             outline: none;
         }
 
-        /* ===== EFECTO NIEVE (OPTIMIZADO) ===== */
-        .snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: #fff;
-            user-select: none;
-            animation: snowfall linear infinite;
-            opacity: 0.8;
-            z-index: 1;
-            will-change: transform;
-        }
-
-        @keyframes snowfall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-            }
-        }
-
         /* ===== EFECTOS DE BRILLO EN TARJETAS ===== */
         .glow-container {
             position: fixed;
@@ -329,45 +297,6 @@
             transition: all 0.4s ease;
         }
 
-        /* ===== LLUVIA DE EMOJIS (OPTIMIZADO) ===== */
-        .emoji-rain-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            border-radius: 30px;
-            z-index: -1;
-        }
-
-        .emoji-drop {
-            position: absolute;
-            top: -50px;
-            font-size: 24px;
-            animation: emojiRain 5s linear infinite;
-            opacity: 0.7;
-            will-change: transform;
-        }
-
-        @keyframes emojiRain {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(500px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
         /* ===== FOOTER ===== */
         footer {
             text-align: center;
@@ -560,6 +489,61 @@
             }
         }
 
+        @media (max-width: 480px) {
+            /* Vista móvil: 3 módulos en una fila */
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                overflow-x: auto;
+                gap: 10px;
+                padding-bottom: 10px;
+                scroll-snap-type: x mandatory;
+            }
+            
+            .category-card {
+                min-width: 120px;
+                scroll-snap-align: start;
+                padding: 15px 10px;
+            }
+            
+            .category-icon {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .category-title {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+            
+            .category-desc {
+                display: none; /* Ocultar descripción en móvil para ahorrar espacio */
+            }
+            
+            /* Segunda fila con 2 módulos centrados */
+            .categories-grid::after {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 0;
+                grid-column: 1 / -1;
+            }
+            
+            .category-card:nth-child(4),
+            .category-card:nth-child(5) {
+                grid-column: span 1;
+            }
+            
+            /* Contenedor para la segunda fila */
+            .second-row {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+
         @media (max-width: 380px) {
             .logo-text {
                 font-size: 1.6rem;
@@ -570,25 +554,20 @@
             }
             
             .category-card {
-                padding: 18px 12px;
+                padding: 12px 8px;
+                min-width: 100px;
             }
             
             .category-icon {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
             
             .category-title {
-                font-size: 1.1rem;
-            }
-            
-            .category-desc {
                 font-size: 0.8rem;
             }
         }
 
         /* Modo reducido de animaciones */
-        .reduced-motion .snowflake,
-        .reduced-motion .emoji-drop,
         .reduced-motion .glow-orbit,
         .reduced-motion .category-icon,
         .reduced-motion .logo-img,
@@ -615,9 +594,6 @@
         <i class="fas fa-pause"></i> <span>Pausar animaciones</span>
     </button>
 
-    <!-- EFECTO NIEVE -->
-    <div class="snow-container" id="snowContainer"></div>
-
     <!-- EFECTOS DE BRILLO -->
     <div class="glow-container">
         <div class="glow-orbit"></div>
@@ -626,9 +602,6 @@
 
     <div class="container">
         <header>
-            <!-- Contenedor para lluvia de emojis -->
-            <div class="emoji-rain-container" id="emojiRain"></div>
-            
             <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
             <h1 class="logo-text">AA-BODEGÓN</h1>
             <p class="tagline">Módulos de Gestión Principal</p>
@@ -655,7 +628,10 @@
                 <h3 class="category-title">Facturación</h3>
                 <p class="category-desc">Sistema completo de facturación electrónica, notas de crédito y débito integrado.</p>
             </a>
+        </div>
 
+        <!-- Segunda fila con 2 módulos -->
+        <div class="second-row">
             <!-- Módulo 4: Caja -->
             <a href="caja.html" class="category-card">
                 <div class="category-icon"><i class="fas fa-cash-register"></i></div>
@@ -678,55 +654,6 @@
     </div>
 
     <script>
-        // ===== EFECTO NIEVE DINÁMICO =====
-        function createSnow() {
-            const snowContainer = document.getElementById('snowContainer');
-            const snowflakeSymbols = ['❄', '❅', '❆', '✦', '✧'];
-            const snowflakesCount = 50;
-
-            for (let i = 0; i < snowflakesCount; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.classList.add('snowflake');
-                
-                const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
-                snowflake.innerHTML = symbol;
-                
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                snowflake.style.animationDuration = (Math.random() * 5 + 3) + 's';
-                snowflake.style.animationDelay = Math.random() * 5 + 's';
-                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
-                
-                snowContainer.appendChild(snowflake);
-            }
-        }
-
-        // ===== LLUVIA DE EMOJIS =====
-        function createEmojiRain() {
-            const emojiContainer = document.getElementById('emojiRain');
-            const emojis = ['📦', '📊', '📋', '📇', '🧾', '📑', '📈', '📉', '💰', '💵', '💳', '🧮', '📱', '💻', '🖥️', '🖨️', '🔍', '📌', '📍', '📎', '🛒', '🛍️', '🧴', '🧃', '🧉', '🍷', '🍺', '🍾'];
-            
-            // Crear emojis de lluvia
-            for (let i = 0; i < 30; i++) {
-                const emoji = document.createElement('div');
-                emoji.classList.add('emoji-drop');
-                emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                
-                // Posición aleatoria
-                emoji.style.left = Math.random() * 100 + '%';
-                
-                // Tamaño aleatorio
-                const size = Math.random() * 20 + 15;
-                emoji.style.fontSize = size + 'px';
-                
-                // Duración y retardo aleatorio
-                emoji.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                emoji.style.animationDelay = (Math.random() * 5) + 's';
-                
-                emojiContainer.appendChild(emoji);
-            }
-        }
-
         // ===== EFECTOS ADICIONALES =====
         function addInteractiveEffects() {
             const cards = document.querySelectorAll('.category-card');
@@ -776,8 +703,6 @@
 
         // ===== INICIALIZACIÓN =====
         document.addEventListener('DOMContentLoaded', function() {
-            createSnow();
-            createEmojiRain();
             addInteractiveEffects();
             setupAnimationToggle();
             
