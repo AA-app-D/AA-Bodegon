@@ -856,6 +856,16 @@
                         url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
         }
+
+        /* ✅ Quitar efecto amarillo al hacer clic */
+        .category-card:active,
+        .category-card:focus,
+        .category-card:hover::after {
+            animation: none !important;
+            opacity: 0 !important;
+        }
+
+        
     </style>
 </head>
 <body>
