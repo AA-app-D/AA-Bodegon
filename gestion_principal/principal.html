@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AA-Bodegón - Módulos de Gestión Principal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
     <style>
         /* ===== ESTILOS BASE ===== */
         * {
@@ -16,7 +16,7 @@
 
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
-                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3') no-repeat center center fixed;
+                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3 ') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             min-height: 100vh;
@@ -256,13 +256,14 @@
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 15px;
-            color: #FFD700;
+            color: #ffffff !important; /* CAMBIO: Ahora es blanco fuerte */
             transition: all 0.4s ease;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Añadido sombra blanca */
         }
 
         .category-card:hover .category-title,
         .category-card:focus .category-title {
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.8); /* Intensificado en hover */
         }
 
         .category-desc {
@@ -270,6 +271,8 @@
             opacity: 0.9;
             line-height: 1.5;
             transition: all 0.4s ease;
+            color: #ffffff !important; /* CAMBIO: Ahora es blanco fuerte */
+            font-weight: 500; /* Aumentado peso para mejor legibilidad */
         }
 
         /* ===== CONTENEDOR PARA LOS DOS MÓDULOS INFERIORES ===== */
@@ -511,7 +514,7 @@
 <body>
 
     <!-- BOTÓN DE INICIO -->
-    <a href="https://aa-app-d.github.io/AA-Bodegon/index.html" class="home-button">
+    <a href="https://aa-app-d.github.io/AA-Bodegon/index.html " class="home-button">
         <i class="fas fa-home"></i> Inicio
     </a>
 
@@ -523,7 +526,7 @@
 
     <div class="container">
         <header>
-            <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="AA-Bodegón Logo" class="logo-img">
+            <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg " alt="AA-Bodegón Logo" class="logo-img">
             <h1 class="logo-text">AA-BODEGÓN</h1>
             <p class="tagline">Módulos de Gestión Principal</p>
         </header>
