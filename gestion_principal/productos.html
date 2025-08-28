@@ -3,957 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Productos - AA-Bodegón</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>BodegónApp - Gestión de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* ===== ESTILOS BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
-        }
-
         body {
-            background: 
-                /* Efecto verde transparente */
-                linear-gradient(135deg, 
-                    rgba(104, 191, 75, 0.1) 0%, 
-                    rgba(104, 191, 75, 0.15) 25%, 
-                    rgba(104, 191, 75, 0.1) 50%, 
-                    rgba(104, 191, 75, 0.15) 75%, 
-                    rgba(104, 191, 75, 0.1) 100%),
-                /* Imagen de fondo para bodegón */
-                url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.95)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23f8f9fa" width="100" height="100"/><path fill="%23e9ecef" d="M0 0h50v50H0z"/></svg>');
             background-size: cover;
             background-attachment: fixed;
-            color: #2c3e50;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        /* ===== BOTÓN DE INICIO ===== */
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(104, 191, 75, 0.9);
+        
+        .header-container {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
             color: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
             border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            z-index: 1000;
         }
-
-        .home-button:hover, .home-button:focus {
-            background: #68BF4B;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(104, 191, 75, 0.4);
-            outline: none;
+        
+        .card:hover {
+            transform: translateY(-5px);
         }
-
-        /* ===== CONTENEDOR PRINCIPAL ===== */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* ===== HEADER ===== */
-        .page-header {
-            background: linear-gradient(135deg, #4a8c31, #68BF4B);
-            color: white;
-            padding: 25px 30px;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(5px);
-            background-color: rgba(74, 140, 49, 0.85);
-        }
-
-        .page-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
-
-        .page-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border-radius: 8px;
-            border: none;
+        
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-
+        
         .btn-primary {
-            background: #FFD700;
-            color: #000;
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 20px;
         }
-
+        
         .btn-primary:hover {
-            background: #ffdf33;
+            background: linear-gradient(to right, #1b5e20, #388e3c);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-
-        .btn-secondary {
-            background: #4a8c31;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #3d7428;
-            transform: translateY(-2px);
-        }
-
-        /* ===== PANEL DE ESTADÍSTICAS ===== */
-        .stats-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
+        
+        .search-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(104, 191, 75, 0.2);
+            margin-bottom: 20px;
         }
-
-        .stat-title {
-            font-size: 0.9rem;
-            color: #5a6b7c;
-            margin-bottom: 10px;
+        
+        .product-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
         }
-
-        .stat-value {
+        
+        .product-table th {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 600;
+            padding: 12px 15px;
+        }
+        
+        .product-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .product-table tr:hover {
+            background-color: #f1f8e9;
+        }
+        
+        .low-stock {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        
+        .status-inactive {
+            color: #9e9e9e;
+        }
+        
+        .action-btn {
+            margin-right: 5px;
+            border-radius: 4px;
+        }
+        
+        .summary-card {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .summary-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #2c3e50;
+            color: #2e7d32;
         }
-
-        .stat-trend {
-            margin-top: 10px;
+        
+        .summary-text {
+            color: #616161;
             font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
-
-        .trend-up {
-            color: #27ae60;
+        
+        .alert-critical {
+            background-color: #ffebee;
+            border-left: 4px solid #d32f2f;
         }
-
-        .trend-down {
-            color: #e74c3c;
-        }
-
-        /* ===== CONTENEDOR PRINCIPAL ===== */
-        .content-container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 25px;
-        }
-
-        /* ===== FILTROS Y CATEGORÍAS ===== */
-        .filters-panel {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            height: fit-content;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(104, 191, 75, 0.2);
-        }
-
-        .filters-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(104, 191, 75, 0.3);
-            color: #2c3e50;
-        }
-
-        .filter-group {
-            margin-bottom: 20px;
-        }
-
-        .filter-label {
-            display: block;
-            font-weight: 600;
+        
+        .filter-badge {
+            cursor: pointer;
+            margin-right: 8px;
             margin-bottom: 8px;
-            color: #2c3e50;
         }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.8);
+        
+        .main-container {
+            max-width: 95%;
+            margin: 0 auto;
         }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #68BF4B;
-            box-shadow: 0 0 0 2px rgba(104, 191, 75, 0.2);
-        }
-
-        .category-list {
-            list-style: none;
-        }
-
-        .category-item {
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .category-item:hover {
-            background: rgba(104, 191, 75, 0.1);
-        }
-
-        .category-item.active {
-            background: #68BF4B;
+        
+        .footer {
+            background-color: #1b5e20;
             color: white;
-            font-weight: 600;
-        }
-
-        .category-count {
-            background: rgba(104, 191, 75, 0.2);
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .category-item.active .category-count {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-
-        /* ===== TABLA DE PRODUCTOS ===== */
-        .products-panel {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(104, 191, 75, 0.2);
-        }
-
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .table-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .products-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .products-table th {
-            text-align: left;
-            padding: 15px;
-            border-bottom: 2px solid rgba(104, 191, 75, 0.3);
-            color: #5a6b7c;
-            font-weight: 600;
-        }
-
-        .products-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(104, 191, 75, 0.2);
-        }
-
-        .products-table tr:hover {
-            background: rgba(104, 191, 75, 0.05);
-        }
-
-        .product-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .product-image {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: rgba(104, 191, 75, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #68BF4B;
-        }
-
-        .product-name {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .product-category {
-            font-size: 0.9rem;
-            color: #5a6b7c;
-        }
-
-        .stock-indicator {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .stock-high {
-            background: rgba(46, 204, 113, 0.2);
-            color: #27ae60;
-        }
-
-        .stock-medium {
-            background: rgba(243, 156, 18, 0.2);
-            color: #d35400;
-        }
-
-        .stock-low {
-            background: rgba(231, 76, 60, 0.2);
-            color: #c0392b;
-        }
-
-        .status-active {
-            color: #27ae60;
-            font-weight: 600;
-        }
-
-        .status-inactive {
-            color: #e74c3c;
-            font-weight: 600;
-        }
-
-        .action-btn {
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: none;
-            background: rgba(104, 191, 75, 0.1);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-right: 5px;
-        }
-
-        .action-btn:hover {
-            background: rgba(104, 191, 75, 0.2);
-        }
-
-        .edit-btn {
-            color: #3498db;
-        }
-
-        .delete-btn {
-            color: #e74c3c;
-        }
-
-        /* ===== PAGINACIÓN ===== */
-        .pagination {
-            display: flex;
-            justify-content: center;
+            text-align: center;
+            padding: 15px 0;
             margin-top: 30px;
-            gap: 10px;
-        }
-
-        .pagination-btn {
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .pagination-btn.active {
-            background: #68BF4B;
-            border-color: #68BF4B;
-            color: white;
-            font-weight: 600;
-        }
-
-        .pagination-btn:hover:not(.active) {
-            background: rgba(104, 191, 75, 0.1);
-        }
-
-        /* ===== MODAL ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            display: none;
-        }
-
-        .modal {
-            background: white;
-            border-radius: 12px;
-            width: 500px;
-            max-width: 90%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #f1f1f1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #68BF4B;
-            color: white;
-            border-radius: 12px 12px 0 0;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: white;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #68BF4B;
-            box-shadow: 0 0 0 2px rgba(104, 191, 75, 0.2);
-        }
-
-        .form-select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-        }
-
-        .modal-footer {
-            padding: 20px;
-            border-top: 1px solid #f1f1f1;
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .content-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .filters-panel {
-                order: 2;
-            }
-            
-            .products-panel {
-                order: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .page-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .stats-panel {
-                grid-template-columns: 1fr;
-            }
-            
-            .products-table {
-                display: block;
-                overflow-x: auto;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-            
-            .table-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
+            border-radius: 10px 10px 0 0;
         }
     </style>
 </head>
 <body>
-
-    <!-- BOTÓN DE INICIO -->
-    <a href="../index.html" class="home-button">
-        <i class="fas fa-arrow-left"></i> Volver
-    </a>
-
-    <div class="container">
-        <!-- HEADER DE LA PÁGINA -->
-        <header class="page-header">
-            <h1 class="page-title">Gestión de Productos</h1>
-            <div class="page-actions">
-                <button class="btn btn-primary" id="addProductBtn">
-                    <i class="fas fa-plus"></i> Nuevo Producto
-                </button>
-                <button class="btn btn-secondary">
-                    <i class="fas fa-file-export"></i> Exportar
-                </button>
-            </div>
-        </header>
-
-        <!-- PANEL DE ESTADÍSTICAS -->
-        <div class="stats-panel">
-            <div class="stat-card">
-                <span class="stat-title">Total de Productos</span>
-                <span class="stat-value">248</span>
-                <span class="stat-trend trend-up">
-                    <i class="fas fa-arrow-up"></i> 12% desde el mes pasado
-                </span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-title">Productos Activos</span>
-                <span class="stat-value">215</span>
-                <span class="stat-trend trend-up">
-                    <i class="fas fa-arrow-up"></i> 8% desde el mes pasado
-                </span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-title">Categorías</span>
-                <span class="stat-value">14</span>
-                <span class="stat-trend trend-up">
-                    <i class="fas fa-arrow-up"></i> 2 nuevas categorías
-                </span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-title">Stock Bajo</span>
-                <span class="stat-value">12</span>
-                <span class="stat-trend trend-down">
-                    <i class="fas fa-arrow-down"></i> Necesita atención
-                </span>
-            </div>
-        </div>
-
-        <!-- CONTENIDO PRINCIPAL -->
-        <div class="content-container">
-            <!-- PANEL DE FILTROS Y CATEGORÍAS -->
-            <aside class="filters-panel">
-                <h2 class="filters-title">Filtros</h2>
-                
-                <div class="filter-group">
-                    <label class="filter-label">Buscar Producto</label>
-                    <input type="text" class="search-input" placeholder="Nombre, código, etc.">
+    <!-- Header -->
+    <div class="header-container py-4 mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1><i class="fas fa-store"></i> BodegónApp</h1>
+                    <p class="mb-0">Sistema de Gestión Integral</p>
                 </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label">Categorías</label>
-                    <ul class="category-list">
-                        <li class="category-item active">
-                            <span>Todas las categorías</span>
-                            <span class="category-count">248</span>
-                        </li>
-                        <li class="category-item">
-                            <span>Bebidas Alcohólicas</span>
-                            <span class="category-count">86</span>
-                        </li>
-                        <li class="category-item">
-                            <span>Snacks y Botanas</span>
-                            <span class="category-count">42</span>
-                        </li>
-                        <li class="category-item">
-                            <span>Conservas</span>
-                            <span class="category-count">35</span>
-                        </li>
-                        <li class="category-item">
-                            <span>Lácteos</span>
-                            <span class="category-count">28</span>
-                        </li>
-                        <li class="category-item">
-                            <span>Panadería</span>
-                            <span class="category-count">22</span>
-                        </li>
-                        <li class="category-item">
-                            <span>Otros</span>
-                            <span class="category-count">35</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label">Estado</label>
-                    <select class="form-select">
-                        <option>Todos</option>
-                        <option>Activo</option>
-                        <option>Inactivo</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label">Nivel de Stock</label>
-                    <select class="form-select">
-                        <option>Todos</option>
-                        <option>Stock Alto</option>
-                        <option>Stock Medio</option>
-                        <option>Stock Bajo</option>
-                    </select>
-                </div>
-            </aside>
-
-            <!-- PANEL DE PRODUCTOS -->
-            <main class="products-panel">
-                <div class="table-header">
-                    <h2 class="table-title">Lista de Productos</h2>
-                    <div>
-                        <span>Mostrando 1-10 de 248 productos</span>
+                <div class="col-md-6 text-end">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <div class="me-3">
+                            <span class="badge bg-light text-dark">Usuario: Admin</span>
+                        </div>
+                        <button class="btn btn-light me-2"><i class="fas fa-bell"></i></button>
+                        <button class="btn btn-light"><i class="fas fa-cog"></i></button>
                     </div>
                 </div>
-                
-                <table class="products-table">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Categoría</th>
-                            <th>Precio</th>
-                            <th>Stock</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="product-info">
-                                    <div class="product-image">
-                                        <i class="fas fa-wine-bottle"></i>
-                                    </div>
-                                    <div>
-                                        <div class="product-name">Vino Tinto Reserva</div>
-                                        <div class="product-category">COD: VN001</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Bebidas Alcohólicas</td>
-                            <td>$18.99</td>
-                            <td>
-                                <span class="stock-indicator stock-high">125 unidades</span>
-                            </td>
-                            <td>
-                                <span class="status-active">Activo</span>
-                            </td>
-                            <td>
-                                <button class="action-btn edit-btn">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-info">
-                                    <div class="product-image">
-                                        <i class="fas fa-cookie"></i>
-                                    </div>
-                                    <div>
-                                        <div class="product-name">Galletas de Chocolate</div>
-                                        <div class="product-category">COD: GL002</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Snacks y Botanas</td>
-                            <td>$3.50</td>
-                            <td>
-                                <span class="stock-indicator stock-medium">42 unidades</span>
-                            </td>
-                            <td>
-                                <span class="status-active">Activo</span>
-                            </td>
-                            <td>
-                                <button class="action-btn edit-btn">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-info">
-                                    <div class="product-image">
-                                        <i class="fas fa-cheese"></i>
-                                    </div>
-                                    <div>
-                                        <div class="product-name">Queso Parmesano</div>
-                                        <div class="product-category">COD: QS003</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Lácteos</td>
-                            <td>$8.75</td>
-                            <td>
-                                <span class="stock-indicator stock-low">5 unidades</span>
-                            </td>
-                            <td>
-                                <span class="status-active">Activo</span>
-                            </td>
-                            <td>
-                                <button class="action-btn edit-btn">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-info">
-                                    <div class="product-image">
-                                        <i class="fas fa-fish"></i>
-                                    </div>
-                                    <div>
-                                        <div class="product-name">Atún en Lata</div>
-                                        <div class="product-category">COD: CN004</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Conservas</td>
-                            <td>$2.99</td>
-                            <td>
-                                <span class="stock-indicator stock-high">78 unidades</span>
-                            </td>
-                            <td>
-                                <span class="status-active">Activo</span>
-                            </td>
-                            <td>
-                                <button class="action-btn edit-btn">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-info">
-                                    <div class="product-image">
-                                        <i class="fas fa-beer"></i>
-                                    </div>
-                                    <div>
-                                        <div class="product-name">Cerveza Artesanal</div>
-                                        <div class="product-category">COD: CV005</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Bebidas Alcohólicas</td>
-                            <td>$4.50</td>
-                            <td>
-                                <span class="stock-indicator stock-medium">35 unidades</span>
-                            </td>
-                            <td>
-                                <span class="status-inactive">Inactivo</span>
-                            </td>
-                            <td>
-                                <button class="action-btn edit-btn">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <!-- PAGINACIÓN -->
-                <div class="pagination">
-                    <button class="pagination-btn">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="pagination-btn active">1</button>
-                    <button class="pagination-btn">2</button>
-                    <button class="pagination-btn">3</button>
-                    <button class="pagination-btn">4</button>
-                    <button class="pagination-btn">5</button>
-                    <button class="pagination-btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </main>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL PARA AGREGAR/EDITAR PRODUCTO -->
-    <div class="modal-overlay" id="productModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Agregar Nuevo Producto</h2>
-                <button class="modal-close" id="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
+    <div class="container main-container">
+        <!-- Page Title and Actions -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h2><i class="fas fa-box-open"></i> Gestión de Productos</h2>
+                <p class="text-muted">Administra el inventario de productos de tu bodegón</p>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Nombre del Producto</label>
-                    <input type="text" class="form-input" placeholder="Ej: Vino Tinto Reserva">
+            <div class="col-md-6 text-end">
+                <button class="btn btn-primary"><i class="fas fa-plus-circle"></i> Nuevo Producto</button>
+                <button class="btn btn-outline-secondary"><i class="fas fa-file-export"></i> Exportar</button>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card summary-card">
+                    <div class="summary-number">148</div>
+                    <div class="summary-text">Productos Totales</div>
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Categoría</label>
+            </div>
+            <div class="col-md-3">
+                <div class="card summary-card">
+                    <div class="summary-number">12</div>
+                    <div class="summary-text">Stock Crítico</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card summary-card">
+                    <div class="summary-number">8</div>
+                    <div class="summary-text">Categorías</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card summary-card">
+                    <div class="summary-number">4</div>
+                    <div class="summary-text">Sin Stock</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="card search-container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar productos por nombre, código o categoría...">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i> Buscar</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <select class="form-select">
-                        <option>Seleccione una categoría</option>
-                        <option>Bebidas Alcohólicas</option>
-                        <option>Snacks y Botanas</option>
-                        <option>Conservas</option>
+                        <option selected>Todas las categorías</option>
+                        <option>Abarrotes</option>
+                        <option>Bebidas</option>
                         <option>Lácteos</option>
-                        <option>Panadería</option>
-                        <option>Otros</option>
+                        <option>Frutas y Verduras</option>
+                        <option>Limpieza</option>
+                        <option>Licorería</option>
                     </select>
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Precio</label>
-                    <input type="number" class="form-input" placeholder="0.00" step="0.01">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Stock Inicial</label>
-                    <input type="number" class="form-input" placeholder="0">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Descripción</label>
-                    <textarea class="form-input" rows="3" placeholder="Descripción del producto"></textarea>
-                </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn" id="cancelModal">Cancelar</button>
-                <button class="btn btn-primary">Guardar Producto</button>
+            
+            <div class="mt-3">
+                <span class="badge bg-primary filter-badge">Todos <i class="fas fa-times ms-1"></i></span>
+                <span class="badge bg-success filter-badge">Activos</span>
+                <span class="badge bg-warning filter-badge">Con Oferta</span>
+                <span class="badge bg-danger filter-badge">Stock Crítico</span>
+                <span class="badge bg-secondary filter-badge">Inactivos</span>
+            </div>
+        </div>
+
+        <!-- Alert for critical stock -->
+        <div class="alert alert-critical d-flex align-items-center" role="alert">
+            <i class="fas fa-exclamation-triangle me-3 text-danger"></i>
+            <div>
+                Tienes <strong>12 productos con stock crítico</strong>. Es necesario realizar un pedido de emergencia.
+            </div>
+            <button class="btn btn-sm btn-outline-danger ms-auto">Ver Productos</button>
+        </div>
+
+        <!-- Products Table -->
+        <div class="card">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Lista de Productos</h5>
+                <span class="badge bg-primary">148 productos</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23f0f4c3'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='14' fill='%23757575'>Aceite</text></svg>" class="img-thumbnail" width="40"></td>
+                                <td>Aceite de Girasol 1L</td>
+                                <td>Abarrotes</td>
+                                <td>$4.50</td>
+                                <td class="low-stock">8 unidades</td>
+                                <td class="status-active">Activo</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary action-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-success action-btn"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23bbdefb'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='14' fill='%23757575'>Leche</text></svg>" class="img-thumbnail" width="40"></td>
+                                <td>Leche Entera 1L</td>
+                                <td>Lácteos</td>
+                                <td>$2.80</td>
+                                <td>45 unidades</td>
+                                <td class="status-active">Activo</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary action-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-success action-btn"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23ffcdd2'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='12' fill='%23757575'>Vino</text></svg>" class="img-thumbnail" width="40"></td>
+                                <td>Vino Tinto Reserva 750ml</td>
+                                <td>Licorería</td>
+                                <td>$12.90</td>
+                                <td>22 unidades</td>
+                                <td class="status-active">Activo</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary action-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-success action-btn"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23c8e6c9'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='10' fill='%23757575'>Manzana</text></svg>" class="img-thumbnail" width="40"></td>
+                                <td>Manzanas Royal Gala (kg)</td>
+                                <td>Frutas y Verduras</td>
+                                <td>$3.20</td>
+                                <td class="low-stock">5 unidades</td>
+                                <td class="status-active">Activo</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary action-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-success action-btn"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><rect width='40' height='40' fill='%23ffecb3'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='14' fill='%23757575'>Detergente</text></svg>" class="img-thumbnail" width="40"></td>
+                                <td>Detergente Líquido 2L</td>
+                                <td>Limpieza</td>
+                                <td>$7.50</td>
+                                <td>0 unidades</td>
+                                <td class="status-inactive">Agotado</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary action-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-success action-btn"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <div class="footer mt-5">
+        <div class="container">
+            <p class="mb-0">BodegónApp © 2023 - Sistema de Gestión para Bodegones</p>
+            <p class="mb-0">v1.0.0</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Funcionalidad para el modal
-        const modal = document.getElementById('productModal');
-        const addProductBtn = document.getElementById('addProductBtn');
-        const closeModal = document.getElementById('closeModal');
-        const cancelModal = document.getElementById('cancelModal');
-        
-        addProductBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
+        // Funcionalidad básica para los botones de acción
+        document.querySelectorAll('.action-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.querySelector('i').className;
+                if (action.includes('fa-edit')) {
+                    alert('Funcionalidad de edición en desarrollo');
+                } else if (action.includes('fa-chart-line')) {
+                    alert('Funcionalidad de estadísticas en desarrollo');
+                } else if (action.includes('fa-times')) {
+                    alert('Funcionalidad de desactivar en desarrollo');
+                }
+            });
         });
         
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-        
-        cancelModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-        
-        // Cerrar modal al hacer clic fuera del contenido
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-        
-        // Funcionalidad para las categorías
-        const categoryItems = document.querySelectorAll('.category-item');
-        categoryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                categoryItems.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
+        // Funcionalidad para los badges de filtro
+        document.querySelectorAll('.filter-badge').forEach(badge => {
+            badge.addEventListener('click', function() {
+                if (this.classList.contains('bg-primary')) {
+                    this.classList.remove('bg-primary');
+                    this.classList.add('bg-secondary');
+                } else {
+                    this.classList.remove('bg-secondary');
+                    this.classList.add('bg-primary');
+                }
             });
         });
     </script>
