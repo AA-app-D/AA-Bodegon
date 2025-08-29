@@ -380,6 +380,46 @@
       color: var(--text-secondary);
     }
     
+    /* Paginación */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+    
+    .pagination button {
+      padding: 8px 16px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .pagination button:hover:not(:disabled) {
+      background: var(--primary-light);
+      color: white;
+    }
+    
+    .pagination button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .pagination-info {
+      margin: 0 15px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
     /* Modal */
     .modal {
       display: none;
@@ -615,6 +655,10 @@
         right: auto;
         left: 0;
       }
+      
+      .pagination {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
@@ -703,6 +747,11 @@
           <!-- Los productos se cargarán dinámicamente -->
         </tbody>
       </table>
+    </div>
+    
+    <!-- Paginación -->
+    <div class="pagination" id="paginacion">
+      <!-- Los controles de paginación se generarán dinámicamente -->
     </div>
     
     <!-- Panel de estadísticas -->
@@ -816,6 +865,11 @@
     // Tasas de cambio (se actualizará desde BCV)
     let TASA_CAMBIO = 36.20; // Valor inicial, se actualizará
 
+    // Configuración de paginación
+    const PRODUCTOS_POR_PAGINA = 10; // Límite de productos por página
+    let paginaActual = 1;
+    let productosFiltrados = [];
+
     // Referencias a elementos del DOM
     const modal = document.getElementById('productModal');
     const formProducto = document.getElementById('formProducto');
@@ -836,6 +890,7 @@
     const listaProveedores = document.getElementById('listaProveedores');
     const tablaProductos = document.getElementById('tablaProductos');
     const panelEstadisticas = document.getElementById('panelEstadisticas');
+    const paginacion = document.getElementById('paginacion');
     const searchInput = document.getElementById('searchInput');
     const filtroCategoria = document.getElementById('filtroCategoria');
     const filtroEstado = document.getElementById('filtroEstado');
@@ -1194,71 +1249,10 @@
       openModal();
     }
 
-    // Renderizar productos en la tabla
-    function renderizarProductos() {
-      tablaProductos.innerHTML = '';
-      
-      if (productos.length === 0) {
-        tablaProductos.innerHTML = `
-          <tr>
-            <td colspan="8" style="text-align: center; padding: 30px;">
-              No hay productos registrados. Haz clic en "Nuevo Producto" para agregar uno.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-      
-      let productosFiltrados = [...productos];
-      
-      // Aplicar filtros
-      const searchTerm = searchInput.value.toLowerCase();
-      const categoriaFiltro = filtroCategoria.value;
-      const estadoFiltro = filtroEstado.value;
-      
-      if (searchTerm) {
-        productosFiltrados = productosFiltrados.filter(p => 
-          p.nombre.toLowerCase().includes(searchTerm) || 
-          p.codigoBarras.includes(searchTerm)
-        );
-      }
-      
-      if (categoriaFiltro) {
-        productosFiltrados = productosFiltrados.filter(p => p.categoria === categoriaFiltro);
-      }
-      
-      if (estadoFiltro) {
-        if (estadoFiltro === 'Stock Bajo') {
-          productosFiltrados = productosFiltrados.filter(p => p.stock <= p.stockMinimo);
-        } else {
-          productosFiltrados = productosFiltrados.filter(p => p.estado === estadoFiltro);
-        }
-      }
-      
-      // Aplicar ordenamiento
-      ordenarProductosLista(productosFiltrados);
-      
-      // Renderizar productos filtrados
-      productosFiltrados.forEach(producto => {
-        const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
-        const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : producto.estado;
-        
-        tablaProductos.innerHTML += `
-          <tr>
-            <td><img src="${producto.imagen}" class="product-img" alt="${producto.nombre}"></td>
-            <td>${producto.nombre}</td>
-            <td>${producto.categoria}</td>
-            <td>${producto.precioBs.toLocaleString()} Bs</td>
-            <td>${producto.precioDollar.toFixed(2)} $</td>
-            <td>${producto.stock} unidades</td>
-            <td><span class="status ${statusClass}">${statusText}</span></td>
-            <td class="action-cell">
-              <button class="action-btn edit-btn" onclick="editarProducto('${producto.id}')"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete-btn" onclick="eliminarProducto('${producto.id}')"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
-        `;
-      });
+    // Filtrar productos según criterios
+    function filtrarProductos() {
+      paginaActual = 1; // Reiniciar a la primera página al filtrar
+      renderizarProductos();
     }
 
     // Ordenar productos según el criterio seleccionado
@@ -1266,6 +1260,7 @@
       renderizarProductos();
     }
 
+    // Ordenar lista de productos
     function ordenarProductosLista(lista) {
       const orden = filtroOrden.value;
       
@@ -1291,9 +1286,138 @@
       }
     }
 
-    // Filtrar productos según la búsqueda
-    function filtrarProductos() {
-      renderizarProductos();
+    // Renderizar productos en la tabla con paginación
+    function renderizarProductos() {
+      tablaProductos.innerHTML = '';
+      
+      if (productos.length === 0) {
+        tablaProductos.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 30px;">
+              No hay productos registrados. Haz clic en "Nuevo Producto" para agregar uno.
+            </td>
+          </tr>
+        `;
+        paginacion.innerHTML = '';
+        return;
+      }
+      
+      // Aplicar filtros
+      const searchTerm = searchInput.value.toLowerCase();
+      const categoriaFiltro = filtroCategoria.value;
+      const estadoFiltro = filtroEstado.value;
+      
+      productosFiltrados = [...productos];
+      
+      if (searchTerm) {
+        productosFiltrados = productosFiltrados.filter(p => 
+          p.nombre.toLowerCase().includes(searchTerm) || 
+          p.codigoBarras.includes(searchTerm)
+        );
+      }
+      
+      if (categoriaFiltro) {
+        productosFiltrados = productosFiltrados.filter(p => p.categoria === categoriaFiltro);
+      }
+      
+      if (estadoFiltro) {
+        if (estadoFiltro === 'Stock Bajo') {
+          productosFiltrados = productosFiltrados.filter(p => p.stock <= p.stockMinimo);
+        } else {
+          productosFiltrados = productosFiltrados.filter(p => p.estado === estadoFiltro);
+        }
+      }
+      
+      // Aplicar ordenamiento
+      ordenarProductosLista(productosFiltrados);
+      
+      // Calcular paginación
+      const totalPaginas = Math.ceil(productosFiltrados.length / PRODUCTOS_POR_PAGINA);
+      const inicio = (paginaActual - 1) * PRODUCTOS_POR_PAGINA;
+      const fin = inicio + PRODUCTOS_POR_PAGINA;
+      const productosPagina = productosFiltrados.slice(inicio, fin);
+      
+      // Renderizar productos de la página actual
+      productosPagina.forEach(producto => {
+        const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
+        const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : producto.estado;
+        
+        tablaProductos.innerHTML += `
+          <tr>
+            <td><img src="${producto.imagen}" class="product-img" alt="${producto.nombre}"></td>
+            <td>${producto.nombre}</td>
+            <td>${producto.categoria}</td>
+            <td>${producto.precioBs.toLocaleString()} Bs</td>
+            <td>${producto.precioDollar.toFixed(2)} $</td>
+            <td>${producto.stock} unidades</td>
+            <td><span class="status ${statusClass}">${statusText}</span></td>
+            <td class="action-cell">
+              <button class="action-btn edit-btn" onclick="editarProducto('${producto.id}')"><i class="fas fa-edit"></i></button>
+              <button class="action-btn delete-btn" onclick="eliminarProducto('${producto.id}')"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+      
+      // Renderizar controles de paginación
+      renderizarPaginacion(totalPaginas);
+    }
+
+    // Renderizar controles de paginación
+    function renderizarPaginacion(totalPaginas) {
+      paginacion.innerHTML = '';
+      
+      if (totalPaginas <= 1) return;
+      
+      // Botón Anterior
+      const btnAnterior = document.createElement('button');
+      btnAnterior.innerHTML = '<i class="fas fa-chevron-left"></i>';
+      btnAnterior.disabled = paginaActual === 1;
+      btnAnterior.addEventListener('click', () => {
+        if (paginaActual > 1) {
+          paginaActual--;
+          renderizarProductos();
+        }
+      });
+      paginacion.appendChild(btnAnterior);
+      
+      // Páginas
+      const maxBotones = 5;
+      let inicioPagina = Math.max(1, paginaActual - Math.floor(maxBotones / 2));
+      let finPagina = Math.min(totalPaginas, inicioPagina + maxBotones - 1);
+      
+      if (finPagina - inicioPagina + 1 < maxBotones) {
+        inicioPagina = Math.max(1, finPagina - maxBotones + 1);
+      }
+      
+      for (let i = inicioPagina; i <= finPagina; i++) {
+        const btnPagina = document.createElement('button');
+        btnPagina.textContent = i;
+        btnPagina.classList.toggle('active', i === paginaActual);
+        btnPagina.addEventListener('click', () => {
+          paginaActual = i;
+          renderizarProductos();
+        });
+        paginacion.appendChild(btnPagina);
+      }
+      
+      // Información de paginación
+      const info = document.createElement('div');
+      info.className = 'pagination-info';
+      info.textContent = `Página ${paginaActual} de ${totalPaginas} - ${productosFiltrados.length} productos`;
+      paginacion.appendChild(info);
+      
+      // Botón Siguiente
+      const btnSiguiente = document.createElement('button');
+      btnSiguiente.innerHTML = '<i class="fas fa-chevron-right"></i>';
+      btnSiguiente.disabled = paginaActual === totalPaginas;
+      btnSiguiente.addEventListener('click', () => {
+        if (paginaActual < totalPaginas) {
+          paginaActual++;
+          renderizarProductos();
+        }
+      });
+      paginacion.appendChild(btnSiguiente);
     }
 
     // Actualizar panel de estadísticas
