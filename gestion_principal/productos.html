@@ -1,27 +1,124 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Página Verde Manzana</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-    body {
-      /* Fondo degradado: verde manzana arriba, blanco cristal abajo */
-      background: linear-gradient(to bottom, #8bc34a, #ffffff);
-      /* Imagen que combina viveres, frutas y licores */
-      background-image: url("https://images.unsplash.com/photo-1516594798947-e65505dbb29d?auto=format&fit=crop&w=1350&q=80");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-blend-mode: multiply;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Víveres y Licores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #a8e063, #56ab2f); /* Verde manzana */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.85;
+            z-index: -1;
+        }
+        
+        .glass-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: -1;
+        }
+        
+        /* Efectos decorativos de burbujas (simulando efecto cristal) */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .bubble:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .bubble:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 75%;
+            animation-delay: -2s;
+        }
+        
+        .bubble:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            left: 80%;
+            animation-delay: -4s;
+        }
+        
+        .bubble:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 70%;
+            left: 15%;
+            animation-delay: -6s;
+        }
+        
+        .bubble:nth-child(5) {
+            width: 50px;
+            height: 50px;
+            top: 30%;
+            left: 50%;
+            animation-delay: -8s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(0) rotate(10deg);
+            }
+            75% {
+                transform: translateY(20px) rotate(5deg);
+            }
+        }
+    </style>
 </head>
-<body></body>
+<body>
+    <!-- Efecto de cristal -->
+    <div class="glass-effect"></div>
+    
+    <!-- Burbujas decorativas -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+</body>
 </html>
