@@ -63,42 +63,6 @@
       gap: 5px;
     }
     
-    /* Contenedor principal */
-    .container {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-    
-    /* Panel lateral */
-    .sidebar {
-      width: 250px;
-      background-color: rgba(43, 43, 43, 0.85);
-      color: white;
-      padding: 20px 0;
-      overflow-y: auto;
-    }
-    .sidebar-menu {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .sidebar-menu li {
-      padding: 12px 20px;
-      border-left: 4px solid transparent;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .sidebar-menu li:hover {
-      background-color: rgba(139, 195, 74, 0.2);
-    }
-    .sidebar-menu li.active {
-      background-color: rgba(139, 195, 74, 0.3);
-      border-left-color: #8bc34a;
-    }
-    
     /* Contenido principal */
     .main-content {
       flex: 1;
@@ -320,16 +284,12 @@
     
     /* Responsive */
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        order: 2;
-      }
       .form-row {
         flex-direction: column;
         gap: 0;
+      }
+      .filters {
+        flex-direction: column;
       }
     }
   </style>
@@ -339,176 +299,156 @@
   <header>
     <div class="logo">
       <i class="fas fa-store logo-icon"></i>
-      <h1>Bodegón App</h1>
+      <h1>Bodegón App - Productos</h1>
     </div>
     <div class="user-actions">
-      <button><i class="fas fa-shopping-cart"></i> Ventas</button>
-      <button><i class="fas fa-bell"></i> Alertas</button>
       <button><i class="fas fa-user"></i> Usuario</button>
     </div>
   </header>
 
-  <!-- Contenedor principal -->
-  <div class="container">
-    <!-- Panel lateral -->
-    <div class="sidebar">
-      <ul class="sidebar-menu">
-        <li class="active"><i class="fas fa-box"></i> Productos</li>
-        <li><i class="fas fa-warehouse"></i> Inventario</li>
-        <li><i class="fas fa-file-invoice-dollar"></i> Facturación</li>
-        <li><i class="fas fa-cash-register"></i> Caja</li>
-        <li><i class="fas fa-glass-martini-alt"></i> Licorería</li>
-        <li><i class="fas fa-users"></i> Clientes</li>
-        <li><i class="fas fa-truck"></i> Proveedores</li>
-        <li><i class="fas fa-chart-line"></i> Reportes</li>
-        <li><i class="fas fa-cog"></i> Configuración</li>
-      </ul>
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <h2><i class="fas fa-box"></i> Gestión de Productos</h2>
+    
+    <!-- Barra de herramientas -->
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Buscar productos...">
+      </div>
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="openModal()">
+          <i class="fas fa-plus"></i> Nuevo Producto
+        </button>
+        <button class="btn btn-secondary">
+          <i class="fas fa-file-export"></i> Exportar
+        </button>
+      </div>
     </div>
-
-    <!-- Contenido principal -->
-    <div class="main-content">
-      <h2><i class="fas fa-box"></i> Gestión de Productos</h2>
-      
-      <!-- Barra de herramientas -->
-      <div class="toolbar">
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Buscar productos...">
-        </div>
-        <div class="action-buttons">
-          <button class="btn btn-primary" onclick="openModal()">
-            <i class="fas fa-plus"></i> Nuevo Producto
-          </button>
-          <button class="btn btn-secondary">
-            <i class="fas fa-file-export"></i> Exportar
-          </button>
-        </div>
+    
+    <!-- Filtros -->
+    <div class="filters">
+      <div class="filter-item">
+        <label>Categoría</label>
+        <select>
+          <option>Todas las categorías</option>
+          <option>Alimentos</option>
+          <option>Bebidas</option>
+          <option>Limpieza</option>
+          <option>Licores</option>
+        </select>
       </div>
-      
-      <!-- Filtros -->
-      <div class="filters">
-        <div class="filter-item">
-          <label>Categoría</label>
-          <select>
-            <option>Todas las categorías</option>
-            <option>Alimentos</option>
-            <option>Bebidas</option>
-            <option>Limpieza</option>
-            <option>Licores</option>
-          </select>
-        </div>
-        <div class="filter-item">
-          <label>Estado</label>
-          <select>
-            <option>Todos</option>
-            <option>Activo</option>
-            <option>Inactivo</option>
-            <option>Stock Bajo</option>
-          </select>
-        </div>
-        <div class="filter-item">
-          <label>Ordenar por</label>
-          <select>
-            <option>Nombre A-Z</option>
-            <option>Nombre Z-A</option>
-            <option>Precio Mayor</option>
-            <option>Precio Menor</option>
-          </select>
-        </div>
+      <div class="filter-item">
+        <label>Estado</label>
+        <select>
+          <option>Todos</option>
+          <option>Activo</option>
+          <option>Inactivo</option>
+          <option>Stock Bajo</option>
+        </select>
       </div>
-      
-      <!-- Tabla de productos -->
-      <table class="products-table">
-        <thead>
-          <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Precio (Bs)</th>
-            <th>Precio ($)</th>
-            <th>Existencia</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Arroz"></td>
-            <td>Arroz Mary</td>
-            <td>Alimentos</td>
-            <td>12.500 Bs</td>
-            <td>3,45 $</td>
-            <td>45 unidades</td>
-            <td><span class="status status-active">Activo</span></td>
-            <td class="action-cell">
-              <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td><img src="https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Harina"></td>
-            <td>Harina PAN</td>
-            <td>Alimentos</td>
-            <td>8.200 Bs</td>
-            <td>2,26 $</td>
-            <td>22 unidades</td>
-            <td><span class="status status-active">Activo</span></td>
-            <td class="action-cell">
-              <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td><img src="https://images.unsplash.com/photo-1603398938373-e54da0bb5e48?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Whisky"></td>
-            <td>Whisky Black Label</td>
-            <td>Licores</td>
-            <td>185.000 Bs</td>
-            <td>51,10 $</td>
-            <td>5 unidades</td>
-            <td><span class="status status-low">Stock Bajo</span></td>
-            <td class="action-cell">
-              <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td><img src="https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Detergente"></td>
-            <td>Detergente Ace</td>
-            <td>Limpieza</td>
-            <td>15.800 Bs</td>
-            <td>4,36 $</td>
-            <td>18 unidades</td>
-            <td><span class="status status-active">Activo</span></td>
-            <td class="action-cell">
-              <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <!-- Panel de estadísticas -->
-      <div class="stats-panel">
-        <div class="stat-card">
-          <div class="stat-title">Total de Productos</div>
-          <div class="stat-value">128</div>
-          <div class="stat-desc">En inventario</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-title">Productos con Stock Bajo</div>
-          <div class="stat-value">12</div>
-          <div class="stat-desc">Necesitan reposición</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-title">Valor Total</div>
-          <div class="stat-value">4.2M Bs</div>
-          <div class="stat-desc">≈ 1,160 $</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-title">Categorías</div>
-          <div class="stat-value">8</div>
-          <div class="stat-desc">Diferentes tipos</div>
-        </div>
+      <div class="filter-item">
+        <label>Ordenar por</label>
+        <select>
+          <option>Nombre A-Z</option>
+          <option>Nombre Z-A</option>
+          <option>Precio Mayor</option>
+          <option>Precio Menor</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Tabla de productos -->
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio (Bs)</th>
+          <th>Precio ($)</th>
+          <th>Existencia</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Arroz"></td>
+          <td>Arroz Mary</td>
+          <td>Alimentos</td>
+          <td>12.500 Bs</td>
+          <td>3,45 $</td>
+          <td>45 unidades</td>
+          <td><span class="status status-active">Activo</span></td>
+          <td class="action-cell">
+            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <td><img src="https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Harina"></td>
+          <td>Harina PAN</td>
+          <td>Alimentos</td>
+          <td>8.200 Bs</td>
+          <td>2,26 $</td>
+          <td>22 unidades</td>
+          <td><span class="status status-active">Activo</span></td>
+          <td class="action-cell">
+            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <td><img src="https://images.unsplash.com/photo-1603398938373-e54da0bb5e48?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Whisky"></td>
+          <td>Whisky Black Label</td>
+          <td>Licores</td>
+          <td>185.000 Bs</td>
+          <td>51,10 $</td>
+          <td>5 unidades</td>
+          <td><span class="status status-low">Stock Bajo</span></td>
+          <td class="action-cell">
+            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <td><img src="https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Detergente"></td>
+          <td>Detergente Ace</td>
+          <td>Limpieza</td>
+          <td>15.800 Bs</td>
+          <td>4,36 $</td>
+          <td>18 unidades</td>
+          <td><span class="status status-active">Activo</span></td>
+          <td class="action-cell">
+            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Panel de estadísticas -->
+    <div class="stats-panel">
+      <div class="stat-card">
+        <div class="stat-title">Total de Productos</div>
+        <div class="stat-value">128</div>
+        <div class="stat-desc">En inventario</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Productos con Stock Bajo</div>
+        <div class="stat-value">12</div>
+        <div class="stat-desc">Necesitan reposición</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Valor Total</div>
+        <div class="stat-value">4.2M Bs</div>
+        <div class="stat-desc">≈ 1,160 $</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Categorías</div>
+        <div class="stat-value">8</div>
+        <div class="stat-desc">Diferentes tipos</div>
       </div>
     </div>
   </div>
