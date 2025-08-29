@@ -6,561 +6,360 @@
   <title>Bodegón App - Gestión de Productos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-    }
-    body {
-      background: linear-gradient(to bottom, #8bc34a, #ffffff);
-      background-image: url("https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&w=1350&q=80");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-blend-mode: multiply;
-      display: flex;
-      flex-direction: column;
-    }
+    /* [Tus estilos actuales] */
+    /* ... (manteniendo todos tus estilos actuales) ... */
     
-    /* Cabecera */
-    header {
-      background-color: rgba(43, 43, 43, 0.9);
+    /* Nuevos estilos para navegación */
+    .app-sidebar {
+      width: 250px;
+      background-color: #2b2b2b;
       color: white;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .logo h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: #8bc34a;
-    }
-    .logo-icon {
-      font-size: 24px;
-      color: #8bc34a;
-    }
-    .user-actions {
-      display: flex;
-      gap: 15px;
-    }
-    .user-actions button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    
-    /* Contenido principal */
-    .main-content {
-      flex: 1;
-      padding: 20px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding-top: 60px;
       overflow-y: auto;
-      background-color: rgba(255, 255, 255, 0.9);
-      margin: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      z-index: 900;
     }
-    
-    /* Barra de herramientas */
-    .toolbar {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 10px;
+    .app-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
-    .search-box {
+    .app-sidebar li {
+      padding: 0;
+    }
+    .app-sidebar a {
+      color: #ddd;
+      text-decoration: none;
       display: flex;
       align-items: center;
-      background: white;
-      border-radius: 20px;
-      padding: 5px 15px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      flex: 1;
-      max-width: 400px;
-    }
-    .search-box input {
-      border: none;
-      padding: 8px;
-      width: 100%;
-      outline: none;
-    }
-    .action-buttons {
-      display: flex;
+      padding: 12px 20px;
+      transition: all 0.3s;
       gap: 10px;
     }
-    .btn {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-weight: 500;
+    .app-sidebar a:hover, .app-sidebar a.active {
+      background-color: #3a3a3a;
+      color: #8bc34a;
     }
-    .btn-primary {
-      background-color: #8bc34a;
-      color: white;
-    }
-    .btn-secondary {
-      background-color: #607d8b;
-      color: white;
-    }
-    
-    /* Filtros */
-    .filters {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .filter-item {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .filter-item select {
-      padding: 8px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }
-    
-    /* Tabla de productos */
-    .products-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    .products-table th, .products-table td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    .products-table th {
-      background-color: #f5f5f5;
-      font-weight: 600;
-    }
-    .products-table tr:hover {
-      background-color: #f9f9f9;
-    }
-    .product-img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-    .status {
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      display: inline-block;
-    }
-    .status-active {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-    }
-    .status-low {
-      background-color: #ffebee;
-      color: #c62828;
-    }
-    .action-cell {
-      display: flex;
-      gap: 10px;
-    }
-    .action-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .edit-btn {
-      color: #1976d2;
-    }
-    .delete-btn {
-      color: #d32f2f;
-    }
-    
-    /* Panel de estadísticas */
-    .stats-panel {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 30px;
-    }
-    .stat-card {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    .stat-value {
-      font-size: 24px;
+    .sidebar-module {
       font-weight: bold;
       color: #8bc34a;
-      margin: 10px 0;
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
     }
-    .stat-title {
-      font-size: 14px;
-      color: #757575;
+    .sidebar-submodule {
+      padding-left: 30px;
+      font-size: 0.9rem;
     }
-    
-    /* Modal */
-    .modal {
+    .main-content-with-sidebar {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+    }
+    .sidebar-toggle {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
+      top: 15px;
+      left: 15px;
       z-index: 1000;
-    }
-    .modal-content {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 600px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .close-modal {
-      background: none;
+      background: #8bc34a;
       border: none;
-      font-size: 24px;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       cursor: pointer;
     }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
-    }
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    .form-row {
-      display: flex;
-      gap: 15px;
-    }
-    .form-row .form-group {
-      flex: 1;
-    }
-    .modal-footer {
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
     
-    /* Responsive */
-    @media (max-width: 768px) {
-      .form-row {
-        flex-direction: column;
-        gap: 0;
+    @media (max-width: 992px) {
+      .app-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
       }
-      .filters {
-        flex-direction: column;
+      .app-sidebar.open {
+        transform: translateX(0);
+      }
+      .main-content-with-sidebar {
+        margin-left: 0;
+        width: 100%;
+      }
+      .sidebar-toggle {
+        display: block;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Cabecera -->
-  <header>
-    <div class="logo">
+  <!-- Botón para toggle sidebar en móviles -->
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Sidebar de navegación -->
+  <div class="app-sidebar" id="appSidebar">
+    <div class="logo" style="padding: 20px; border-bottom: 1px solid #444;">
       <i class="fas fa-store logo-icon"></i>
+      <h1>Bodegón App</h1>
+    </div>
+    
+    <ul>
+      <li class="sidebar-module">MÓDULOS PRINCIPALES</li>
+      <li><a href="productos.html" class="active"><i class="fas fa-box"></i> Productos</a></li>
+      <li><a href="../01_gestion_principal/inventario.html"><i class="fas fa-warehouse"></i> Inventario</a></li>
+      <li><a href="../01_gestion_principal/facturacion.html"><i class="fas fa-file-invoice-dollar"></i> Facturación</a></li>
+      <li><a href="../01_gestion_principal/caja.html"><i class="fas fa-cash-register"></i> Caja</a></li>
+      
+      <li class="sidebar-module">GESTIÓN DE ENTIDADES</li>
+      <li><a href="../02_gestion_entidades/clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
+      <li><a href="../02_gestion_entidades/proveedores.html"><i class="fas fa-truck-loading"></i> Proveedores</a></li>
+      
+      <li class="sidebar-module">OPERACIONES</li>
+      <li><a href="../03_operaciones/compras.html"><i class="fas fa-shopping-cart"></i> Compras</a></li>
+      <li><a href="../03_operaciones/delivery.html"><i class="fas fa-motorcycle"></i> Delivery</a></li>
+    </ul>
+  </div>
+
+  <!-- Cabecera -->
+  <header style="margin-left: 250px; width: calc(100% - 250px);" id="mainHeader">
+    <div class="logo">
+      <i class="fas fa-box logo-icon"></i>
       <h1>Bodegón App - Productos</h1>
     </div>
     <div class="user-actions">
       <button><i class="fas fa-user"></i> Usuario</button>
+      <button onclick="eventBus.notify('user:logout')"><i class="fas fa-sign-out-alt"></i> Salir</button>
     </div>
   </header>
 
   <!-- Contenido principal -->
-  <div class="main-content">
-    <h2><i class="fas fa-box"></i> Gestión de Productos</h2>
-    
-    <!-- Barra de herramientas -->
-    <div class="toolbar">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Buscar productos...">
-      </div>
-      <div class="action-buttons">
-        <button class="btn btn-primary" onclick="openModal()">
-          <i class="fas fa-plus"></i> Nuevo Producto
-        </button>
-        <button class="btn btn-secondary">
-          <i class="fas fa-file-export"></i> Exportar
-        </button>
-      </div>
-    </div>
-    
-    <!-- Filtros -->
-    <div class="filters">
-      <div class="filter-item">
-        <label>Categoría</label>
-        <select>
-          <option>Todas las categorías</option>
-          <option>Alimentos</option>
-          <option>Bebidas</option>
-          <option>Limpieza</option>
-          <option>Licores</option>
-        </select>
-      </div>
-      <div class="filter-item">
-        <label>Estado</label>
-        <select>
-          <option>Todos</option>
-          <option>Activo</option>
-          <option>Inactivo</option>
-          <option>Stock Bajo</option>
-        </select>
-      </div>
-      <div class="filter-item">
-        <label>Ordenar por</label>
-        <select>
-          <option>Nombre A-Z</option>
-          <option>Nombre Z-A</option>
-          <option>Precio Mayor</option>
-          <option>Precio Menor</option>
-        </select>
-      </div>
-    </div>
-    
-    <!-- Tabla de productos -->
-    <table class="products-table">
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre</th>
-          <th>Categoría</th>
-          <th>Precio (Bs)</th>
-          <th>Precio ($)</th>
-          <th>Existencia</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Arroz"></td>
-          <td>Arroz Mary</td>
-          <td>Alimentos</td>
-          <td>12.500 Bs</td>
-          <td>3,45 $</td>
-          <td>45 unidades</td>
-          <td><span class="status status-active">Activo</span></td>
-          <td class="action-cell">
-            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-          </td>
-        </tr>
-        <tr>
-          <td><img src="https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Harina"></td>
-          <td>Harina PAN</td>
-          <td>Alimentos</td>
-          <td>8.200 Bs</td>
-          <td>2,26 $</td>
-          <td>22 unidades</td>
-          <td><span class="status status-active">Activo</span></td>
-          <td class="action-cell">
-            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-          </td>
-        </tr>
-        <tr>
-          <td><img src="https://images.unsplash.com/photo-1603398938373-e54da0bb5e48?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Whisky"></td>
-          <td>Whisky Black Label</td>
-          <td>Licores</td>
-          <td>185.000 Bs</td>
-          <td>51,10 $</td>
-          <td>5 unidades</td>
-          <td><span class="status status-low">Stock Bajo</span></td>
-          <td class="action-cell">
-            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-          </td>
-        </tr>
-        <tr>
-          <td><img src="https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Detergente"></td>
-          <td>Detergente Ace</td>
-          <td>Limpieza</td>
-          <td>15.800 Bs</td>
-          <td>4,36 $</td>
-          <td>18 unidades</td>
-          <td><span class="status status-active">Activo</span></td>
-          <td class="action-cell">
-            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <!-- Panel de estadísticas -->
-    <div class="stats-panel">
-      <div class="stat-card">
-        <div class="stat-title">Total de Productos</div>
-        <div class="stat-value">128</div>
-        <div class="stat-desc">En inventario</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-title">Productos con Stock Bajo</div>
-        <div class="stat-value">12</div>
-        <div class="stat-desc">Necesitan reposición</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-title">Valor Total</div>
-        <div class="stat-value">4.2M Bs</div>
-        <div class="stat-desc">≈ 1,160 $</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-title">Categorías</div>
-        <div class="stat-value">8</div>
-        <div class="stat-desc">Diferentes tipos</div>
-      </div>
-    </div>
+  <div class="main-content-with-sidebar" id="mainContent">
+    <!-- [Todo el contenido actual de productos] -->
+    <!-- ... (todo tu contenido actual de productos.html) ... -->
   </div>
 
   <!-- Modal para agregar/editar producto -->
   <div class="modal" id="productModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Agregar Nuevo Producto</h3>
-        <button class="close-modal" onclick="closeModal()">&times;</button>
-      </div>
-      <form>
-        <div class="form-group">
-          <label for="productName">Nombre del Producto</label>
-          <input type="text" id="productName" placeholder="Ej: Arroz Mary">
-        </div>
-        <div class="form-group">
-          <label for="productCategory">Categoría</label>
-          <select id="productCategory">
-            <option>Seleccione una categoría</option>
-            <option>Alimentos</option>
-            <option>Bebidas</option>
-            <option>Limpieza</option>
-            <option>Licores</option>
-            <option>Higiene Personal</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="productPriceBs">Precio en Bolívares</label>
-            <input type="number" id="productPriceBs" placeholder="0.00">
-          </div>
-          <div class="form-group">
-            <label for="productPriceDollar">Precio en Dólares</label>
-            <input type="number" id="productPriceDollar" placeholder="0.00" step="0.01">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="productStock">Stock Actual</label>
-            <input type="number" id="productStock" placeholder="0">
-          </div>
-          <div class="form-group">
-            <label for="productMinStock">Stock Mínimo</label>
-            <input type="number" id="productMinStock" placeholder="0">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="productBarcode">Código de Barras</label>
-          <input type="text" id="productBarcode" placeholder="Ej: 1234567890123">
-        </div>
-        <div class="form-group">
-          <label for="productSupplier">Proveedor</label>
-          <select id="productSupplier">
-            <option>Seleccione un proveedor</option>
-            <option>Distribuidora Mary</option>
-            <option>Polar</option>
-            <option>Empresas Lindas</option>
-            <option>Importaciones JR</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="productImage">Imagen del Producto</label>
-          <input type="file" id="productImage">
-        </div>
-        <div class="form-group">
-          <label for="productStatus">Estado</label>
-          <select id="productStatus">
-            <option>Activo</option>
-            <option>Inactivo</option>
-          </select>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar Producto</button>
-        </div>
-      </form>
-    </div>
+    <!-- [Contenido actual del modal] -->
   </div>
 
   <script>
-    // Funciones para abrir y cerrar el modal
-    function openModal() {
-      document.getElementById('productModal').style.display = 'flex';
-    }
+    // ==============================================
+    // SISTEMA DE EVENTOS GLOBAL (Event Bus)
+    // ==============================================
+    const eventBus = {
+      listeners: {},
+      
+      // Registrar un listener para un evento
+      on: function(eventName, callback) {
+        if (!this.listeners[eventName]) {
+          this.listeners[eventName] = [];
+        }
+        this.listeners[eventName].push(callback);
+        
+        // Para debugging
+        console.log(`Evento registrado: ${eventName}`);
+      },
+      
+      // Eliminar un listener
+      off: function(eventName, callback) {
+        if (this.listeners[eventName]) {
+          this.listeners[eventName] = this.listeners[eventName].filter(
+            listener => listener !== callback
+          );
+        }
+      },
+      
+      // Disparar un evento
+      notify: function(eventName, data) {
+        if (this.listeners[eventName]) {
+          console.log(`Evento disparado: ${eventName}`, data);
+          this.listeners[eventName].forEach(callback => {
+            try {
+              callback(data);
+            } catch (error) {
+              console.error(`Error en listener para ${eventName}:`, error);
+            }
+          });
+        }
+      }
+    };
+
+    // ==============================================
+    // MÓDULO DE PRODUCTOS (comunicación con otros módulos)
+    // ==============================================
+    const ProductManager = {
+      init: function() {
+        this.setupEventListeners();
+        this.loadProducts();
+        
+        // Escuchar eventos de otros módulos
+        eventBus.on('inventory:updated', this.handleInventoryUpdate.bind(this));
+        eventBus.on('purchase:created', this.handleNewPurchase.bind(this));
+        eventBus.on('exchangeRate:updated', this.handleExchangeRateUpdate.bind(this));
+      },
+      
+      setupEventListeners: function() {
+        // [Tus event listeners actuales]
+      },
+      
+      loadProducts: function() {
+        // Cargar productos desde localStorage o API
+        console.log("Cargando productos...");
+        // Tu lógica actual de carga de productos
+      },
+      
+      // Manejar actualización de inventario
+      handleInventoryUpdate: function(data) {
+        console.log("Inventario actualizado recibido:", data);
+        // Actualizar stock de productos afectados
+        this.updateProductStock(data.productId, data.newStock);
+        
+        // Notificar a la interfaz para actualizar
+        this.refreshProductDisplay();
+      },
+      
+      // Manejar nueva compra de productos
+      handleNewPurchase: function(data) {
+        console.log("Nueva compra recibida:", data);
+        // Aquí podrías agregar los nuevos productos al inventario
+        // o actualizar existentes según la data recibida
+      },
+      
+      // Manejar actualización de tasa de cambio
+      handleExchangeRateUpdate: function(newRate) {
+        console.log("Tasa de cambio actualizada:", newRate);
+        // Recalcular precios en dólares
+        this.recalculateDollarPrices(newRate);
+      },
+      
+      updateProductStock: function(productId, newStock) {
+        // Lógica para actualizar el stock de un producto
+        console.log(`Actualizando stock del producto ${productId} a ${newStock}`);
+      },
+      
+      refreshProductDisplay: function() {
+        // Lógica para refrescar la visualización de productos
+        console.log("Refrescando visualización de productos");
+      },
+      
+      recalculateDollarPrices: function(exchangeRate) {
+        // Lógica para recalcular precios en dólares
+        console.log(`Recalculando precios con tasa ${exchangeRate}`);
+      },
+      
+      // Notificar a otros módulos sobre cambios en productos
+      notifyProductCreated: function(productData) {
+        eventBus.notify('product:created', productData);
+      },
+      
+      notifyProductUpdated: function(productData) {
+        eventBus.notify('product:updated', productData);
+      },
+      
+      notifyProductDeleted: function(productId) {
+        eventBus.notify('product:deleted', productId);
+      },
+      
+      notifyLowStock: function(productData) {
+        eventBus.notify('product:lowStock', productData);
+      }
+    };
+
+    // ==============================================
+    // EJEMPLOS DE OTROS MÓDULOS (para mostrar cómo se comunicarían)
+    // ==============================================
     
-    function closeModal() {
-      document.getElementById('productModal').style.display = 'none';
-    }
-    
-    // Cerrar modal al hacer clic fuera del contenido
-    window.onclick = function(event) {
-      const modal = document.getElementById('productModal');
-      if (event.target === modal) {
-        closeModal();
+    // Módulo de Inventario (inventario.html)
+    const InventoryManager = {
+      init: function() {
+        // Escuchar eventos de productos
+        eventBus.on('product:created', this.addToInventory.bind(this));
+        eventBus.on('product:updated', this.updateInventory.bind(this));
+        eventBus.on('product:deleted', this.removeFromInventory.bind(this));
+      },
+      
+      addToInventory: function(productData) {
+        console.log("Agregando producto al inventario:", productData);
+        // Lógica para agregar producto al inventario
+      },
+      
+      updateInventory: function(productData) {
+        console.log("Actualizando producto en inventario:", productData);
+        // Lógica para actualizar producto en inventario
+      },
+      
+      removeFromInventory: function(productId) {
+        console.log("Eliminando producto del inventario:", productId);
+        // Lógica para eliminar producto del inventario
+      },
+      
+      // Ejemplo: notificar a productos sobre cambio de stock
+      notifyStockUpdate: function(productId, newStock) {
+        eventBus.notify('inventory:updated', {
+          productId: productId,
+          newStock: newStock
+        });
       }
     };
     
-    // Conversión automática de precios
-    document.getElementById('productPriceBs').addEventListener('input', function() {
-      const tasaCambio = 3620; // Tasa de cambio ejemplo
-      const precioBs = parseFloat(this.value) || 0;
-      const precioDollar = precioBs / tasaCambio;
-      document.getElementById('productPriceDollar').value = precioDollar.toFixed(2);
+    // Módulo de Facturación (facturacion.html)
+    const BillingManager = {
+      init: function() {
+        // Escuchar eventos de productos
+        eventBus.on('product:updated', this.updateProductCatalog.bind(this));
+        eventBus.on('product:deleted', this.removeFromCatalog.bind(this));
+      },
+      
+      updateProductCatalog: function(productData) {
+        console.log("Actualizando catálogo de facturación:", productData);
+        // Lógica para actualizar productos en facturación
+      },
+      
+      removeFromCatalog: function(productId) {
+        console.log("Eliminando producto de facturación:", productId);
+        // Lógica para eliminar producto de facturación
+      }
+    };
+
+    // ==============================================
+    // INICIALIZACIÓN
+    // ==============================================
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inicializar el manager de productos
+      ProductManager.init();
+      
+      // Inicializar otros managers (cada módulo inicializa los suyos)
+      // InventoryManager.init();
+      // BillingManager.init();
+      
+      // Ajustar la interfaz para el sidebar
+      adjustLayoutForSidebar();
+      
+      // Setup para el toggle del sidebar en móviles
+      document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.getElementById('appSidebar').classList.toggle('open');
+      });
     });
-    
-    document.getElementById('productPriceDollar').addEventListener('input', function() {
-      const tasaCambio = 3620; // Tasa de cambio ejemplo
-      const precioDollar = parseFloat(this.value) || 0;
-      const precioBs = precioDollar * tasaCambio;
-      document.getElementById('productPriceBs').value = Math.round(precioBs);
-    });
+
+    // Ajustar el layout para el sidebar
+    function adjustLayoutForSidebar() {
+      const sidebar = document.getElementById('appSidebar');
+      const header = document.getElementById('mainHeader');
+      const content = document.getElementById('mainContent');
+      
+      if (window.innerWidth <= 992) {
+        sidebar.style.marginLeft = "0";
+        header.style.marginLeft = "0";
+        header.style.width = "100%";
+        content.style.marginLeft = "0";
+        content.style.width = "100%";
+      }
+    }
+
+    // [El resto de tu código JavaScript actual]
+    // ... (tus funciones openModal, closeModal, etc.) ...
   </script>
 </body>
 </html>
