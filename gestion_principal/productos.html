@@ -514,6 +514,44 @@
       padding-top: 20px;
       border-top: 1px solid #e2e8f0;
     }
+
+    /* Gestión de categorías */
+    .category-management {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .category-management select {
+      flex: 1;
+    }
+    
+    .category-panel {
+      display: none;
+      margin-top: 10px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .category-list {
+      max-height: 120px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+    
+    .category-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .category-item:last-child {
+      border-bottom: none;
+    }
     
     /* Responsive */
     @media (max-width: 768px) {
@@ -541,6 +579,11 @@
       
       .stats-panel {
         grid-template-columns: 1fr;
+      }
+
+      .category-management {
+        flex-direction: column;
+        align-items: stretch;
       }
     }
   </style>
@@ -571,7 +614,7 @@
         <button class="btn btn-primary" onclick="openModal()">
           <i class="fas fa-plus"></i> Nuevo Producto
         </button>
-        <button class="btn btn-secondary">
+        <button class="btn btn-secondary" onclick="exportarDatos()">
           <i class="fas fa-file-export"></i> Exportar
         </button>
       </div>
@@ -581,12 +624,8 @@
     <div class="filters">
       <div class="filter-item">
         <label>Categoría</label>
-        <select>
+        <select id="filtroCategoria">
           <option>Todas las categorías</option>
-          <option>Alimentos</option>
-          <option>Bebidas</option>
-          <option>Limpieza</option>
-          <option>Licores</option>
         </select>
       </div>
       <div class="filter-item">
@@ -624,46 +663,15 @@
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80" class="product-img" alt="Arroz"></td>
-            <td>Arroz Mary</td>
-            <td>Alimentos</td>
-            <td>12.500 Bs</td>
-            <td>3,45 $</td>
-            <td>45 unidades</td>
-            <td><span class="status status-active">Activo</span></td>
-            <td class="action-cell">
-              <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
+        <tbody id="tablaProductos">
+          <!-- Los productos se cargarán dinámicamente -->
         </tbody>
       </table>
     </div>
     
     <!-- Panel de estadísticas -->
-    <div class="stats-panel">
-      <div class="stat-card">
-        <div class="stat-title">Total de Productos</div>
-        <div class="stat-value">128</div>
-        <div class="stat-desc">En inventario</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-title">Productos con Stock Bajo</div>
-        <div class="stat-value">12</div>
-        <div class="stat-desc">Necesitan reposición</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-title">Valor Total</div>
-        <div class="stat-value">4.2M Bs</div>
-        <div class="stat-desc">≈ 1,160 $</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-title">Categorías</div>
-        <div class="stat-value">8</div>
-        <div class="stat-desc">Diferentes tipos</div>
-      </div>
+    <div class="stats-panel" id="panelEstadisticas">
+      <!-- Las estadísticas se cargarán dinámicamente -->
     </div>
   </div>
 
@@ -674,40 +682,51 @@
         <h3>Agregar Nuevo Producto</h3>
         <button class="close-modal" onclick="closeModal()">&times;</button>
       </div>
-      <form>
+      <form id="formProducto">
         <div class="form-group">
           <label for="productName">Nombre del Producto</label>
-          <input type="text" id="productName" placeholder="Ej: Arroz Mary">
+          <input type="text" id="productName" placeholder="Ej: Arroz Mary" required>
         </div>
         <div class="form-group">
           <label for="productCategory">Categoría</label>
-          <select id="productCategory">
-            <option>Seleccione una categoría</option>
-            <option>Alimentos</option>
-            <option>Bebidas</option>
-            <option>Limpieza</option>
-            <option>Licores</option>
-            <option>Higiene Personal</option>
-          </select>
+          <div class="category-management">
+            <select id="productCategory" required>
+              <option value="">Seleccione una categoría</option>
+            </select>
+            <button type="button" class="action-btn edit-btn" id="btnGestionCategorias">
+              <i class="fas fa-cog"></i>
+            </button>
+          </div>
+          <div class="category-panel" id="panelGestionCategorias">
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+              <input type="text" id="inputNuevaCategoria" placeholder="Nueva categoría" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+              <button type="button" class="btn btn-primary" id="btnAgregarCategoria" style="padding: 8px 12px;">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="category-list" id="listaCategorias">
+              <!-- Las categorías se cargarán dinámicamente -->
+            </div>
+          </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="productPriceBs">Precio en Bolívares</label>
-            <input type="number" id="productPriceBs" placeholder="0.00">
+            <input type="number" id="productPriceBs" placeholder="0.00" step="0.01" required>
           </div>
           <div class="form-group">
             <label for="productPriceDollar">Precio en Dólares</label>
-            <input type="number" id="productPriceDollar" placeholder="0.00" step="0.01">
+            <input type="number" id="productPriceDollar" placeholder="0.00" step="0.01" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="productStock">Stock Actual</label>
-            <input type="number" id="productStock" placeholder="0">
+            <input type="number" id="productStock" placeholder="0" required>
           </div>
           <div class="form-group">
             <label for="productMinStock">Stock Mínimo</label>
-            <input type="number" id="productMinStock" placeholder="0">
+            <input type="number" id="productMinStock" placeholder="0" required>
           </div>
         </div>
         <div class="form-group">
@@ -717,7 +736,7 @@
         <div class="form-group">
           <label for="productSupplier">Proveedor</label>
           <select id="productSupplier">
-            <option>Seleccione un proveedor</option>
+            <option value="">Seleccione un proveedor</option>
             <option>Distribuidora Mary</option>
             <option>Polar</option>
             <option>Empresas Lindas</option>
@@ -730,9 +749,9 @@
         </div>
         <div class="form-group">
           <label for="productStatus">Estado</label>
-          <select id="productStatus">
-            <option>Activo</option>
-            <option>Inactivo</option>
+          <select id="productStatus" required>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
           </select>
         </div>
         <div class="modal-footer">
@@ -744,9 +763,261 @@
   </div>
 
   <script>
+    // Tasas de cambio y configuración
+    const TASA_CAMBIO = 3620; // Ejemplo: 1$ = 3620 Bs
+
+    // Referencias a elementos del DOM
+    const modal = document.getElementById('productModal');
+    const formProducto = document.getElementById('formProducto');
+    const selectCategoria = document.getElementById('productCategory');
+    const selectCategoriaFiltro = document.getElementById('filtroCategoria');
+    const btnGestionCategorias = document.getElementById('btnGestionCategorias');
+    const panelGestionCategorias = document.getElementById('panelGestionCategorias');
+    const btnAgregarCategoria = document.getElementById('btnAgregarCategoria');
+    const inputNuevaCategoria = document.getElementById('inputNuevaCategoria');
+    const listaCategorias = document.getElementById('listaCategorias');
+    const tablaProductos = document.getElementById('tablaProductos');
+    const panelEstadisticas = document.getElementById('panelEstadisticas');
+
+    // Inicializar datos
+    let productos = JSON.parse(localStorage.getItem('productos')) || [];
+    let categorias = JSON.parse(localStorage.getItem('categorias')) || ['Alimentos', 'Bebidas', 'Limpieza', 'Licores'];
+
+    // Inicializar la aplicación
+    function inicializar() {
+      configurarGestionCategorias();
+      actualizarSelectCategorias();
+      renderizarProductos();
+      actualizarEstadisticas();
+      
+      // Event listeners
+      formProducto.addEventListener('submit', agregarProducto);
+    }
+
+    // Configurar gestión de categorías en el modal
+    function configurarGestionCategorias() {
+      // Toggle del panel de gestión
+      btnGestionCategorias.addEventListener('click', () => {
+        panelGestionCategorias.style.display = panelGestionCategorias.style.display === 'none' ? 'block' : 'none';
+        if (panelGestionCategorias.style.display === 'block') {
+          renderizarListaCategorias();
+        }
+      });
+
+      // Agregar nueva categoría
+      btnAgregarCategoria.addEventListener('click', agregarCategoriaDesdeInput);
+      inputNuevaCategoria.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          agregarCategoriaDesdeInput();
+        }
+      });
+    }
+
+    // Renderizar lista de categorías
+    function renderizarListaCategorias() {
+      listaCategorias.innerHTML = '';
+      categorias.forEach((categoria, index) => {
+        const div = document.createElement('div');
+        div.className = 'category-item';
+        
+        div.innerHTML = `
+          <span>${categoria}</span>
+          <button type="button" class="action-btn delete-btn" data-index="${index}">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        
+        listaCategorias.appendChild(div);
+      });
+
+      // Agregar event listeners para eliminar
+      document.querySelectorAll('#listaCategorias .delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.currentTarget.getAttribute('data-index'));
+          eliminarCategoria(index);
+        });
+      });
+    }
+
+    function agregarCategoriaDesdeInput() {
+      const nuevaCategoria = inputNuevaCategoria.value.trim();
+      if (nuevaCategoria && !categorias.includes(nuevaCategoria)) {
+        categorias.push(nuevaCategoria);
+        guardarCategorias();
+        actualizarSelectCategorias();
+        inputNuevaCategoria.value = '';
+        renderizarListaCategorias();
+        
+        // Seleccionar la nueva categoría automáticamente
+        selectCategoria.value = nuevaCategoria;
+      }
+    }
+
+    function eliminarCategoria(index) {
+      if (confirm(`¿Estás seguro de eliminar la categoría "${categorias[index]}"?`)) {
+        categorias.splice(index, 1);
+        guardarCategorias();
+        actualizarSelectCategorias();
+        renderizarListaCategorias();
+      }
+    }
+
+    // Guardar categorías en localStorage
+    function guardarCategorias() {
+      localStorage.setItem('categorias', JSON.stringify(categorias));
+    }
+
+    // Actualizar selects de categorías
+    function actualizarSelectCategorias() {
+      // Limpiar selects
+      selectCategoria.innerHTML = '<option value="">Seleccione una categoría</option>';
+      selectCategoriaFiltro.innerHTML = '<option>Todas las categorías</option>';
+      
+      // Agregar categorías
+      categorias.forEach(categoria => {
+        selectCategoria.innerHTML += `<option value="${categoria}">${categoria}</option>`;
+        selectCategoriaFiltro.innerHTML += `<option>${categoria}</option>`;
+      });
+    }
+
+    // Guardar productos en localStorage
+    function guardarProductos() {
+      localStorage.setItem('productos', JSON.stringify(productos));
+    }
+
+    // Generar ID único
+    function generarId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    // Agregar nuevo producto
+    function agregarProducto(e) {
+      e.preventDefault();
+      
+      const nuevoProducto = {
+        id: generarId(),
+        nombre: document.getElementById('productName').value,
+        categoria: document.getElementById('productCategory').value,
+        precioBs: parseFloat(document.getElementById('productPriceBs').value) || 0,
+        precioDollar: parseFloat(document.getElementById('productPriceDollar').value) || 0,
+        stock: parseInt(document.getElementById('productStock').value) || 0,
+        stockMinimo: parseInt(document.getElementById('productMinStock').value) || 0,
+        codigoBarras: document.getElementById('productBarcode').value,
+        proveedor: document.getElementById('productSupplier').value,
+        estado: document.getElementById('productStatus').value,
+        imagen: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80'
+      };
+      
+      productos.push(nuevoProducto);
+      guardarProductos();
+      renderizarProductos();
+      actualizarEstadisticas();
+      formProducto.reset();
+      closeModal();
+    }
+
+    // Renderizar productos en la tabla
+    function renderizarProductos() {
+      tablaProductos.innerHTML = '';
+      
+      if (productos.length === 0) {
+        tablaProductos.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 30px;">
+              No hay productos registrados. Haz clic en "Nuevo Producto" para agregar uno.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      productos.forEach(producto => {
+        const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
+        const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : 'Activo';
+        
+        tablaProductos.innerHTML += `
+          <tr>
+            <td><img src="${producto.imagen}" class="product-img" alt="${producto.nombre}"></td>
+            <td>${producto.nombre}</td>
+            <td>${producto.categoria}</td>
+            <td>${producto.precioBs.toLocaleString()} Bs</td>
+            <td>${producto.precioDollar.toFixed(2)} $</td>
+            <td>${producto.stock} unidades</td>
+            <td><span class="status ${statusClass}">${statusText}</span></td>
+            <td class="action-cell">
+              <button class="action-btn edit-btn" onclick="editarProducto('${producto.id}')"><i class="fas fa-edit"></i></button>
+              <button class="action-btn delete-btn" onclick="eliminarProducto('${producto.id}')"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // Actualizar panel de estadísticas
+    function actualizarEstadisticas() {
+      const totalProductos = productos.length;
+      const productosStockBajo = productos.filter(p => p.stock <= p.stockMinimo).length;
+      const valorTotalBs = productos.reduce((sum, p) => sum + (p.precioBs * p.stock), 0);
+      const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
+      const categoriasUnicas = new Set(productos.map(p => p.categoria)).size;
+      
+      panelEstadisticas.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-title">Total de Productos</div>
+          <div class="stat-value">${totalProductos}</div>
+          <div class="stat-desc">En inventario</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Productos con Stock Bajo</div>
+          <div class="stat-value">${productosStockBajo}</div>
+          <div class="stat-desc">Necesitan reposición</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Valor Total</div>
+          <div class="stat-value">${(valorTotalBs / 1000000).toFixed(1)}M Bs</div>
+          <div class="stat-desc">≈ ${Math.round(valorTotalDollar)} $</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Categorías</div>
+          <div class="stat-value">${categoriasUnicas}</div>
+          <div class="stat-desc">Diferentes tipos</div>
+        </div>
+      `;
+    }
+
+    // Exportar datos (JSON)
+    function exportarDatos() {
+      const datos = {
+        productos: productos,
+        categorias: categorias,
+        exportado: new Date().toISOString()
+      };
+      
+      const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `bodegon_export_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Eliminar producto
+    function eliminarProducto(id) {
+      if (confirm('¿Estás seguro de eliminar este producto?')) {
+        productos = productos.filter(p => p.id !== id);
+        guardarProductos();
+        renderizarProductos();
+        actualizarEstadisticas();
+      }
+    }
+
     // Funciones para abrir y cerrar el modal
     function openModal() {
       document.getElementById('productModal').style.display = 'flex';
+      panelGestionCategorias.style.display = 'none';
     }
     
     function closeModal() {
@@ -763,18 +1034,23 @@
     
     // Conversión automática de precios
     document.getElementById('productPriceBs').addEventListener('input', function() {
-      const tasaCambio = 3620; // Tasa de cambio ejemplo
       const precioBs = parseFloat(this.value) || 0;
-      const precioDollar = precioBs / tasaCambio;
+      const precioDollar = precioBs / TASA_CAMBIO;
       document.getElementById('productPriceDollar').value = precioDollar.toFixed(2);
     });
     
     document.getElementById('productPriceDollar').addEventListener('input', function() {
-      const tasaCambio = 3620; // Tasa de cambio ejemplo
       const precioDollar = parseFloat(this.value) || 0;
-      const precioBs = precioDollar * tasaCambio;
+      const precioBs = precioDollar * TASA_CAMBIO;
       document.getElementById('productPriceBs').value = Math.round(precioBs);
     });
+
+    // Iniciar cuando el DOM esté cargado
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', inicializar);
+    } else {
+      inicializar();
+    }
   </script>
 </body>
 </html>
