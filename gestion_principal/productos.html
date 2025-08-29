@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bodegón App - Gestión de Productos</title>
+  <title>AA-BODEGÓN - Gestión de Productos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary: #4e7ae5;
-      --primary-light: #7a9ef1;
-      --primary-dark: #3a5cb7;
+      --primary: #4CAF50;
+      --primary-light: #80e27e;
+      --primary-dark: #087f23;
       --secondary: #6c757d;
       --success: #28a745;
       --danger: #dc3545;
@@ -51,9 +51,8 @@
     
     /* Cabecera */
     header {
-      background-color: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
       padding: 16px 24px;
       display: flex;
       justify-content: space-between;
@@ -72,46 +71,19 @@
     
     .logo h1 {
       margin: 0;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     }
     
     .logo-icon {
       font-size: 28px;
-      color: var(--primary);
-      background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
-      padding: 10px;
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 12px;
       border-radius: 10px;
       box-shadow: var(--shadow);
-    }
-    
-    .user-actions {
-      display: flex;
-      gap: 16px;
-    }
-    
-    .user-actions button {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border: none;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: var(--transition);
-      box-shadow: var(--shadow);
-    }
-    
-    .user-actions button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(78, 122, 229, 0.3);
     }
     
     /* Contenido principal */
@@ -166,7 +138,7 @@
     
     .search-box:focus-within {
       border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(78, 122, 229, 0.15);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
     
     .search-box input {
@@ -204,7 +176,7 @@
     
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(78, 122, 229, 0.3);
+      box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
     }
     
     .btn-secondary {
@@ -251,7 +223,7 @@
     .filter-item select:focus {
       outline: none;
       border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(78, 122, 229, 0.15);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
     
     /* Tabla de productos */
@@ -343,11 +315,11 @@
     
     .edit-btn {
       color: var(--primary);
-      background-color: rgba(78, 122, 229, 0.1);
+      background-color: rgba(76, 175, 80, 0.1);
     }
     
     .edit-btn:hover {
-      background-color: rgba(78, 122, 229, 0.2);
+      background-color: rgba(76, 175, 80, 0.2);
       transform: scale(1.1);
     }
     
@@ -494,7 +466,7 @@
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       outline: none;
       border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(78, 122, 229, 0.15);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
     
     .form-row {
@@ -593,10 +565,7 @@
   <header>
     <div class="logo">
       <i class="fas fa-store logo-icon"></i>
-      <h1>Bodegón App - Productos</h1>
-    </div>
-    <div class="user-actions">
-      <button><i class="fas fa-user-circle"></i> Usuario</button>
+      <h1>AA-BODEGÓN - Gestión de Productos</h1>
     </div>
   </header>
 
