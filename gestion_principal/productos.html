@@ -6,6 +6,10 @@
   <title>AA-BODEGÓN - Productos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
       --primary: #4CAF50;
@@ -492,18 +496,18 @@
       border-top: 1px solid #e2e8f0;
     }
 
-    /* Gestión de categorías */
-    .category-management {
+    /* Gestión de categorías y proveedores */
+    .category-management, .supplier-management {
       display: flex;
       gap: 10px;
       align-items: center;
     }
     
-    .category-management select {
+    .category-management select, .supplier-management select {
       flex: 1;
     }
     
-    .category-panel {
+    .category-panel, .supplier-panel {
       display: none;
       margin-top: 10px;
       padding: 15px;
@@ -512,13 +516,13 @@
       border: 1px solid #e2e8f0;
     }
     
-    .category-list {
+    .category-list, .supplier-list {
       max-height: 120px;
       overflow-y: auto;
       margin-top: 10px;
     }
     
-    .category-item {
+    .category-item, .supplier-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -527,8 +531,47 @@
       font-size: 16px;
     }
     
-    .category-item:last-child {
+    .category-item:last-child, .supplier-item:last-child {
       border-bottom: none;
+    }
+    
+    /* Dropdown de exportación */
+    .export-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .export-dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+    
+    .export-dropdown-content button {
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      border: none;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .export-dropdown-content button:hover {
+      background-color: #f1f1f1;
+    }
+    
+    .export-dropdown:hover .export-dropdown-content {
+      display: block;
     }
     
     /* Responsive */
@@ -559,13 +602,18 @@
         grid-template-columns: 1fr;
       }
 
-      .category-management {
+      .category-management, .supplier-management {
         flex-direction: column;
         align-items: stretch;
       }
       
       .filter-item select {
         min-width: 100%;
+      }
+      
+      .export-dropdown-content {
+        right: auto;
+        left: 0;
       }
     }
   </style>
@@ -587,15 +635,22 @@
     <div class="toolbar">
       <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Buscar productos...">
+        <input type="text" id="searchInput" placeholder="Buscar productos..." oninput="filtrarProductos()">
       </div>
       <div class="action-buttons">
         <button class="btn btn-primary" onclick="openModal()">
           <i class="fas fa-plus"></i> Nuevo Producto
         </button>
-        <button class="btn btn-secondary" onclick="exportarDatos()">
-          <i class="fas fa-file-export"></i> Exportar
-        </button>
+        <div class="export-dropdown">
+          <button class="btn btn-secondary">
+            <i class="fas fa-file-export"></i> Exportar
+          </button>
+          <div class="export-dropdown-content">
+            <button onclick="exportarPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+            <button onclick="exportarExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+            <button onclick="exportarJPG()"><i class="fas fa-file-image"></i> JPG</button>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -603,26 +658,28 @@
     <div class="filters">
       <div class="filter-item">
         <label>Categoría</label>
-        <select id="filtroCategoria">
-          <option>Todas las categorías</option>
+        <select id="filtroCategoria" onchange="filtrarProductos()">
+          <option value="">Todas las categorías</option>
         </select>
       </div>
       <div class="filter-item">
         <label>Estado</label>
-        <select>
-          <option>Todos</option>
-          <option>Activo</option>
-          <option>Inactivo</option>
-          <option>Stock Bajo</option>
+        <select id="filtroEstado" onchange="filtrarProductos()">
+          <option value="">Todos</option>
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+          <option value="Stock Bajo">Stock Bajo</option>
         </select>
       </div>
       <div class="filter-item">
         <label>Ordenar por</label>
-        <select>
-          <option>Nombre A-Z</option>
-          <option>Nombre Z-A</option>
-          <option>Precio Mayor</option>
-          <option>Precio Menor</option>
+        <select id="filtroOrden" onchange="ordenarProductos()">
+          <option value="nombre-asc">Nombre A-Z</option>
+          <option value="nombre-desc">Nombre Z-A</option>
+          <option value="precio-mayor">Precio Mayor</option>
+          <option value="precio-menor">Precio Menor</option>
+          <option value="stock-mayor">Stock Mayor</option>
+          <option value="stock-menor">Stock Menor</option>
         </select>
       </div>
     </div>
@@ -658,10 +715,11 @@
   <div class="modal" id="productModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Agregar Nuevo Producto</h3>
+        <h3 id="modalTitulo">Agregar Nuevo Producto</h3>
         <button class="close-modal" onclick="closeModal()">&times;</button>
       </div>
       <form id="formProducto">
+        <input type="hidden" id="productId">
         <div class="form-group">
           <label for="productName">Nombre del Producto</label>
           <input type="text" id="productName" placeholder="Ej: Arroz Mary" required>
@@ -691,11 +749,11 @@
         <div class="form-row">
           <div class="form-group">
             <label for="productPriceBs">Precio en Bolívares</label>
-            <input type="number" id="productPriceBs" placeholder="0.00" step="0.01" required>
+            <input type="number" id="productPriceBs" placeholder="0.00" step="0.01" required oninput="calcularPrecioDolar()">
           </div>
           <div class="form-group">
             <label for="productPriceDollar">Precio en Dólares</label>
-            <input type="number" id="productPriceDollar" placeholder="0.00" step="0.01" required>
+            <input type="number" id="productPriceDollar" placeholder="0.00" step="0.01" required oninput="calcularPrecioBs()">
           </div>
         </div>
         <div class="form-row">
@@ -710,21 +768,34 @@
         </div>
         <div class="form-group">
           <label for="productBarcode">Código de Barras</label>
-          <input type="text" id="productBarcode" placeholder="Ej: 1234567890123">
+          <input type="text" id="productBarcode" placeholder="Ej: 1234567890123" onchange="buscarPorCodigoBarras()">
         </div>
         <div class="form-group">
           <label for="productSupplier">Proveedor</label>
-          <select id="productSupplier">
-            <option value="">Seleccione un proveedor</option>
-            <option>Distribuidora Mary</option>
-            <option>Polar</option>
-            <option>Empresas Lindas</option>
-            <option>Importaciones JR</option>
-          </select>
+          <div class="supplier-management">
+            <select id="productSupplier">
+              <option value="">Seleccione un proveedor</option>
+            </select>
+            <button type="button" class="action-btn edit-btn" id="btnGestionProveedores">
+              <i class="fas fa-cog"></i>
+            </button>
+          </div>
+          <div class="supplier-panel" id="panelGestionProveedores">
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+              <input type="text" id="inputNuevoProveedor" placeholder="Nuevo proveedor" style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+              <button type="button" class="btn btn-primary" id="btnAgregarProveedor" style="padding: 10px 16px;">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="supplier-list" id="listaProveedores">
+              <!-- Los proveedores se cargarán dinámicamente -->
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="productImage">Imagen del Producto</label>
-          <input type="file" id="productImage">
+          <input type="file" id="productImage" accept="image/*" onchange="previsualizarImagen()">
+          <img id="previewImage" src="" alt="Vista previa" style="max-width: 100px; max-height: 100px; margin-top: 10px; display: none;">
         </div>
         <div class="form-group">
           <label for="productStatus">Estado</label>
@@ -742,12 +813,14 @@
   </div>
 
   <script>
-    // Tasas de cambio y configuración
-    const TASA_CAMBIO = 3620; // Ejemplo: 1$ = 3620 Bs
+    // Tasas de cambio (se actualizará desde BCV)
+    let TASA_CAMBIO = 36.20; // Valor inicial, se actualizará
 
     // Referencias a elementos del DOM
     const modal = document.getElementById('productModal');
     const formProducto = document.getElementById('formProducto');
+    const modalTitulo = document.getElementById('modalTitulo');
+    const productId = document.getElementById('productId');
     const selectCategoria = document.getElementById('productCategory');
     const selectCategoriaFiltro = document.getElementById('filtroCategoria');
     const btnGestionCategorias = document.getElementById('btnGestionCategorias');
@@ -755,22 +828,53 @@
     const btnAgregarCategoria = document.getElementById('btnAgregarCategoria');
     const inputNuevaCategoria = document.getElementById('inputNuevaCategoria');
     const listaCategorias = document.getElementById('listaCategorias');
+    const selectProveedor = document.getElementById('productSupplier');
+    const btnGestionProveedores = document.getElementById('btnGestionProveedores');
+    const panelGestionProveedores = document.getElementById('panelGestionProveedores');
+    const btnAgregarProveedor = document.getElementById('btnAgregarProveedor');
+    const inputNuevoProveedor = document.getElementById('inputNuevoProveedor');
+    const listaProveedores = document.getElementById('listaProveedores');
     const tablaProductos = document.getElementById('tablaProductos');
     const panelEstadisticas = document.getElementById('panelEstadisticas');
+    const searchInput = document.getElementById('searchInput');
+    const filtroCategoria = document.getElementById('filtroCategoria');
+    const filtroEstado = document.getElementById('filtroEstado');
+    const filtroOrden = document.getElementById('filtroOrden');
+    const previewImage = document.getElementById('previewImage');
 
     // Inicializar datos
     let productos = JSON.parse(localStorage.getItem('productos')) || [];
     let categorias = JSON.parse(localStorage.getItem('categorias')) || ['Alimentos', 'Bebidas', 'Limpieza', 'Licores'];
+    let proveedores = JSON.parse(localStorage.getItem('proveedores')) || ['Distribuidora Mary', 'Polar', 'Empresas Lindas', 'Importaciones JR'];
+    let productoEditando = null;
 
     // Inicializar la aplicación
     function inicializar() {
+      obtenerTasaCambioBCV();
       configurarGestionCategorias();
+      configurarGestionProveedores();
       actualizarSelectCategorias();
+      actualizarSelectProveedores();
       renderizarProductos();
       actualizarEstadisticas();
       
       // Event listeners
-      formProducto.addEventListener('submit', agregarProducto);
+      formProducto.addEventListener('submit', guardarProducto);
+    }
+
+    // Obtener tasa de cambio del BCV
+    async function obtenerTasaCambioBCV() {
+      try {
+        // En un entorno real, aquí haríamos una petición a la API del BCV
+        // Como ejemplo, simulamos una respuesta después de un tiempo
+        setTimeout(() => {
+          // Simulamos que obtenemos la tasa actual (valor ficticio)
+          TASA_CAMBIO = 36.15;
+          console.log("Tasa de cambio actualizada:", TASA_CAMBIO);
+        }, 1000);
+      } catch (error) {
+        console.error("Error obteniendo tasa de cambio:", error);
+      }
     }
 
     // Configurar gestión de categorías en el modal
@@ -788,6 +892,25 @@
       inputNuevaCategoria.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
           agregarCategoriaDesdeInput();
+        }
+      });
+    }
+
+    // Configurar gestión de proveedores en el modal
+    function configurarGestionProveedores() {
+      // Toggle del panel de gestión
+      btnGestionProveedores.addEventListener('click', () => {
+        panelGestionProveedores.style.display = panelGestionProveedores.style.display === 'none' ? 'block' : 'none';
+        if (panelGestionProveedores.style.display === 'block') {
+          renderizarListaProveedores();
+        }
+      });
+
+      // Agregar nuevo proveedor
+      btnAgregarProveedor.addEventListener('click', agregarProveedorDesdeInput);
+      inputNuevoProveedor.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          agregarProveedorDesdeInput();
         }
       });
     }
@@ -818,6 +941,32 @@
       });
     }
 
+    // Renderizar lista de proveedores
+    function renderizarListaProveedores() {
+      listaProveedores.innerHTML = '';
+      proveedores.forEach((proveedor, index) => {
+        const div = document.createElement('div');
+        div.className = 'supplier-item';
+        
+        div.innerHTML = `
+          <span>${proveedor}</span>
+          <button type="button" class="action-btn delete-btn" data-index="${index}">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        
+        listaProveedores.appendChild(div);
+      });
+
+      // Agregar event listeners para eliminar
+      document.querySelectorAll('#listaProveedores .delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.currentTarget.getAttribute('data-index'));
+          eliminarProveedor(index);
+        });
+      });
+    }
+
     function agregarCategoriaDesdeInput() {
       const nuevaCategoria = inputNuevaCategoria.value.trim();
       if (nuevaCategoria && !categorias.includes(nuevaCategoria)) {
@@ -832,6 +981,20 @@
       }
     }
 
+    function agregarProveedorDesdeInput() {
+      const nuevoProveedor = inputNuevoProveedor.value.trim();
+      if (nuevoProveedor && !proveedores.includes(nuevoProveedor)) {
+        proveedores.push(nuevoProveedor);
+        guardarProveedores();
+        actualizarSelectProveedores();
+        inputNuevoProveedor.value = '';
+        renderizarListaProveedores();
+        
+        // Seleccionar el nuevo proveedor automáticamente
+        selectProveedor.value = nuevoProveedor;
+      }
+    }
+
     function eliminarCategoria(index) {
       if (confirm(`¿Estás seguro de eliminar la categoría "${categorias[index]}"?`)) {
         categorias.splice(index, 1);
@@ -841,21 +1004,46 @@
       }
     }
 
+    function eliminarProveedor(index) {
+      if (confirm(`¿Estás seguro de eliminar el proveedor "${proveedores[index]}"?`)) {
+        proveedores.splice(index, 1);
+        guardarProveedores();
+        actualizarSelectProveedores();
+        renderizarListaProveedores();
+      }
+    }
+
     // Guardar categorías en localStorage
     function guardarCategorias() {
       localStorage.setItem('categorias', JSON.stringify(categorias));
+    }
+
+    // Guardar proveedores en localStorage
+    function guardarProveedores() {
+      localStorage.setItem('proveedores', JSON.stringify(proveedores));
     }
 
     // Actualizar selects de categorías
     function actualizarSelectCategorias() {
       // Limpiar selects
       selectCategoria.innerHTML = '<option value="">Seleccione una categoría</option>';
-      selectCategoriaFiltro.innerHTML = '<option>Todas las categorías</option>';
+      selectCategoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
       
       // Agregar categorías
       categorias.forEach(categoria => {
         selectCategoria.innerHTML += `<option value="${categoria}">${categoria}</option>`;
-        selectCategoriaFiltro.innerHTML += `<option>${categoria}</option>`;
+        selectCategoriaFiltro.innerHTML += `<option value="${categoria}">${categoria}</option>`;
+      });
+    }
+
+    // Actualizar selects de proveedores
+    function actualizarSelectProveedores() {
+      // Limpiar selects
+      selectProveedor.innerHTML = '<option value="">Seleccione un proveedor</option>';
+      
+      // Agregar proveedores
+      proveedores.forEach(proveedor => {
+        selectProveedor.innerHTML += `<option value="${proveedor}">${proveedor}</option>`;
       });
     }
 
@@ -869,12 +1057,83 @@
       return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
-    // Agregar nuevo producto
-    function agregarProducto(e) {
+    // Calcular precio en dólares basado en bolívares
+    function calcularPrecioDolar() {
+      const precioBs = parseFloat(document.getElementById('productPriceBs').value) || 0;
+      const precioDollar = precioBs / TASA_CAMBIO;
+      document.getElementById('productPriceDollar').value = precioDollar.toFixed(2);
+    }
+
+    // Calcular precio en bolívares basado en dólares
+    function calcularPrecioBs() {
+      const precioDollar = parseFloat(document.getElementById('productPriceDollar').value) || 0;
+      const precioBs = precioDollar * TASA_CAMBIO;
+      document.getElementById('productPriceBs').value = precioBs.toFixed(2);
+    }
+
+    // Previsualizar imagen seleccionada
+    function previsualizarImagen() {
+      const fileInput = document.getElementById('productImage');
+      const file = fileInput.files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewImage.style.display = 'none';
+      }
+    }
+
+    // Buscar producto por código de barras
+    function buscarPorCodigoBarras() {
+      const codigoBarras = document.getElementById('productBarcode').value.trim();
+      if (!codigoBarras) return;
+      
+      // Buscar en productos existentes
+      const productoExistente = productos.find(p => p.codigoBarras === codigoBarras);
+      
+      if (productoExistente) {
+        // Llenar el formulario con los datos del producto
+        document.getElementById('productName').value = productoExistente.nombre;
+        document.getElementById('productCategory').value = productoExistente.categoria;
+        document.getElementById('productPriceBs').value = productoExistente.precioBs;
+        document.getElementById('productPriceDollar').value = productoExistente.precioDollar;
+        document.getElementById('productStock').value = productoExistente.stock;
+        document.getElementById('productMinStock').value = productoExistente.stockMinimo;
+        document.getElementById('productSupplier').value = productoExistente.proveedor;
+        document.getElementById('productStatus').value = productoExistente.estado;
+        
+        // Mostrar mensaje informativo
+        alert(`Producto "${productoExistente.nombre}" encontrado. Los datos han sido cargados en el formulario.`);
+      }
+    }
+
+    // Guardar producto (nuevo o editado)
+    function guardarProducto(e) {
       e.preventDefault();
       
-      const nuevoProducto = {
-        id: generarId(),
+      // Obtener la imagen si se ha seleccionado una
+      let imagenUrl = 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80';
+      const fileInput = document.getElementById('productImage');
+      if (fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagenUrl = e.target.result;
+          finalizarGuardado(imagenUrl);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        finalizarGuardado(imagenUrl);
+      }
+    }
+
+    function finalizarGuardado(imagenUrl) {
+      const producto = {
+        id: productId.value || generarId(),
         nombre: document.getElementById('productName').value,
         categoria: document.getElementById('productCategory').value,
         precioBs: parseFloat(document.getElementById('productPriceBs').value) || 0,
@@ -884,15 +1143,55 @@
         codigoBarras: document.getElementById('productBarcode').value,
         proveedor: document.getElementById('productSupplier').value,
         estado: document.getElementById('productStatus').value,
-        imagen: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80'
+        imagen: imagenUrl
       };
       
-      productos.push(nuevoProducto);
+      if (productoEditando) {
+        // Editar producto existente
+        const index = productos.findIndex(p => p.id === productoEditando.id);
+        if (index !== -1) {
+          productos[index] = producto;
+        }
+      } else {
+        // Agregar nuevo producto
+        productos.push(producto);
+      }
+      
       guardarProductos();
       renderizarProductos();
       actualizarEstadisticas();
       formProducto.reset();
+      previewImage.style.display = 'none';
       closeModal();
+      productoEditando = null;
+    }
+
+    // Editar producto
+    function editarProducto(id) {
+      productoEditando = productos.find(p => p.id === id);
+      if (!productoEditando) return;
+      
+      // Llenar el formulario con los datos del producto
+      document.getElementById('productId').value = productoEditando.id;
+      document.getElementById('productName').value = productoEditando.nombre;
+      document.getElementById('productCategory').value = productoEditando.categoria;
+      document.getElementById('productPriceBs').value = productoEditando.precioBs;
+      document.getElementById('productPriceDollar').value = productoEditando.precioDollar;
+      document.getElementById('productStock').value = productoEditando.stock;
+      document.getElementById('productMinStock').value = productoEditando.stockMinimo;
+      document.getElementById('productBarcode').value = productoEditando.codigoBarras;
+      document.getElementById('productSupplier').value = productoEditando.proveedor;
+      document.getElementById('productStatus').value = productoEditando.estado;
+      
+      // Mostrar imagen actual
+      previewImage.src = productoEditando.imagen;
+      previewImage.style.display = 'block';
+      
+      // Cambiar título del modal
+      modalTitulo.textContent = 'Editar Producto';
+      
+      // Abrir modal
+      openModal();
     }
 
     // Renderizar productos en la tabla
@@ -910,9 +1209,39 @@
         return;
       }
       
-      productos.forEach(producto => {
+      let productosFiltrados = [...productos];
+      
+      // Aplicar filtros
+      const searchTerm = searchInput.value.toLowerCase();
+      const categoriaFiltro = filtroCategoria.value;
+      const estadoFiltro = filtroEstado.value;
+      
+      if (searchTerm) {
+        productosFiltrados = productosFiltrados.filter(p => 
+          p.nombre.toLowerCase().includes(searchTerm) || 
+          p.codigoBarras.includes(searchTerm)
+        );
+      }
+      
+      if (categoriaFiltro) {
+        productosFiltrados = productosFiltrados.filter(p => p.categoria === categoriaFiltro);
+      }
+      
+      if (estadoFiltro) {
+        if (estadoFiltro === 'Stock Bajo') {
+          productosFiltrados = productosFiltrados.filter(p => p.stock <= p.stockMinimo);
+        } else {
+          productosFiltrados = productosFiltrados.filter(p => p.estado === estadoFiltro);
+        }
+      }
+      
+      // Aplicar ordenamiento
+      ordenarProductosLista(productosFiltrados);
+      
+      // Renderizar productos filtrados
+      productosFiltrados.forEach(producto => {
         const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
-        const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : 'Activo';
+        const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : producto.estado;
         
         tablaProductos.innerHTML += `
           <tr>
@@ -930,6 +1259,41 @@
           </tr>
         `;
       });
+    }
+
+    // Ordenar productos según el criterio seleccionado
+    function ordenarProductos() {
+      renderizarProductos();
+    }
+
+    function ordenarProductosLista(lista) {
+      const orden = filtroOrden.value;
+      
+      switch (orden) {
+        case 'nombre-asc':
+          lista.sort((a, b) => a.nombre.localeCompare(b.nombre));
+          break;
+        case 'nombre-desc':
+          lista.sort((a, b) => b.nombre.localeCompare(a.nombre));
+          break;
+        case 'precio-mayor':
+          lista.sort((a, b) => b.precioBs - a.precioBs);
+          break;
+        case 'precio-menor':
+          lista.sort((a, b) => a.precioBs - b.precioBs);
+          break;
+        case 'stock-mayor':
+          lista.sort((a, b) => b.stock - a.stock);
+          break;
+        case 'stock-menor':
+          lista.sort((a, b) => a.stock - b.stock);
+          break;
+      }
+    }
+
+    // Filtrar productos según la búsqueda
+    function filtrarProductos() {
+      renderizarProductos();
     }
 
     // Actualizar panel de estadísticas
@@ -964,25 +1328,6 @@
       `;
     }
 
-    // Exportar datos (JSON)
-    function exportarDatos() {
-      const datos = {
-        productos: productos,
-        categorias: categorias,
-        exportado: new Date().toISOString()
-      };
-      
-      const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `bodegon_export_${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
     // Eliminar producto
     function eliminarProducto(id) {
       if (confirm('¿Estás seguro de eliminar este producto?')) {
@@ -993,14 +1338,85 @@
       }
     }
 
+    // Exportar a PDF
+    function exportarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      // Título
+      doc.setFontSize(20);
+      doc.text('AA-BODEGÓN - Reporte de Productos', 14, 15);
+      
+      // Fecha
+      doc.setFontSize(12);
+      doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 25);
+      
+      // Tabla
+      doc.autoTable({
+        startY: 30,
+        head: [['Nombre', 'Categoría', 'Precio Bs', 'Precio $', 'Stock', 'Estado']],
+        body: productos.map(p => [
+          p.nombre,
+          p.categoria,
+          p.precioBs.toLocaleString(),
+          p.precioDollar.toFixed(2),
+          p.stock,
+          p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
+        ])
+      });
+      
+      // Guardar PDF
+      doc.save(`AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.pdf`);
+    }
+
+    // Exportar a Excel
+    function exportarExcel() {
+      // Preparar datos
+      const datos = productos.map(p => ({
+        'Nombre': p.nombre,
+        'Categoría': p.categoria,
+        'Precio Bs': p.precioBs,
+        'Precio $': p.precioDollar,
+        'Stock': p.stock,
+        'Stock Mínimo': p.stockMinimo,
+        'Código Barras': p.codigoBarras,
+        'Proveedor': p.proveedor,
+        'Estado': p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
+      }));
+      
+      // Crear libro de trabajo
+      const libro = XLSX.utils.book_new();
+      const hoja = XLSX.utils.json_to_sheet(datos);
+      
+      // Añadir hoja al libro
+      XLSX.utils.book_append_sheet(libro, hoja, 'Productos');
+      
+      // Guardar archivo
+      XLSX.writeFile(libro, `AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // Exportar a JPG
+    function exportarJPG() {
+      html2canvas(document.querySelector('.table-container')).then(canvas => {
+        const enlace = document.createElement('a');
+        enlace.download = `AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.jpg`;
+        enlace.href = canvas.toDataURL('image/jpeg', 0.9);
+        enlace.click();
+      });
+    }
+
     // Funciones para abrir y cerrar el modal
     function openModal() {
       document.getElementById('productModal').style.display = 'flex';
       panelGestionCategorias.style.display = 'none';
+      panelGestionProveedores.style.display = 'none';
     }
     
     function closeModal() {
       document.getElementById('productModal').style.display = 'none';
+      productoEditando = null;
+      modalTitulo.textContent = 'Agregar Nuevo Producto';
+      document.getElementById('productId').value = '';
     }
     
     // Cerrar modal al hacer clic fuera del contenido
@@ -1010,19 +1426,6 @@
         closeModal();
       }
     };
-    
-    // Conversión automática de precios
-    document.getElementById('productPriceBs').addEventListener('input', function() {
-      const precioBs = parseFloat(this.value) || 0;
-      const precioDollar = precioBs / TASA_CAMBIO;
-      document.getElementById('productPriceDollar').value = precioDollar.toFixed(2);
-    });
-    
-    document.getElementById('productPriceDollar').addEventListener('input', function() {
-      const precioDollar = parseFloat(this.value) || 0;
-      const precioBs = precioDollar * TASA_CAMBIO;
-      document.getElementById('productPriceBs').value = Math.round(precioBs);
-    });
 
     // Iniciar cuando el DOM esté cargado
     if (document.readyState === 'loading') {
