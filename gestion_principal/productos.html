@@ -1,116 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Víveres, Frutas y Licores</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #8BC34A 0%, #8BC34A 50%, #F5F5F5 50%, #F5F5F5 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
-        }
-        
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 800px;
-            width: 100%;
-        }
-        
-        h1 {
-            color: #2E7D32;
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-        }
-        
-        p {
-            color: #555;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        
-        .image-container {
-            width: 100%;
-            height: 350px;
-            margin: 25px 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(45deg, #8BC34A, #CDDC39, #F5F5F5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .image-placeholder {
-            color: #2E7D32;
-            font-size: 1.1rem;
-            text-align: center;
-            padding: 20px;
-            max-width: 80%;
-        }
-        
-        .image-placeholder::before {
-            content: "🛒 🍎 🥂";
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 15px;
-        }
-        
-        .note {
-            background-color: #E8F5E9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 5px solid #4CAF50;
-            font-size: 1rem;
-            text-align: left;
-        }
-        
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            p {
-                font-size: 1rem;
-            }
-            
-            .image-container {
-                height: 250px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Página Verde Manzana</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+    body {
+      /* Fondo degradado: verde manzana arriba, blanco cristal abajo */
+      background: linear-gradient(to bottom, #8bc34a, #ffffff);
+      /* Imagen de fondo con viveres, licor y frutas */
+      background-image: url("https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1350&q=80");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-blend-mode: multiply;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .texto {
+      font-size: 2rem;
+      text-shadow: 0 0 8px rgba(0,0,0,.7);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Víveres, Frutas y Licores</h1>
-        <p>Bienvenido a nuestra página con diseño verde manzana y blanco cristal, dedicada a los mejores víveres, frutas frescas y licores seleccionados.</p>
-        
-        <div class="image-container">
-            <div class="image-placeholder">
-                Imagen generada por IA: Víveres, frutas y licores
-                <br><br>
-                (En una implementación real, aquí se mostraría una imagen generada por IA relacionada con el tema)
-            </div>
-        </div>
-        
-        <p class="note">Nota: Esta es una página de ejemplo. Para una implementación completa con una imagen real generada por IA, se necesitaría integrar con un servicio de generación de imágenes o utilizar una API especializada.</p>
-    </div>
+  <div class="texto"></div>
 </body>
 </html>
