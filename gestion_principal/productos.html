@@ -1,36 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Página Verde Manzana</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-    body {
-      /* Fondo degradado: verde manzana arriba, blanco cristal abajo */
-      background: linear-gradient(to bottom, #8bc34a, #ffffff);
-      /* Imagen de fondo con viveres, licor y frutas */
-      background-image: url("https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1350&q=80");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-blend-mode: multiply;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .texto {
-      font-size: 2rem;
-      text-shadow: 0 0 8px rgba(0,0,0,.7);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Víveres y Licores</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #8BC34A; /* Verde manzana */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            width: 80%;
+            max-width: 800px;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #2E7D32;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
-  <div class="texto"></div>
+    <div class="glass-container">
+        <h1>Bienvenido a Nuestra Tienda</h1>
+        <div class="content">
+            <p>Los mejores víveres, licores y frutas frescas</p>
+        </div>
+    </div>
 </body>
 </html>
