@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bodegón Moderno</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Bodegón</title>
     <style>
         * {
             margin: 0;
@@ -12,207 +11,50 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            text-align: center;
-            padding: 30px 0;
-        }
-        
-        .logo {
-            font-size: 2.5rem;
-            color: #43a047;
-            margin-bottom: 10px;
-        }
-        
-        .main-content {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: #8BC34A; /* Verde manzana */
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 40px;
+            justify-content: center;
+            align-items: center;
         }
         
-        .image-section {
-            flex: 1;
-            min-width: 300px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            background: white;
-            padding: 20px;
-        }
-        
-        .image-placeholder {
-            height: 400px;
-            background-image: url('https://images.unsplash.com/photo-1548943487-2f52941f1ef9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
-            border-radius: 10px;
+            opacity: 0.85;
+            z-index: 1;
         }
         
-        .info-section {
-            flex: 1;
-            min-width: 300px;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .info-section h2 {
-            color: #2e7d32;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-        
-        .info-section p {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .feature {
-            flex: 1;
-            min-width: 250px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .feature i {
-            font-size: 2.5rem;
-            color: #43a047;
-            margin-bottom: 15px;
-        }
-        
-        .feature h3 {
-            color: #388e3c;
-            margin-bottom: 10px;
-        }
-        
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-        
-        .gallery-item {
-            height: 200px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover {
-            transform: scale(1.05);
-        }
-        
-        .gallery-1 {
-            background: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80') center/cover;
-        }
-        
-        .gallery-2 {
-            background: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80') center/cover;
-        }
-        
-        .gallery-3 {
-            background: url('https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80') center/cover;
-        }
-        
-        .gallery-4 {
-            background: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80') center/cover;
-        }
-        
-        .footer {
-            background: #1b5e20;
-            color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 40px;
-            border-radius: 15px 15px 0 0;
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
-            
-            .image-placeholder {
-                height: 300px;
-            }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(139, 195, 74, 0.6); /* Verde manzana con transparencia */
+            z-index: 2;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">
-                <i class="fas fa-leaf"></i> Naturaleza Viva
-            </div>
-        </div>
-        
-        <div class="main-content">
-            <div class="image-section">
-                <div class="image-placeholder"></div>
-            </div>
-            
-            <div class="info-section">
-                <h2>Productos Frescos y Naturales</h2>
-                <p>Disfruta de la mejor selección de productos frescos, directamente desde la naturaleza hasta tu hogar. Nuestra filosofía se basa en ofrecer lo mejor de la tierra con el máximo respeto al medio ambiente.</p>
-                <p>Todo nuestro proceso de cultivo y recolección sigue los más estrictos estándares de calidad, garantizando productos llenos de sabor y nutrientes.</p>
-                
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-seedling"></i>
-                        <h3>100% Natural</h3>
-                        <p>Productos orgánicos certificados</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-truck"></i>
-                        <h3>Entrega Rápida</h3>
-                        <p>Recibe en casa en 24h</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <h2 style="text-align: center; color: #2e7d32; margin: 40px 0 20px;">Nuestra Selección</h2>
-        
-        <div class="gallery">
-            <div class="gallery-item gallery-1"></div>
-            <div class="gallery-item gallery-2"></div>
-            <div class="gallery-item gallery-3"></div>
-            <div class="gallery-item gallery-4"></div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <p>© 2023 - Todos los derechos reservados</p>
-        <p>Diseño moderno con verde manzana y blanco</p>
+        <div class="background-image"></div>
+        <div class="overlay"></div>
     </div>
 </body>
 </html>
