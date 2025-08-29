@@ -21,7 +21,7 @@
             position: relative;
             width: 100%;
             height: 100vh;
-            background-color: #8BC34A; /* Verde manzana */
+            background: linear-gradient(135deg, rgba(142, 215, 112, 0.7) 0%, rgba(102, 175, 72, 0.7) 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,17 +36,17 @@
             background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
-            opacity: 0.85;
             z-index: 1;
         }
         
-        .overlay {
+        .glass-effect {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(139, 195, 74, 0.6); /* Verde manzana con transparencia */
+            background: linear-gradient(135deg, rgba(142, 215, 112, 0.3) 0%, rgba(102, 175, 72, 0.3) 100%);
+            backdrop-filter: blur(3px);
             z-index: 2;
         }
     </style>
@@ -54,7 +54,7 @@
 <body>
     <div class="container">
         <div class="background-image"></div>
-        <div class="overlay"></div>
+        <div class="glass-effect"></div>
     </div>
 </body>
 </html>
