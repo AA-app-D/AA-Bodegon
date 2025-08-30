@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AA-BODEGÓN - Productos</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400 ;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js "></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js "></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js "></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js "></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
       --primary: #4CAF50;
@@ -46,7 +46,7 @@
     }
 
     body {
-      background-image: url("https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&w=1350&q=80 ");
+      background-image: url("https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&w=1350&q=80");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -837,7 +837,7 @@
   <!-- Cabecera -->
   <header>
     <div class="logo">
-      <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg " class="logo-icon" alt="AA-BODEGÓN Logo">
+      <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" class="logo-icon" alt="AA-BODEGÓN Logo">
       <h1>AA-BODEGÓN - Productos</h1>
     </div>
     <div class="tasa-conversor">
@@ -927,7 +927,6 @@
             <th>Precio (Bs)</th>
             <th>Precio ($)</th>
             <th>Existencia</th>
-            <th>Valor Total (Bs)</th>
             <th>Estado</th>
             <th>Acciones</th>
           </tr>
@@ -1390,7 +1389,7 @@
       e.preventDefault();
       
       // Obtener la imagen si se ha seleccionado una
-      let imagenUrl = 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80 ';
+      let imagenUrl = 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80';
       const fileInput = document.getElementById('productImage');
       if (fileInput.files[0]) {
         const reader = new FileReader();
@@ -1521,7 +1520,7 @@
       if (productos.length === 0) {
         tablaProductos.innerHTML = `
           <tr>
-            <td colspan="10" style="text-align: center; padding: 30px;">
+            <td colspan="9" style="text-align: center; padding: 30px;">
               No hay productos registrados. Haz clic en "Nuevo Producto" para agregar uno.
             </td>
           </tr>
@@ -1569,7 +1568,6 @@
       productosPagina.forEach(producto => {
         const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
         const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : producto.estado;
-        const valorTotal = producto.precioBs * producto.stock;
         const isSelected = productosSeleccionados.has(producto.id);
         
         tablaProductos.innerHTML += `
@@ -1583,7 +1581,6 @@
             <td>${producto.precioBs.toLocaleString()} Bs</td>
             <td>${producto.precioDollar.toFixed(2)} $</td>
             <td>${producto.stock} unidades</td>
-            <td>${valorTotal.toLocaleString()} Bs</td>
             <td><span class="status ${statusClass}">${statusText}</span></td>
             <td class="action-cell">
               <button class="action-btn edit-btn" onclick="editarProducto('${producto.id}')"><i class="fas fa-edit"></i></button>
@@ -1678,7 +1675,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-title">Valor Total (Bs)</div>
-          <div class="stat-value">${(valorTotalBs / 1000000).toFixed(1)}M Bs</div>
+          <div class="stat-value">${valorTotalBs.toLocaleString()} Bs</div>
           <div class="stat-desc">Valor total del inventario</div>
         </div>
         <div class="stat-card">
@@ -1687,9 +1684,9 @@
           <div class="stat-desc">Valor total del inventario</div>
         </div>
         <div class="stat-card">
-          <div class="stat-title">Categorías</div>
+          <div class="stat-title">Categorías Diferentes</div>
           <div class="stat-value">${categoriasUnicas}</div>
-          <div class="stat-desc">Diferentes categorías</div>
+          <div class="stat-desc">Tipos de productos</div>
         </div>
       `;
     }
@@ -1774,14 +1771,13 @@
       // Tabla
       doc.autoTable({
         startY: 30,
-        head: [['Nombre', 'Categoría', 'Precio Bs', 'Precio $', 'Stock', 'Valor Total Bs', 'Estado']],
+        head: [['Nombre', 'Categoría', 'Precio Bs', 'Precio $', 'Stock', 'Estado']],
         body: productos.map(p => [
           p.nombre,
           p.categoria,
           p.precioBs.toLocaleString(),
           p.precioDollar.toFixed(2),
           p.stock,
-          (p.precioBs * p.stock).toLocaleString(),
           p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
         ])
       });
