@@ -53,6 +53,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
     
     /* Cabecera */
@@ -142,6 +143,8 @@
       margin: 20px;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
+      max-width: 100%;
+      box-sizing: border-box;
     }
     
     .main-content h2 {
@@ -283,6 +286,8 @@
       box-shadow: var(--shadow);
       background: var(--card-bg);
       margin-top: 20px;
+      width: 100%;
+      overflow-x: auto;
     }
     
     .products-table {
@@ -705,14 +710,25 @@
     }
     
     /* Responsive */
-    @media (max-width: 768px) {
-      .form-row {
-        flex-direction: column;
-        gap: 0;
+    @media (max-width: 1200px) {
+      .main-content {
+        margin: 15px;
+        padding: 20px;
       }
       
       .filters {
         flex-direction: column;
+      }
+      
+      .filter-item select {
+        min-width: 100%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
       }
       
       .toolbar {
@@ -737,10 +753,6 @@
         align-items: stretch;
       }
       
-      .filter-item select {
-        min-width: 100%;
-      }
-      
       .export-dropdown-content {
         right: auto;
         left: 0;
@@ -763,6 +775,15 @@
       
       .mass-selection {
         flex-wrap: wrap;
+      }
+      
+      .products-table th, .products-table td {
+        padding: 12px 8px;
+      }
+      
+      .action-cell {
+        flex-direction: column;
+        gap: 8px;
       }
     }
   </style>
@@ -1054,6 +1075,11 @@
       
       // Event listeners
       formProducto.addEventListener('submit', guardarProducto);
+      
+      // Prevenir que el modal se cierre al hacer clic dentro del contenido
+      document.querySelector('.modal-content').addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
     }
 
     // Actualizar tasa de cambio
@@ -1713,17 +1739,25 @@
     // Exportar a Excel
     function exportarExcel() {
       // Preparar datos
-      const datos = productos.map(p => ({
-        'Nombre': p.nombre,
-        'Categoría': p.categoria,
-        'Precio Bs': p.precioBs,
-        'Precio $': p.precioDollar,
-        'Stock': p.stock,
-        'Stock Mínimo': p.stockMinimo,
-        'Código Barras': p.codigoBarras,
-        'Proveedor': p.proveedor,
-        'Estado': p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
-      }));
+      const datos = productos.map(p => {
+        // Calcular el valor total por producto
+        const valorTotalBs = p.precioBs * p.stock;
+        const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
+        
+        return {
+          'Nombre': p.nombre,
+          'Categoría': p.categoria,
+          'Precio Bs': p.precioBs,
+          'Precio $': p.precioDollar,
+          'Stock': p.stock,
+          'Valor Total Bs': valorTotalBs,
+          'Valor Total $': valorTotalDollar,
+          'Stock Mínimo': p.stockMinimo,
+          'Código Barras': p.codigoBarras,
+          'Proveedor': p.proveedor,
+          'Estado': p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
+        };
+      });
       
       // Crear libro de trabajo
       const libro = XLSX.utils.book_new();
