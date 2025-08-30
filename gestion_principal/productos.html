@@ -56,7 +56,8 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
+    
+    /* Cabecera */
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
@@ -71,14 +72,14 @@
       flex-wrap: wrap;
       gap: 10px;
     }
-
+    
     .logo {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-shrink: 0;
     }
-
+    
     .logo h1 {
       margin: 0;
       font-size: 1.5rem;
@@ -87,7 +88,7 @@
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
       white-space: nowrap;
     }
-
+    
     .logo-icon {
       width: 40px;
       height: 40px;
@@ -96,7 +97,8 @@
       object-fit: cover;
       flex-shrink: 0;
     }
-
+    
+    /* Conversor de tasa */
     .tasa-conversor {
       display: flex;
       align-items: center;
@@ -106,13 +108,13 @@
       border-radius: 20px;
       flex-shrink: 0;
     }
-
+    
     .tasa-conversor label {
       font-size: 12px;
       color: white;
       white-space: nowrap;
     }
-
+    
     .tasa-conversor input {
       width: 80px;
       padding: 5px 8px;
@@ -123,7 +125,7 @@
       font-weight: 600;
       font-size: 12px;
     }
-
+    
     .tasa-conversor button {
       background: white;
       border: none;
@@ -136,7 +138,13 @@
       font-size: 12px;
       white-space: nowrap;
     }
-
+    
+    .tasa-conversor button:hover {
+      background: var(--primary-light);
+      color: white;
+    }
+    
+    /* Contenido principal */
     .main-content {
       flex: 1;
       padding: 20px;
@@ -150,7 +158,7 @@
       max-width: 100%;
       box-sizing: border-box;
     }
-
+    
     .main-content h2 {
       font-size: 1.5rem;
       margin-bottom: 20px;
@@ -160,14 +168,15 @@
       gap: 10px;
       font-weight: 700;
     }
-
+    
     .main-content h2 i {
       color: var(--primary);
       background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
       padding: 10px;
       border-radius: 8px;
     }
-
+    
+    /* Barra de herramientas */
     .toolbar {
       display: flex;
       justify-content: space-between;
@@ -175,7 +184,7 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-
+    
     .search-box {
       display: flex;
       align-items: center;
@@ -189,12 +198,12 @@
       transition: var(--transition);
       border: 1px solid transparent;
     }
-
+    
     .search-box:focus-within {
       border-color: var(--primary-light);
       box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
-
+    
     .search-box input {
       border: none;
       padding: 8px;
@@ -203,14 +212,14 @@
       background: transparent;
       font-size: 14px;
     }
-
+    
     .action-buttons {
       display: flex;
       gap: 10px;
       align-items: center;
       flex-wrap: wrap;
     }
-
+    
     .btn {
       padding: 10px 20px;
       border: none;
@@ -226,25 +235,35 @@
       height: 40px;
       white-space: nowrap;
     }
-
+    
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
     }
-
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
+    }
+    
     .btn-secondary {
       background: linear-gradient(135deg, var(--secondary), #8a96a1);
       color: white;
     }
-
+    
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
+    }
+    
+    /* Filtros */
     .filters {
       display: flex;
       gap: 15px;
       margin-bottom: 20px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
+      flex-wrap: wrap;
     }
-
+    
     .filter-item {
       display: flex;
       flex-direction: column;
@@ -252,13 +271,13 @@
       min-width: 150px;
       flex: 1;
     }
-
+    
     .filter-item label {
       font-size: 14px;
       font-weight: 600;
       color: var(--text-primary);
     }
-
+    
     .filter-item select {
       padding: 10px 14px;
       border-radius: 10px;
@@ -270,7 +289,14 @@
       transition: var(--transition);
       min-width: 100%;
     }
-
+    
+    .filter-item select:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+    }
+    
+    /* Tabla de productos */
     .table-container {
       border-radius: var(--border-radius);
       overflow: hidden;
@@ -280,21 +306,21 @@
       width: 100%;
       overflow-x: auto;
     }
-
+    
     .products-table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
       min-width: 900px;
     }
-
+    
     .products-table th, .products-table td {
       padding: 14px;
       text-align: left;
       border-bottom: 1px solid #e2e8f0;
       font-size: 13px;
     }
-
+    
     .products-table th {
       background-color: #f7f9fc;
       font-weight: 600;
@@ -303,7 +329,19 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-
+    
+    .products-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .products-table tr {
+      transition: var(--transition);
+    }
+    
+    .products-table tr:hover {
+      background-color: #f7f9fc;
+    }
+    
     .product-img {
       width: 40px;
       height: 40px;
@@ -311,7 +349,7 @@
       border-radius: 8px;
       box-shadow: var(--shadow);
     }
-
+    
     .status {
       padding: 6px 12px;
       border-radius: 30px;
@@ -320,24 +358,66 @@
       font-weight: 600;
       white-space: nowrap;
     }
-
+    
     .status-active {
       background-color: rgba(40, 167, 69, 0.15);
       color: var(--success);
     }
-
+    
     .status-low {
       background-color: rgba(220, 53, 69, 0.15);
       color: var(--danger);
     }
-
+    
+    .action-cell {
+      display: flex;
+      gap: 8px;
+      min-width: 90px;
+    }
+    
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    
+    .edit-btn {
+      color: var(--primary);
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+    
+    .edit-btn:hover {
+      background-color: rgba(76, 175, 80, 0.2);
+      transform: scale(1.1);
+    }
+    
+    .delete-btn {
+      color: var(--danger);
+      background-color: rgba(220, 53, 69, 0.1);
+    }
+    
+    .delete-btn:hover {
+      background-color: rgba(220, 53, 69, 0.2);
+      transform: scale(1.1);
+    }
+    
+    /* Panel de estadísticas */
     .stats-panel {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 15px;
       margin-top: 25px;
     }
-
+    
     .stat-card {
       background: var(--card-bg);
       padding: 20px;
@@ -346,25 +426,31 @@
       transition: var(--transition);
       border-left: 4px solid var(--primary);
     }
-
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
     .stat-value {
       font-size: 24px;
       font-weight: 700;
       color: var(--primary);
       margin: 10px 0;
     }
-
+    
     .stat-title {
       font-size: 14px;
       color: var(--text-secondary);
       font-weight: 600;
     }
-
+    
     .stat-desc {
       font-size: 12px;
       color: var(--text-secondary);
     }
-
+    
+    /* Paginación */
     .pagination {
       display: flex;
       justify-content: center;
@@ -373,7 +459,7 @@
       gap: 8px;
       flex-wrap: wrap;
     }
-
+    
     .pagination button {
       padding: 6px 12px;
       border: 1px solid #e2e8f0;
@@ -383,13 +469,30 @@
       transition: var(--transition);
       font-size: 13px;
     }
-
+    
+    .pagination button:hover:not(:disabled) {
+      background: var(--primary-light);
+      color: white;
+    }
+    
     .pagination button.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
     }
-
+    
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .pagination-info {
+      margin: 0 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -404,7 +507,7 @@
       z-index: 1000;
       padding: 15px;
     }
-
+    
     .modal-content {
       background: var(--card-bg);
       padding: 25px;
@@ -414,59 +517,327 @@
       max-height: 90vh;
       overflow-y: auto;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      animation: modalFadeIn 0.3s ease;
     }
-
+    
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .modal-header h3 {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    
+    .close-modal:hover {
+      color: var(--danger);
+      transform: rotate(90deg);
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
     .form-group label {
       display: block;
       margin-bottom: 8px;
       font-weight: 600;
+      color: var(--text-primary);
       font-size: 14px;
     }
-
+    
     .form-group input, .form-group select, .form-group textarea {
       width: 100%;
       padding: 12px 15px;
       border: 1px solid #e2e8f0;
       border-radius: 8px;
+      box-sizing: border-box;
       font-size: 14px;
+      transition: var(--transition);
+      background: var(--card-bg);
+      font-weight: 500;
     }
-
+    
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+    }
+    
     .form-row {
       display: flex;
       gap: 15px;
     }
-
+    
     .form-row .form-group {
       flex: 1;
     }
-
+    
     .modal-footer {
       margin-top: 20px;
       display: flex;
       justify-content: flex-end;
       gap: 10px;
+      padding-top: 15px;
+      border-top: 1px solid #e2e8f0;
     }
 
-    @media (max-width: 768px) {
+    /* Gestión de categorías y proveedores */
+    .category-management, .supplier-management {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    
+    .category-management select, .supplier-management select {
+      flex: 1;
+    }
+    
+    .category-panel, .supplier-panel {
+      display: none;
+      margin-top: 8px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .category-list, .supplier-list {
+      max-height: 100px;
+      overflow-y: auto;
+      margin-top: 8px;
+    }
+    
+    .category-item, .supplier-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 14px;
+    }
+    
+    .category-item:last-child, .supplier-item:last-child {
+      border-bottom: none;
+    }
+    
+    /* Dropdown de exportación */
+    .export-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .export-dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 140px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+    
+    .export-dropdown-content button {
+      width: 100%;
+      text-align: left;
+      padding: 10px 14px;
+      border: none;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+    
+    .export-dropdown-content button:hover {
+      background-color: #f1f1f1;
+    }
+    
+    .export-dropdown:hover .export-dropdown-content {
+      display: block;
+    }
+    
+    /* Selección masiva */
+    .mass-selection {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .mass-selection input {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .mass-selection button {
+      padding: 6px 10px;
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    
+    /* Botón volver atrás */
+    .back-button {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 99;
+      background: var(--primary);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .back-button:hover {
+      transform: translateY(-3px);
+      background: var(--primary-dark);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .main-content {
+        margin: 12px;
+        padding: 15px;
+      }
+      
       .filters {
         flex-direction: column;
       }
-
+      
+      .filter-item select {
+        min-width: 100%;
+      }
+    }
+    
+    @media (max-width: 768px) {
       .form-row {
         flex-direction: column;
+        gap: 0;
       }
-
+      
       .toolbar {
         flex-direction: column;
         align-items: stretch;
+      }
+      
+      .search-box {
+        max-width: 100%;
+      }
+      
+      .action-buttons {
+        justify-content: center;
+      }
+      
+      .stats-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .category-management, .supplier-management {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .export-dropdown-content {
+        right: auto;
+        left: 0;
+      }
+      
+      .pagination {
+        flex-wrap: wrap;
+      }
+      
+      header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+      }
+      
+      .tasa-conversor {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .mass-selection {
+        flex-wrap: wrap;
+      }
+      
+      .products-table th, .products-table td {
+        padding: 10px 6px;
+      }
+      
+      .action-cell {
+        flex-direction: column;
+        gap: 6px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo h1 {
+        font-size: 1.2rem;
+      }
+      
+      .tasa-conversor {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .btn {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+      
+      .modal-content {
+        padding: 15px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Cabecera -->
   <header>
     <div class="logo">
-      <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" class="logo-icon" alt="Logo">
+      <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" class="logo-icon" alt="AA-BODEGÓN Logo">
       <h1>AA-BODEGÓN - Productos</h1>
     </div>
     <div class="tasa-conversor">
@@ -476,9 +847,11 @@
     </div>
   </header>
 
+  <!-- Contenido principal -->
   <div class="main-content">
     <h2><i class="fas fa-boxes"></i> Gestión de Productos</h2>
-
+    
+    <!-- Barra de herramientas -->
     <div class="toolbar">
       <div class="search-box">
         <i class="fas fa-search"></i>
@@ -500,7 +873,17 @@
         </div>
       </div>
     </div>
-
+    
+    <!-- Selección masiva -->
+    <div class="mass-selection" id="massSelection" style="display: none;">
+      <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()">
+      <label for="selectAllCheckbox">Seleccionar todos</label>
+      <button onclick="deleteSelectedProducts()">
+        <i class="fas fa-trash"></i> Eliminar seleccionados
+      </button>
+    </div>
+    
+    <!-- Filtros -->
     <div class="filters">
       <div class="filter-item">
         <label>Categoría</label>
@@ -529,11 +912,15 @@
         </select>
       </div>
     </div>
-
+    
+    <!-- Tabla de productos -->
     <div class="table-container">
       <table class="products-table">
         <thead>
           <tr>
+            <th style="width: 40px;">
+              <input type="checkbox" id="toggleMassSelection" onchange="toggleMassSelectionMode()">
+            </th>
             <th>Imagen</th>
             <th>Nombre</th>
             <th>Categoría</th>
@@ -544,16 +931,24 @@
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody id="tablaProductos"></tbody>
+        <tbody id="tablaProductos">
+          <!-- Los productos se cargarán dinámicamente -->
+        </tbody>
       </table>
     </div>
-
-    <div class="pagination" id="paginacion"></div>
-
-    <div class="stats-panel" id="panelEstadisticas"></div>
+    
+    <!-- Paginación -->
+    <div class="pagination" id="paginacion">
+      <!-- Los controles de paginación se generarán dinámicamente -->
+    </div>
+    
+    <!-- Panel de estadísticas -->
+    <div class="stats-panel" id="panelEstadisticas">
+      <!-- Las estadísticas se cargarán dinámicamente -->
+    </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Modal para agregar/editar producto -->
   <div class="modal" id="productModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -563,250 +958,911 @@
       <form id="formProducto">
         <input type="hidden" id="productId">
         <div class="form-group">
-          <label>Nombre del Producto</label>
-          <input type="text" id="productName" required>
+          <label for="productName">Nombre del Producto</label>
+          <input type="text" id="productName" placeholder="Ej: Arroz Mary" required>
         </div>
         <div class="form-group">
-          <label>Categoría</label>
-          <select id="productCategory" required></select>
+          <label for="productCategory">Categoría</label>
+          <div class="category-management">
+            <select id="productCategory" required>
+              <option value="">Seleccione una categoría</option>
+            </select>
+            <button type="button" class="action-btn edit-btn" id="btnGestionCategorias">
+              <i class="fas fa-cog"></i>
+            </button>
+          </div>
+          <div class="category-panel" id="panelGestionCategorias">
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+              <input type="text" id="inputNuevaCategoria" placeholder="Nueva categoría" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+              <button type="button" class="btn btn-primary" id="btnAgregarCategoria" style="padding: 8px 12px;">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="category-list" id="listaCategorias">
+              <!-- Las categorías se cargarán dinámicamente -->
+            </div>
+          </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Precio en Bolívares</label>
-            <input type="number" id="productPriceBs" step="0.01" required oninput="calcularPrecioDolar()">
+            <label for="productPriceBs">Precio en Bolívares</label>
+            <input type="number" id="productPriceBs" placeholder="0.00" step="0.01" required oninput="calcularPrecioDolar()">
           </div>
           <div class="form-group">
-            <label>Precio en Dólares</label>
-            <input type="number" id="productPriceDollar" step="0.01" required oninput="calcularPrecioBs()">
+            <label for="productPriceDollar">Precio en Dólares</label>
+            <input type="number" id="productPriceDollar" placeholder="0.00" step="0.01" required oninput="calcularPrecioBs()">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Stock Actual</label>
-            <input type="number" id="productStock" required>
+            <label for="productStock">Stock Actual</label>
+            <input type="number" id="productStock" placeholder="0" required>
           </div>
           <div class="form-group">
-            <label>Stock Mínimo</label>
-            <input type="number" id="productMinStock" required>
+            <label for="productMinStock">Stock Mínimo</label>
+            <input type="number" id="productMinStock" placeholder="0" required>
           </div>
         </div>
         <div class="form-group">
-          <label>Código de Barras</label>
-          <input type="text" id="productBarcode">
+          <label for="productBarcode">Código de Barras</label>
+          <input type="text" id="productBarcode" placeholder="Ej: 1234567890123" onchange="buscarPorCodigoBarras()">
         </div>
         <div class="form-group">
-          <label>Proveedor</label>
-          <select id="productSupplier"></select>
+          <label for="productSupplier">Proveedor</label>
+          <div class="supplier-management">
+            <select id="productSupplier">
+              <option value="">Seleccione un proveedor</option>
+            </select>
+            <button type="button" class="action-btn edit-btn" id="btnGestionProveedores">
+              <i class="fas fa-cog"></i>
+            </button>
+          </div>
+          <div class="supplier-panel" id="panelGestionProveedores">
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+              <input type="text" id="inputNuevoProveedor" placeholder="Nuevo proveedor" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+              <button type="button" class="btn btn-primary" id="btnAgregarProveedor" style="padding: 8px 12px;">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="supplier-list" id="listaProveedores">
+              <!-- Los proveedores se cargarán dinámicamente -->
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label>Imagen</label>
+          <label for="productImage">Imagen del Producto</label>
           <input type="file" id="productImage" accept="image/*" onchange="previsualizarImagen()">
-          <img id="previewImage" src="" style="max-width: 80px; display: none; margin-top: 8px;">
+          <img id="previewImage" src="" alt="Vista previa" style="max-width: 80px; max-height: 80px; margin-top: 8px; display: none;">
         </div>
         <div class="form-group">
-          <label>Estado</label>
-          <select id="productStatus">
+          <label for="productStatus">Estado</label>
+          <select id="productStatus" required>
             <option value="Activo">Activo</option>
             <option value="Inactivo">Inactivo</option>
           </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary">Guardar Producto</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- Botón para volver atrás -->
+  <div class="back-button" onclick="goBack()">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+
   <script>
+    // Tasas de cambio (valor inicial según BCV)
     let TASA_CAMBIO = 36.7765;
-    const PRODUCTOS_POR_PAGINA = 10;
+
+    // Configuración de paginación
+    const PRODUCTOS_POR_PAGINA = 10; // Límite de productos por página
     let paginaActual = 1;
+    let productosFiltrados = [];
+    let modoSeleccionMasiva = false;
+    let productosSeleccionados = new Set();
+
+    // Referencias a elementos del DOM
+    const modal = document.getElementById('productModal');
+    const formProducto = document.getElementById('formProducto');
+    const modalTitulo = document.getElementById('modalTitulo');
+    const productId = document.getElementById('productId');
+    const selectCategoria = document.getElementById('productCategory');
+    const selectCategoriaFiltro = document.getElementById('filtroCategoria');
+    const btnGestionCategorias = document.getElementById('btnGestionCategorias');
+    const panelGestionCategorias = document.getElementById('panelGestionCategorias');
+    const btnAgregarCategoria = document.getElementById('btnAgregarCategoria');
+    const inputNuevaCategoria = document.getElementById('inputNuevaCategoria');
+    const listaCategorias = document.getElementById('listaCategorias');
+    const selectProveedor = document.getElementById('productSupplier');
+    const btnGestionProveedores = document.getElementById('btnGestionProveedores');
+    const panelGestionProveedores = document.getElementById('panelGestionProveedores');
+    const btnAgregarProveedor = document.getElementById('btnAgregarProveedor');
+    const inputNuevoProveedor = document.getElementById('inputNuevoProveedor');
+    const listaProveedores = document.getElementById('listaProveedores');
+    const tablaProductos = document.getElementById('tablaProductos');
+    const panelEstadisticas = document.getElementById('panelEstadisticas');
+    const paginacion = document.getElementById('paginacion');
+    const searchInput = document.getElementById('searchInput');
+    const filtroCategoria = document.getElementById('filtroCategoria');
+    const filtroEstado = document.getElementById('filtroEstado');
+    const filtroOrden = document.getElementById('filtroOrden');
+    const previewImage = document.getElementById('previewImage');
+    const tasaCambioInput = document.getElementById('tasaCambioInput');
+    const massSelection = document.getElementById('massSelection');
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    const toggleMassSelection = document.getElementById('toggleMassSelection');
+
+    // Inicializar datos
     let productos = JSON.parse(localStorage.getItem('productos')) || [];
     let categorias = JSON.parse(localStorage.getItem('categorias')) || ['Alimentos', 'Bebidas', 'Limpieza', 'Licores'];
-    let proveedores = JSON.parse(localStorage.getItem('proveedores')) || ['Distribuidora Mary', 'Polar', 'Empresas Lindas'];
+    let proveedores = JSON.parse(localStorage.getItem('proveedores')) || ['Distribuidora Mary', 'Polar', 'Empresas Lindas', 'Importaciones JR'];
+    let productoEditando = null;
 
+    // Inicializar la aplicación
     function inicializar() {
+      // Cargar tasa de cambio guardada o usar la predeterminada
+      const tasaGuardada = localStorage.getItem('tasaCambio');
+      if (tasaGuardada) {
+        TASA_CAMBIO = parseFloat(tasaGuardada);
+        tasaCambioInput.value = TASA_CAMBIO;
+      }
+      
+      configurarGestionCategorias();
+      configurarGestionProveedores();
       actualizarSelectCategorias();
       actualizarSelectProveedores();
       renderizarProductos();
       actualizarEstadisticas();
-      document.getElementById('formProducto').addEventListener('submit', guardarProducto);
-    }
-
-    function actualizarSelectCategorias() {
-      const catSelect = document.getElementById('productCategory');
-      const filtroSelect = document.getElementById('filtroCategoria');
-      catSelect.innerHTML = '<option value="">Seleccione</option>';
-      filtroSelect.innerHTML = '<option value="">Todas las categorías</option>';
-      categorias.forEach(c => {
-        catSelect.innerHTML += `<option>${c}</option>`;
-        filtroSelect.innerHTML += `<option>${c}</option>`;
+      
+      // Event listeners
+      formProducto.addEventListener('submit', guardarProducto);
+      
+      // Prevenir que el modal se cierre al hacer clic dentro del contenido
+      document.querySelector('.modal-content').addEventListener('click', function(e) {
+        e.stopPropagation();
       });
     }
 
-    function actualizarSelectProveedores() {
-      const provSelect = document.getElementById('productSupplier');
-      provSelect.innerHTML = '<option value="">Seleccione</option>';
-      proveedores.forEach(p => provSelect.innerHTML += `<option>${p}</option>`);
+    // Actualizar tasa de cambio
+    function actualizarTasaCambio() {
+      const nuevaTasa = parseFloat(tasaCambioInput.value);
+      if (!isNaN(nuevaTasa) && nuevaTasa > 0) {
+        TASA_CAMBIO = nuevaTasa;
+        localStorage.setItem('tasaCambio', TASA_CAMBIO);
+        
+        // Recalcular precios en dólares para todos los productos
+        productos.forEach(producto => {
+          producto.precioDollar = producto.precioBs / TASA_CAMBIO;
+        });
+        
+        guardarProductos();
+        renderizarProductos();
+        actualizarEstadisticas();
+        
+        alert(`Tasa de cambio actualizada a ${TASA_CAMBIO} Bs/$`);
+      } else {
+        alert('Por favor ingrese una tasa de cambio válida');
+      }
     }
 
-    function renderizarProductos() {
-      const tbody = document.getElementById('tablaProductos');
-      const filtro = document.getElementById('searchInput').value.toLowerCase();
-      const categoria = document.getElementById('filtroCategoria').value;
-      const estado = document.getElementById('filtroEstado').value;
-      let filtrados = productos.filter(p => {
-        return (
-          p.nombre.toLowerCase().includes(filtro) &&
-          (categoria === '' || p.categoria === categoria) &&
-          (estado === '' || (estado === 'Stock Bajo' ? p.stock <= p.stockMinimo : p.estado === estado))
-        );
+    // Configurar gestión de categorías en el modal
+    function configurarGestionCategorias() {
+      // Toggle del panel de gestión
+      btnGestionCategorias.addEventListener('click', () => {
+        panelGestionCategorias.style.display = panelGestionCategorias.style.display === 'none' ? 'block' : 'none';
+        if (panelGestionCategorias.style.display === 'block') {
+          renderizarListaCategorias();
+        }
       });
 
-      tbody.innerHTML = '';
-      filtrados.forEach(p => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><img src="${p.imagen}" class="product-img"></td>
-          <td>${p.nombre}</td>
-          <td>${p.categoria}</td>
-          <td>${p.precioBs.toLocaleString()} Bs</td>
-          <td>${p.precioDollar.toFixed(2)} $</td>
-          <td>${p.stock}</td>
-          <td><span class="status ${p.stock <= p.stockMinimo ? 'status-low' : 'status-active'}">${p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado}</span></td>
-          <td>
-            <button onclick="editarProducto('${p.id}')">✏️</button>
-            <button onclick="eliminarProducto('${p.id}')">🗑️</button>
-          </td>
+      // Agregar nueva categoría
+      btnAgregarCategoria.addEventListener('click', agregarCategoriaDesdeInput);
+      inputNuevaCategoria.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          agregarCategoriaDesdeInput();
+        }
+      });
+    }
+
+    // Configurar gestión de proveedores en el modal
+    function configurarGestionProveedores() {
+      // Toggle del panel de gestión
+      btnGestionProveedores.addEventListener('click', () => {
+        panelGestionProveedores.style.display = panelGestionProveedores.style.display === 'none' ? 'block' : 'none';
+        if (panelGestionProveedores.style.display === 'block') {
+          renderizarListaProveedores();
+        }
+      });
+
+      // Agregar nuevo proveedor
+      btnAgregarProveedor.addEventListener('click', agregarProveedorDesdeInput);
+      inputNuevoProveedor.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          agregarProveedorDesdeInput();
+        }
+      });
+    }
+
+    // Renderizar lista de categorías
+    function renderizarListaCategorias() {
+      listaCategorias.innerHTML = '';
+      categorias.forEach((categoria, index) => {
+        const div = document.createElement('div');
+        div.className = 'category-item';
+        
+        div.innerHTML = `
+          <span>${categoria}</span>
+          <button type="button" class="action-btn delete-btn" data-index="${index}">
+            <i class="fas fa-trash"></i>
+          </button>
         `;
-        tbody.appendChild(tr);
+        
+        listaCategorias.appendChild(div);
+      });
+
+      // Agregar event listeners para eliminar
+      document.querySelectorAll('#listaCategorias .delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.currentTarget.getAttribute('data-index'));
+          eliminarCategoria(index);
+        });
       });
     }
 
+    // Renderizar lista de proveedores
+    function renderizarListaProveedores() {
+      listaProveedores.innerHTML = '';
+      proveedores.forEach((proveedor, index) => {
+        const div = document.createElement('div');
+        div.className = 'supplier-item';
+        
+        div.innerHTML = `
+          <span>${proveedor}</span>
+          <button type="button" class="action-btn delete-btn" data-index="${index}">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        
+        listaProveedores.appendChild(div);
+      });
+
+      // Agregar event listeners para eliminar
+      document.querySelectorAll('#listaProveedores .delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.currentTarget.getAttribute('data-index'));
+          eliminarProveedor(index);
+        });
+      });
+    }
+
+    function agregarCategoriaDesdeInput() {
+      const nuevaCategoria = inputNuevaCategoria.value.trim();
+      if (nuevaCategoria && !categorias.includes(nuevaCategoria)) {
+        categorias.push(nuevaCategoria);
+        guardarCategorias();
+        actualizarSelectCategorias();
+        inputNuevaCategoria.value = '';
+        renderizarListaCategorias();
+        
+        // Seleccionar la nueva categoría automáticamente
+        selectCategoria.value = nuevaCategoria;
+      }
+    }
+
+    function agregarProveedorDesdeInput() {
+      const nuevoProveedor = inputNuevoProveedor.value.trim();
+      if (nuevoProveedor && !proveedores.includes(nuevoProveedor)) {
+        proveedores.push(nuevoProveedor);
+        guardarProveedores();
+        actualizarSelectProveedores();
+        inputNuevoProveedor.value = '';
+        renderizarListaProveedores();
+        
+        // Seleccionar el nuevo proveedor automáticamente
+        selectProveedor.value = nuevoProveedor;
+      }
+    }
+
+    function eliminarCategoria(index) {
+      if (confirm(`¿Estás seguro de eliminar la categoría "${categorias[index]}"?`)) {
+        categorias.splice(index, 1);
+        guardarCategorias();
+        actualizarSelectCategorias();
+        renderizarListaCategorias();
+      }
+    }
+
+    function eliminarProveedor(index) {
+      if (confirm(`¿Estás seguro de eliminar el proveedor "${proveedores[index]}"?`)) {
+        proveedores.splice(index, 1);
+        guardarProveedores();
+        actualizarSelectProveedores();
+        renderizarListaProveedores();
+      }
+    }
+
+    // Guardar categorías en localStorage
+    function guardarCategorias() {
+      localStorage.setItem('categorias', JSON.stringify(categorias));
+    }
+
+    // Guardar proveedores en localStorage
+    function guardarProveedores() {
+      localStorage.setItem('proveedores', JSON.stringify(proveedores));
+    }
+
+    // Actualizar selects de categorías
+    function actualizarSelectCategorias() {
+      // Limpiar selects
+      selectCategoria.innerHTML = '<option value="">Seleccione una categoría</option>';
+      selectCategoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
+      
+      // Agregar categorías
+      categorias.forEach(categoria => {
+        selectCategoria.innerHTML += `<option value="${categoria}">${categoria}</option>`;
+        selectCategoriaFiltro.innerHTML += `<option value="${categoria}">${categoria}</option>`;
+      });
+    }
+
+    // Actualizar selects de proveedores
+    function actualizarSelectProveedores() {
+      // Limpiar selects
+      selectProveedor.innerHTML = '<option value="">Seleccione un proveedor</option>';
+      
+      // Agregar proveedores
+      proveedores.forEach(proveedor => {
+        selectProveedor.innerHTML += `<option value="${proveedor}">${proveedor}</option>`;
+      });
+    }
+
+    // Guardar productos en localStorage
+    function guardarProductos() {
+      localStorage.setItem('productos', JSON.stringify(productos));
+    }
+
+    // Generar ID único
+    function generarId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    // Calcular precio en dólares basado en bolívares
+    function calcularPrecioDolar() {
+      const precioBs = parseFloat(document.getElementById('productPriceBs').value) || 0;
+      const precioDollar = precioBs / TASA_CAMBIO;
+      document.getElementById('productPriceDollar').value = precioDollar.toFixed(2);
+    }
+
+    // Calcular precio en bolívares basado en dólares
+    function calcularPrecioBs() {
+      const precioDollar = parseFloat(document.getElementById('productPriceDollar').value) || 0;
+      const precioBs = precioDollar * TASA_CAMBIO;
+      document.getElementById('productPriceBs').value = precioBs.toFixed(2);
+    }
+
+    // Previsualizar imagen seleccionada
+    function previsualizarImagen() {
+      const fileInput = document.getElementById('productImage');
+      const file = fileInput.files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewImage.style.display = 'none';
+      }
+    }
+
+    // Buscar producto por código de barras
+    function buscarPorCodigoBarras() {
+      const codigoBarras = document.getElementById('productBarcode').value.trim();
+      if (!codigoBarras) return;
+      
+      // Buscar en productos existentes
+      const productoExistente = productos.find(p => p.codigoBarras === codigoBarras);
+      
+      if (productoExistente) {
+        // Llenar el formulario con los datos del producto
+        document.getElementById('productName').value = productoExistente.nombre;
+        document.getElementById('productCategory').value = productoExistente.categoria;
+        document.getElementById('productPriceBs').value = productoExistente.precioBs;
+        document.getElementById('productPriceDollar').value = productoExistente.precioDollar;
+        document.getElementById('productStock').value = productoExistente.stock;
+        document.getElementById('productMinStock').value = productoExistente.stockMinimo;
+        document.getElementById('productSupplier').value = productoExistente.proveedor;
+        document.getElementById('productStatus').value = productoExistente.estado;
+        
+        // Mostrar mensaje informativo
+        alert(`Producto "${productoExistente.nombre}" encontrado. Los datos han sido cargados en el formulario.`);
+      }
+    }
+
+    // Guardar producto (nuevo o editado)
+    function guardarProducto(e) {
+      e.preventDefault();
+      
+      // Obtener la imagen si se ha seleccionado una
+      let imagenUrl = 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80';
+      const fileInput = document.getElementById('productImage');
+      if (fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagenUrl = e.target.result;
+          finalizarGuardado(imagenUrl);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        finalizarGuardado(imagenUrl);
+      }
+    }
+
+    function finalizarGuardado(imagenUrl) {
+      const producto = {
+        id: productId.value || generarId(),
+        nombre: document.getElementById('productName').value,
+        categoria: document.getElementById('productCategory').value,
+        precioBs: parseFloat(document.getElementById('productPriceBs').value) || 0,
+        precioDollar: parseFloat(document.getElementById('productPriceDollar').value) || 0,
+        stock: parseInt(document.getElementById('productStock').value) || 0,
+        stockMinimo: parseInt(document.getElementById('productMinStock').value) || 0,
+        codigoBarras: document.getElementById('productBarcode').value,
+        proveedor: document.getElementById('productSupplier').value,
+        estado: document.getElementById('productStatus').value,
+        imagen: imagenUrl
+      };
+      
+      if (productoEditando) {
+        // Editar producto existente
+        const index = productos.findIndex(p => p.id === productoEditando.id);
+        if (index !== -1) {
+          productos[index] = producto;
+        }
+      } else {
+        // Agregar nuevo producto
+        productos.push(producto);
+      }
+      
+      guardarProductos();
+      renderizarProductos();
+      actualizarEstadisticas();
+      formProducto.reset();
+      previewImage.style.display = 'none';
+      closeModal();
+      productoEditando = null;
+    }
+
+    // Editar producto
+    function editarProducto(id) {
+      productoEditando = productos.find(p => p.id === id);
+      if (!productoEditando) return;
+      
+      // Llenar el formulario con los datos del producto
+      document.getElementById('productId').value = productoEditando.id;
+      document.getElementById('productName').value = productoEditando.nombre;
+      document.getElementById('productCategory').value = productoEditando.categoria;
+      document.getElementById('productPriceBs').value = productoEditando.precioBs;
+      document.getElementById('productPriceDollar').value = productoEditando.precioDollar;
+      document.getElementById('productStock').value = productoEditando.stock;
+      document.getElementById('productMinStock').value = productoEditando.stockMinimo;
+      document.getElementById('productBarcode').value = productoEditando.codigoBarras;
+      document.getElementById('productSupplier').value = productoEditando.proveedor;
+      document.getElementById('productStatus').value = productoEditando.estado;
+      
+      // Mostrar imagen actual
+      previewImage.src = productoEditando.imagen;
+      previewImage.style.display = 'block';
+      
+      // Cambiar título del modal
+      modalTitulo.textContent = 'Editar Producto';
+      
+      // Abrir modal
+      openModal();
+    }
+
+    // Eliminar producto
+    function eliminarProducto(id) {
+      if (confirm('¿Estás seguro de eliminar este producto?')) {
+        productos = productos.filter(p => p.id !== id);
+        guardarProductos();
+        renderizarProductos();
+        actualizarEstadisticas();
+      }
+    }
+
+    // Filtrar productos según criterios
+    function filtrarProductos() {
+      paginaActual = 1; // Reiniciar a la primera página al filtrar
+      renderizarProductos();
+    }
+
+    // Ordenar productos según el criterio seleccionado
+    function ordenarProductos() {
+      renderizarProductos();
+    }
+
+    // Ordenar lista de productos
+    function ordenarProductosLista(lista) {
+      const orden = filtroOrden.value;
+      
+      switch (orden) {
+        case 'nombre-asc':
+          lista.sort((a, b) => a.nombre.localeCompare(b.nombre));
+          break;
+        case 'nombre-desc':
+          lista.sort((a, b) => b.nombre.localeCompare(a.nombre));
+          break;
+        case 'precio-mayor':
+          lista.sort((a, b) => b.precioBs - a.precioBs);
+          break;
+        case 'precio-menor':
+          lista.sort((a, b) => a.precioBs - b.precioBs);
+          break;
+        case 'stock-mayor':
+          lista.sort((a, b) => b.stock - a.stock);
+          break;
+        case 'stock-menor':
+          lista.sort((a, b) => a.stock - b.stock);
+          break;
+      }
+    }
+
+    // Renderizar productos en la tabla con paginación
+    function renderizarProductos() {
+      tablaProductos.innerHTML = '';
+      
+      if (productos.length === 0) {
+        tablaProductos.innerHTML = `
+          <tr>
+            <td colspan="9" style="text-align: center; padding: 30px;">
+              No hay productos registrados. Haz clic en "Nuevo Producto" para agregar uno.
+            </td>
+          </tr>
+        `;
+        paginacion.innerHTML = '';
+        return;
+      }
+      
+      // Aplicar filtros
+      const searchTerm = searchInput.value.toLowerCase();
+      const categoriaFiltro = filtroCategoria.value;
+      const estadoFiltro = filtroEstado.value;
+      
+      productosFiltrados = [...productos];
+      
+      if (searchTerm) {
+        productosFiltrados = productosFiltrados.filter(p => 
+          p.nombre.toLowerCase().includes(searchTerm) || 
+          p.codigoBarras.includes(searchTerm)
+        );
+      }
+      
+      if (categoriaFiltro) {
+        productosFiltrados = productosFiltrados.filter(p => p.categoria === categoriaFiltro);
+      }
+      
+      if (estadoFiltro) {
+        if (estadoFiltro === 'Stock Bajo') {
+          productosFiltrados = productosFiltrados.filter(p => p.stock <= p.stockMinimo);
+        } else {
+          productosFiltrados = productosFiltrados.filter(p => p.estado === estadoFiltro);
+        }
+      }
+      
+      // Aplicar ordenamiento
+      ordenarProductosLista(productosFiltrados);
+      
+      // Calcular paginación
+      const totalPaginas = Math.ceil(productosFiltrados.length / PRODUCTOS_POR_PAGINA);
+      const inicio = (paginaActual - 1) * PRODUCTOS_POR_PAGINA;
+      const fin = inicio + PRODUCTOS_POR_PAGINA;
+      const productosPagina = productosFiltrados.slice(inicio, fin);
+      
+      // Renderizar productos de la página actual
+      productosPagina.forEach(producto => {
+        const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
+        const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : producto.estado;
+        const isSelected = productosSeleccionados.has(producto.id);
+        
+        tablaProductos.innerHTML += `
+          <tr>
+            <td>
+              ${modoSeleccionMasiva ? `<input type="checkbox" class="product-checkbox" data-id="${producto.id}" ${isSelected ? 'checked' : ''} onchange="toggleProductSelection('${producto.id}')">` : ''}
+            </td>
+            <td><img src="${producto.imagen}" class="product-img" alt="${producto.nombre}"></td>
+            <td>${producto.nombre}</td>
+            <td>${producto.categoria}</td>
+            <td>${producto.precioBs.toLocaleString()} Bs</td>
+            <td>${producto.precioDollar.toFixed(2)} $</td>
+            <td>${producto.stock} unidades</td>
+            <td><span class="status ${statusClass}">${statusText}</span></td>
+            <td class="action-cell">
+              <button class="action-btn edit-btn" onclick="editarProducto('${producto.id}')"><i class="fas fa-edit"></i></button>
+              <button class="action-btn delete-btn" onclick="eliminarProducto('${producto.id}')"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+      
+      // Renderizar controles de paginación
+      renderizarPaginacion(totalPaginas);
+    }
+
+    // Renderizar controles de paginación
+    function renderizarPaginacion(totalPaginas) {
+      paginacion.innerHTML = '';
+      
+      if (totalPaginas <= 1) return;
+      
+      // Botón Anterior
+      const btnAnterior = document.createElement('button');
+      btnAnterior.innerHTML = '<i class="fas fa-chevron-left"></i>';
+      btnAnterior.disabled = paginaActual === 1;
+      btnAnterior.addEventListener('click', () => {
+        if (paginaActual > 1) {
+          paginaActual--;
+          renderizarProductos();
+        }
+      });
+      paginacion.appendChild(btnAnterior);
+      
+      // Páginas
+      const maxBotones = 5;
+      let inicioPagina = Math.max(1, paginaActual - Math.floor(maxBotones / 2));
+      let finPagina = Math.min(totalPaginas, inicioPagina + maxBotones - 1);
+      
+      if (finPagina - inicioPagina + 1 < maxBotones) {
+        inicioPagina = Math.max(1, finPagina - maxBotones + 1);
+      }
+      
+      for (let i = inicioPagina; i <= finPagina; i++) {
+        const btnPagina = document.createElement('button');
+        btnPagina.textContent = i;
+        btnPagina.classList.toggle('active', i === paginaActual);
+        btnPagina.addEventListener('click', () => {
+          paginaActual = i;
+          renderizarProductos();
+        });
+        paginacion.appendChild(btnPagina);
+      }
+      
+      // Información de paginación
+      const info = document.createElement('div');
+      info.className = 'pagination-info';
+      info.textContent = `Página ${paginaActual} de ${totalPaginas} - ${productosFiltrados.length} productos`;
+      paginacion.appendChild(info);
+      
+      // Botón Siguiente
+      const btnSiguiente = document.createElement('button');
+      btnSiguiente.innerHTML = '<i class="fas fa-chevron-right"></i>';
+      btnSiguiente.disabled = paginaActual === totalPaginas;
+      btnSiguiente.addEventListener('click', () => {
+        if (paginaActual < totalPaginas) {
+          paginaActual++;
+          renderizarProductos();
+        }
+      });
+      paginacion.appendChild(btnSiguiente);
+    }
+
+    // Actualizar panel de estadísticas
     function actualizarEstadisticas() {
-      const total = productos.length;
-      const stockBajo = productos.filter(p => p.stock <= p.stockMinimo).length;
+      const totalProductos = productos.length;
+      const productosStockBajo = productos.filter(p => p.stock <= p.stockMinimo).length;
+      
+      // Calcular valor total correctamente (precio * stock)
       const valorTotalBs = productos.reduce((sum, p) => sum + (p.precioBs * p.stock), 0);
       const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
+      
       const categoriasUnicas = new Set(productos.map(p => p.categoria)).size;
-
-      document.getElementById('panelEstadisticas').innerHTML = `
+      
+      panelEstadisticas.innerHTML = `
         <div class="stat-card">
-          <div class="stat-title">Total Productos</div>
-          <div class="stat-value">${total}</div>
+          <div class="stat-title">Total de Productos</div>
+          <div class="stat-value">${totalProductos}</div>
+          <div class="stat-desc">En inventario</div>
         </div>
         <div class="stat-card">
-          <div class="stat-title">Stock Bajo</div>
-          <div class="stat-value">${stockBajo}</div>
+          <div class="stat-title">Productos con Stock Bajo</div>
+          <div class="stat-value">${productosStockBajo}</div>
+          <div class="stat-desc">Necesitan reposición</div>
         </div>
         <div class="stat-card">
           <div class="stat-title">Valor Total (Bs)</div>
           <div class="stat-value">${valorTotalBs.toLocaleString()} Bs</div>
+          <div class="stat-desc">Valor total del inventario</div>
         </div>
         <div class="stat-card">
           <div class="stat-title">Valor Total ($)</div>
           <div class="stat-value">${valorTotalDollar.toFixed(2)} $</div>
+          <div class="stat-desc">Valor total del inventario</div>
         </div>
         <div class="stat-card">
           <div class="stat-title">Categorías Diferentes</div>
           <div class="stat-value">${categoriasUnicas}</div>
+          <div class="stat-desc">Tipos de productos</div>
         </div>
       `;
     }
 
-    function guardarProducto(e) {
-      e.preventDefault();
-      const id = document.getElementById('productId').value || Date.now().toString();
-      const nombre = document.getElementById('productName').value;
-      const categoria = document.getElementById('productCategory').value;
-      const precioBs = parseFloat(document.getElementById('productPriceBs').value);
-      const precioDollar = parseFloat(document.getElementById('productPriceDollar').value);
-      const stock = parseInt(document.getElementById('productStock').value);
-      const stockMinimo = parseInt(document.getElementById('productMinStock').value);
-      const proveedor = document.getElementById('productSupplier').value;
-      const estado = document.getElementById('productStatus').value;
-      const codigoBarras = document.getElementById('productBarcode').value;
-      const imagen = document.getElementById('previewImage').src || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80';
-
-      const producto = { id, nombre, categoria, precioBs, precioDollar, stock, stockMinimo, proveedor, estado, codigoBarras, imagen };
-      const index = productos.findIndex(p => p.id === id);
-      if (index >= 0) productos[index] = producto; else productos.push(producto);
-      localStorage.setItem('productos', JSON.stringify(productos));
+    // Toggle modo selección masiva
+    function toggleMassSelectionMode() {
+      modoSeleccionMasiva = !modoSeleccionMasiva;
+      productosSeleccionados.clear();
+      
+      if (modoSeleccionMasiva) {
+        massSelection.style.display = 'flex';
+        toggleMassSelection.checked = true;
+      } else {
+        massSelection.style.display = 'none';
+        toggleMassSelection.checked = false;
+      }
+      
       renderizarProductos();
-      actualizarEstadisticas();
-      closeModal();
     }
 
-    function editarProducto(id) {
-      const p = productos.find(p => p.id === id);
-      Object.keys(p).forEach(key => {
-        const el = document.getElementById('product' + key.charAt(0).toUpperCase() + key.slice(1));
-        if (el) el.value = p[key];
+    // Seleccionar/deseleccionar todos los productos
+    function toggleSelectAll() {
+      const checkboxes = document.querySelectorAll('.product-checkbox');
+      const selectAll = document.getElementById('selectAllCheckbox').checked;
+      
+      if (selectAll) {
+        productosFiltrados.forEach(p => productosSeleccionados.add(p.id));
+      } else {
+        productosSeleccionados.clear();
+      }
+      
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAll;
       });
-      document.getElementById('productId').value = p.id;
-      document.getElementById('modalTitulo').textContent = 'Editar Producto';
-      openModal();
     }
 
-    function eliminarProducto(id) {
-      if (confirm('¿Eliminar producto?')) {
-        productos = productos.filter(p => p.id !== id);
-        localStorage.setItem('productos', JSON.stringify(productos));
+    // Toggle selección de producto individual
+    function toggleProductSelection(id) {
+      if (productosSeleccionados.has(id)) {
+        productosSeleccionados.delete(id);
+      } else {
+        productosSeleccionados.add(id);
+      }
+      
+      // Actualizar estado del checkbox "Seleccionar todos"
+      const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+      const checkboxes = document.querySelectorAll('.product-checkbox');
+      const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+      selectAllCheckbox.checked = allChecked;
+    }
+
+    // Eliminar productos seleccionados
+    function deleteSelectedProducts() {
+      if (productosSeleccionados.size === 0) {
+        alert('Por favor seleccione al menos un producto para eliminar');
+        return;
+      }
+      
+      if (confirm(`¿Estás seguro de eliminar ${productosSeleccionados.size} producto(s)?`)) {
+        productos = productos.filter(p => !productosSeleccionados.has(p.id));
+        productosSeleccionados.clear();
+        guardarProductos();
         renderizarProductos();
         actualizarEstadisticas();
+        toggleMassSelectionMode(); // Salir del modo selección masiva
       }
     }
 
-    function calcularPrecioDolar() {
-      const bs = parseFloat(document.getElementById('productPriceBs').value) || 0;
-      document.getElementById('productPriceDollar').value = (bs / TASA_CAMBIO).toFixed(2);
+    // Exportar a PDF
+    function exportarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      // Título
+      doc.setFontSize(20);
+      doc.text('AA-BODEGÓN - Reporte de Productos', 14, 15);
+      
+      // Fecha
+      doc.setFontSize(12);
+      doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 25);
+      
+      // Tabla
+      doc.autoTable({
+        startY: 30,
+        head: [['Nombre', 'Categoría', 'Precio Bs', 'Precio $', 'Stock', 'Estado']],
+        body: productos.map(p => [
+          p.nombre,
+          p.categoria,
+          p.precioBs.toLocaleString(),
+          p.precioDollar.toFixed(2),
+          p.stock,
+          p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
+        ])
+      });
+      
+      // Guardar PDF
+      doc.save(`AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.pdf`);
     }
 
-    function calcularPrecioBs() {
-      const usd = parseFloat(document.getElementById('productPriceDollar').value) || 0;
-      document.getElementById('productPriceBs').value = (usd * TASA_CAMBIO).toFixed(2);
+    // Exportar a Excel
+    function exportarExcel() {
+      // Preparar datos
+      const datos = productos.map(p => {
+        // Calcular el valor total por producto
+        const valorTotalBs = p.precioBs * p.stock;
+        const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
+        
+        return {
+          'Nombre': p.nombre,
+          'Categoría': p.categoria,
+          'Precio Bs': p.precioBs,
+          'Precio $': p.precioDollar,
+          'Stock': p.stock,
+          'Valor Total Bs': valorTotalBs,
+          'Valor Total $': valorTotalDollar,
+          'Stock Mínimo': p.stockMinimo,
+          'Código Barras': p.codigoBarras,
+          'Proveedor': p.proveedor,
+          'Estado': p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
+        };
+      });
+      
+      // Crear libro de trabajo
+      const libro = XLSX.utils.book_new();
+      const hoja = XLSX.utils.json_to_sheet(datos);
+      
+      // Añadir hoja al libro
+      XLSX.utils.book_append_sheet(libro, hoja, 'Productos');
+      
+      // Guardar archivo
+      XLSX.writeFile(libro, `AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
 
-    function actualizarTasaCambio() {
-      const nueva = parseFloat(document.getElementById('tasaCambioInput').value);
-      if (!isNaN(nueva) && nueva > 0) {
-        TASA_CAMBIO = nueva;
-        localStorage.setItem('tasaCambio', TASA_CAMBIO);
-        alert('Tasa actualizada');
-        renderizarProductos();
-        actualizarEstadisticas();
-      }
+    // Exportar a JPG
+    function exportarJPG() {
+      html2canvas(document.querySelector('.table-container')).then(canvas => {
+        const enlace = document.createElement('a');
+        enlace.download = `AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.jpg`;
+        enlace.href = canvas.toDataURL('image/jpeg', 0.9);
+        enlace.click();
+      });
     }
 
+    // Funciones para abrir y cerrar el modal
     function openModal() {
       document.getElementById('productModal').style.display = 'flex';
+      panelGestionCategorias.style.display = 'none';
+      panelGestionProveedores.style.display = 'none';
     }
-
+    
     function closeModal() {
       document.getElementById('productModal').style.display = 'none';
-      document.getElementById('formProducto').reset();
-      document.getElementById('modalTitulo').textContent = 'Agregar Nuevo Producto';
+      productoEditando = null;
+      modalTitulo.textContent = 'Agregar Nuevo Producto';
+      document.getElementById('productId').value = '';
     }
-
-    function previsualizarImagen() {
-      const file = document.getElementById('productImage').files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          const img = document.getElementById('previewImage');
-          img.src = e.target.result;
-          img.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
+    
+    // Cerrar modal al hacer clic fuera del contenido
+    window.onclick = function(event) {
+      const modal = document.getElementById('productModal');
+      if (event.target === modal) {
+        closeModal();
       }
+    };
+
+    // Función para volver atrás
+    function goBack() {
+      window.history.back();
     }
 
-    function filtrarProductos() {
-      renderizarProductos();
+    // Iniciar cuando el DOM esté cargado
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', inicializar);
+    } else {
+      inicializar();
     }
-
-    inicializar();
   </script>
 </body>
 </html>
