@@ -256,7 +256,7 @@
       box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
     }
     
-    /* Filtros - MODIFICADO: Ahora es horizontal */
+    /* Filtros - MODIFICADO: Ahora es horizontal y mejor distribuido */
     .filters {
       display: flex;
       gap: 15px;
@@ -743,11 +743,12 @@
       }
       
       .filters {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 10px;
       }
       
-      .filter-item select {
-        min-width: 100%;
+      .filter-item {
+        min-width: 120px;
       }
     }
     
@@ -810,6 +811,16 @@
       .action-cell {
         flex-direction: column;
         gap: 6px;
+      }
+      
+      /* Filtros responsivos */
+      .filters {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .filter-item {
+        min-width: 100%;
       }
     }
 
