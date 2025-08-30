@@ -1137,6 +1137,16 @@
       document.querySelector('.modal-content').addEventListener('click', function(e) {
         e.stopPropagation();
       });
+      
+      // Prevenir que el panel de categorías se abra al hacer clic en el select
+      selectCategoria.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+
+      // Prevenir que el panel de proveedores se abra al hacer clic en el select
+      selectProveedor.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
     }
 
     // Actualizar tasa de cambio
@@ -1391,8 +1401,36 @@
         document.getElementById('productSupplier').value = productoExistente.proveedor;
         document.getElementById('productStatus').value = productoExistente.estado;
         
+        // Si hay imagen, mostrarla
+        if (productoExistente.imagen) {
+          previewImage.src = productoExistente.imagen;
+          previewImage.style.display = 'block';
+        }
+        
+        // Establecer el ID del producto para edición
+        document.getElementById('productId').value = productoExistente.id;
+        productoEditando = productoExistente;
+        modalTitulo.textContent = 'Editar Producto';
+        
         // Mostrar mensaje informativo
         alert(`Producto "${productoExistente.nombre}" encontrado. Los datos han sido cargados en el formulario.`);
+      } else {
+        // Si no existe, ofrecer crear uno nuevo
+        if (confirm('Código de barras no encontrado. ¿Desea crear un nuevo producto con este código?')) {
+          // Limpiar solo algunos campos para nuevo producto
+          document.getElementById('productName').value = '';
+          document.getElementById('productStock').value = '0';
+          document.getElementById('productMinStock').value = '0';
+          document.getElementById('productId').value = '';
+          productoEditando = null;
+          modalTitulo.textContent = 'Agregar Nuevo Producto';
+          
+          // Mantener el código de barras ingresado
+          document.getElementById('productBarcode').value = codigoBarras;
+          
+          // Enfocar el campo de nombre para facilitar el ingreso
+          document.getElementById('productName').focus();
+        }
       }
     }
 
@@ -1856,7 +1894,7 @@
       document.getElementById('productId').value = '';
     }
     
-    // Cerrar modal al hacer clic fuera del contenido
+    // Cerrar modal solo al hacer clic en el fondo oscuro, no en cualquier parte
     window.onclick = function(event) {
       const modal = document.getElementById('productModal');
       if (event.target === modal) {
