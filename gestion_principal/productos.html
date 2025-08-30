@@ -91,6 +91,47 @@
       box-shadow: var(--shadow);
     }
     
+    /* Conversor de tasa */
+    .tasa-conversor {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 15px;
+      border-radius: 20px;
+    }
+    
+    .tasa-conversor label {
+      font-size: 14px;
+      color: white;
+    }
+    
+    .tasa-conversor input {
+      width: 100px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+      background: white;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    .tasa-conversor button {
+      background: white;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 12px;
+      cursor: pointer;
+      color: var(--primary);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .tasa-conversor button:hover {
+      background: var(--primary-light);
+      color: white;
+    }
+    
     /* Contenido principal */
     .main-content {
       flex: 1;
@@ -659,6 +700,17 @@
       .pagination {
         flex-wrap: wrap;
       }
+      
+      header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+      }
+      
+      .tasa-conversor {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -668,6 +720,11 @@
     <div class="logo">
       <i class="fas fa-store logo-icon"></i>
       <h1>AA-BODEGÓN - Productos</h1>
+    </div>
+    <div class="tasa-conversor">
+      <label>Tasa Bs/$:</label>
+      <input type="number" id="tasaCambioInput" value="36.7765" step="0.0001">
+      <button onclick="actualizarTasaCambio()">Actualizar</button>
     </div>
   </header>
 
@@ -862,8 +919,8 @@
   </div>
 
   <script>
-    // Tasas de cambio (se actualizará desde BCV)
-    let TASA_CAMBIO = 36.20; // Valor inicial, se actualizará
+    // Tasas de cambio (valor inicial según BCV)
+    let TASA_CAMBIO = 36.7765;
 
     // Configuración de paginación
     const PRODUCTOS_POR_PAGINA = 10; // Límite de productos por página
@@ -896,6 +953,7 @@
     const filtroEstado = document.getElementById('filtroEstado');
     const filtroOrden = document.getElementById('filtroOrden');
     const previewImage = document.getElementById('previewImage');
+    const tasaCambioInput = document.getElementById('tasaCambioInput');
 
     // Inicializar datos
     let productos = JSON.parse(localStorage.getItem('productos')) || [];
@@ -905,7 +963,13 @@
 
     // Inicializar la aplicación
     function inicializar() {
-      obtenerTasaCambioBCV();
+      // Cargar tasa de cambio guardada o usar la predeterminada
+      const tasaGuardada = localStorage.getItem('tasaCambio');
+      if (tasaGuardada) {
+        TASA_CAMBIO = parseFloat(tasaGuardada);
+        tasaCambioInput.value = TASA_CAMBIO;
+      }
+      
       configurarGestionCategorias();
       configurarGestionProveedores();
       actualizarSelectCategorias();
@@ -917,18 +981,25 @@
       formProducto.addEventListener('submit', guardarProducto);
     }
 
-    // Obtener tasa de cambio del BCV
-    async function obtenerTasaCambioBCV() {
-      try {
-        // En un entorno real, aquí haríamos una petición a la API del BCV
-        // Como ejemplo, simulamos una respuesta después de un tiempo
-        setTimeout(() => {
-          // Simulamos que obtenemos la tasa actual (valor ficticio)
-          TASA_CAMBIO = 36.15;
-          console.log("Tasa de cambio actualizada:", TASA_CAMBIO);
-        }, 1000);
-      } catch (error) {
-        console.error("Error obteniendo tasa de cambio:", error);
+    // Actualizar tasa de cambio
+    function actualizarTasaCambio() {
+      const nuevaTasa = parseFloat(tasaCambioInput.value);
+      if (!isNaN(nuevaTasa) && nuevaTasa > 0) {
+        TASA_CAMBIO = nuevaTasa;
+        localStorage.setItem('tasaCambio', TASA_CAMBIO);
+        
+        // Recalcular precios en dólares para todos los productos
+        productos.forEach(producto => {
+          producto.precioDollar = producto.precioBs / TASA_CAMBIO;
+        });
+        
+        guardarProductos();
+        renderizarProductos();
+        actualizarEstadisticas();
+        
+        alert(`Tasa de cambio actualizada a ${TASA_CAMBIO} Bs/$`);
+      } else {
+        alert('Por favor ingrese una tasa de cambio válida');
       }
     }
 
@@ -1249,6 +1320,16 @@
       openModal();
     }
 
+    // Eliminar producto
+    function eliminarProducto(id) {
+      if (confirm('¿Estás seguro de eliminar este producto?')) {
+        productos = productos.filter(p => p.id !== id);
+        guardarProductos();
+        renderizarProductos();
+        actualizarEstadisticas();
+      }
+    }
+
     // Filtrar productos según criterios
     function filtrarProductos() {
       paginaActual = 1; // Reiniciar a la primera página al filtrar
@@ -1442,7 +1523,7 @@
         <div class="stat-card">
           <div class="stat-title">Valor Total</div>
           <div class="stat-value">${(valorTotalBs / 1000000).toFixed(1)}M Bs</div>
-          <div class="stat-desc">≈ ${Math.round(valorTotalDollar)} $</div>
+          <div class="stat-desc">≈ ${valorTotalDollar.toFixed(2)} $</div>
         </div>
         <div class="stat-card">
           <div class="stat-title">Categorías</div>
@@ -1450,16 +1531,6 @@
           <div class="stat-desc">Diferentes tipos</div>
         </div>
       `;
-    }
-
-    // Eliminar producto
-    function eliminarProducto(id) {
-      if (confirm('¿Estás seguro de eliminar este producto?')) {
-        productos = productos.filter(p => p.id !== id);
-        guardarProductos();
-        renderizarProductos();
-        actualizarEstadisticas();
-      }
     }
 
     // Exportar a PDF
