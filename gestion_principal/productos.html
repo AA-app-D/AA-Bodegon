@@ -42,6 +42,7 @@
       font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
       color: var(--text-primary);
       background-color: var(--background);
+      overflow-x: hidden;
     }
 
     body {
@@ -52,6 +53,7 @@
       background-attachment: fixed;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
     
     /* Cabecera */
@@ -74,6 +76,14 @@
       gap: 12px;
     }
     
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: var(--shadow);
+    }
+    
     .logo h1 {
       margin: 0;
       font-size: 1.8rem;
@@ -82,13 +92,10 @@
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     }
     
-    .logo-icon {
-      font-size: 28px;
-      color: white;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 12px;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
+    .header-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
     }
     
     /* Conversor de tasa */
@@ -132,6 +139,23 @@
       color: white;
     }
     
+    .back-button {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+    
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
     /* Contenido principal */
     .main-content {
       flex: 1;
@@ -142,6 +166,8 @@
       margin: 20px;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
+      width: calc(100% - 40px);
+      box-sizing: border-box;
     }
     
     .main-content h2 {
@@ -159,6 +185,7 @@
       background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
       padding: 12px;
       border-radius: 10px;
+      box-shadow: var(--shadow);
     }
     
     /* Barra de herramientas */
@@ -200,6 +227,7 @@
     .action-buttons {
       display: flex;
       gap: 12px;
+      align-items: center;
     }
     
     .btn {
@@ -214,6 +242,7 @@
       transition: var(--transition);
       font-size: 16px;
       box-shadow: var(--shadow);
+      height: 48px;
     }
     
     .btn-primary {
@@ -234,6 +263,16 @@
     .btn-secondary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
+    }
+    
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), #e35d6a);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
     }
     
     /* Filtros */
@@ -274,6 +313,29 @@
       box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
     
+    /* Selección masiva */
+    .bulk-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: var(--border-radius);
+      border: 1px solid #e2e8f0;
+    }
+    
+    .bulk-actions input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    
+    .bulk-actions span {
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    
     /* Tabla de productos */
     .table-container {
       border-radius: var(--border-radius);
@@ -281,12 +343,15 @@
       box-shadow: var(--shadow);
       background: var(--card-bg);
       margin-top: 20px;
+      overflow-x: auto;
+      max-width: 100%;
     }
     
     .products-table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
+      min-width: 1000px;
     }
     
     .products-table th, .products-table td {
@@ -417,7 +482,7 @@
     }
     
     .stat-desc {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-secondary);
     }
     
@@ -475,6 +540,7 @@
       align-items: center;
       z-index: 1000;
       padding: 20px;
+      box-sizing: border-box;
     }
     
     .modal-content {
@@ -487,6 +553,7 @@
       overflow-y: auto;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
       animation: modalFadeIn 0.3s ease;
+      position: relative;
     }
     
     @keyframes modalFadeIn {
@@ -522,6 +589,9 @@
       cursor: pointer;
       color: var(--text-secondary);
       transition: var(--transition);
+      position: absolute;
+      top: 20px;
+      right: 20px;
     }
     
     .close-modal:hover {
@@ -656,6 +726,12 @@
     }
     
     /* Responsive */
+    @media (max-width: 1024px) {
+      .products-table {
+        min-width: 900px;
+      }
+    }
+    
     @media (max-width: 768px) {
       .form-row {
         flex-direction: column;
@@ -677,6 +753,7 @@
       
       .action-buttons {
         justify-content: center;
+        flex-wrap: wrap;
       }
       
       .stats-panel {
@@ -707,9 +784,25 @@
         padding: 15px;
       }
       
+      .header-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      
       .tasa-conversor {
         width: 100%;
         justify-content: center;
+      }
+      
+      .back-button {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .main-content {
+        margin: 10px;
+        padding: 15px;
+        width: calc(100% - 20px);
       }
     }
   </style>
@@ -718,19 +811,24 @@
   <!-- Cabecera -->
   <header>
     <div class="logo">
-      <i class="fas fa-store logo-icon"></i>
+      <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" alt="Logo AA-BODEGÓN" class="logo-img">
       <h1>AA-BODEGÓN - Productos</h1>
     </div>
-    <div class="tasa-conversor">
-      <label>Tasa Bs/$:</label>
-      <input type="number" id="tasaCambioInput" value="36.7765" step="0.0001">
-      <button onclick="actualizarTasaCambio()">Actualizar</button>
+    <div class="header-actions">
+      <div class="tasa-conversor">
+        <label>Tasa Bs/$:</label>
+        <input type="number" id="tasaCambioInput" value="36.7765" step="0.0001">
+        <button onclick="actualizarTasaCambio()">Actualizar</button>
+      </div>
+      <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
     </div>
   </header>
 
   <!-- Contenido principal -->
   <div class="main-content">
-    <h2><i class="fas fa-box"></i> Gestión de Productos</h2>
+    <h2><i class="fas fa-shopping-basket"></i> Gestión de Productos</h2>
     
     <!-- Barra de herramientas -->
     <div class="toolbar">
@@ -785,11 +883,23 @@
       </div>
     </div>
     
+    <!-- Selección masiva -->
+    <div class="bulk-actions" id="bulkActions" style="display: none;">
+      <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+      <span id="selectedCount">0 productos seleccionados</span>
+      <button class="btn btn-danger" onclick="eliminarSeleccionados()">
+        <i class="fas fa-trash"></i> Eliminar seleccionados
+      </button>
+    </div>
+    
     <!-- Tabla de productos -->
     <div class="table-container">
       <table class="products-table">
         <thead>
           <tr>
+            <th style="width: 40px;">
+              <input type="checkbox" id="selectAllHeader" onchange="toggleSelectAll()">
+            </th>
             <th>Imagen</th>
             <th>Nombre</th>
             <th>Categoría</th>
@@ -926,6 +1036,7 @@
     const PRODUCTOS_POR_PAGINA = 10; // Límite de productos por página
     let paginaActual = 1;
     let productosFiltrados = [];
+    let productosSeleccionados = new Set();
 
     // Referencias a elementos del DOM
     const modal = document.getElementById('productModal');
@@ -954,6 +1065,10 @@
     const filtroOrden = document.getElementById('filtroOrden');
     const previewImage = document.getElementById('previewImage');
     const tasaCambioInput = document.getElementById('tasaCambioInput');
+    const bulkActions = document.getElementById('bulkActions');
+    const selectedCount = document.getElementById('selectedCount');
+    const selectAllHeader = document.getElementById('selectAllHeader');
+    const selectAll = document.getElementById('selectAll');
 
     // Inicializar datos
     let productos = JSON.parse(localStorage.getItem('productos')) || [];
@@ -979,6 +1094,11 @@
       
       // Event listeners
       formProducto.addEventListener('submit', guardarProducto);
+      
+      // Prevenir que el modal se cierre al hacer clic dentro
+      document.querySelector('.modal-content').addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
     }
 
     // Actualizar tasa de cambio
@@ -1324,15 +1444,90 @@
     function eliminarProducto(id) {
       if (confirm('¿Estás seguro de eliminar este producto?')) {
         productos = productos.filter(p => p.id !== id);
+        productosSeleccionados.delete(id);
+        actualizarContadorSeleccionados();
         guardarProductos();
         renderizarProductos();
         actualizarEstadisticas();
       }
     }
 
+    // Eliminar productos seleccionados
+    function eliminarSeleccionados() {
+      if (productosSeleccionados.size === 0) {
+        alert('No hay productos seleccionados para eliminar');
+        return;
+      }
+      
+      if (confirm(`¿Estás seguro de eliminar ${productosSeleccionados.size} productos?`)) {
+        productos = productos.filter(p => !productosSeleccionados.has(p.id));
+        productosSeleccionados.clear();
+        actualizarContadorSeleccionados();
+        guardarProductos();
+        renderizarProductos();
+        actualizarEstadisticas();
+      }
+    }
+
+    // Seleccionar/deseleccionar todos los productos
+    function toggleSelectAll() {
+      const todosSeleccionados = selectAll.checked || selectAllHeader.checked;
+      
+      if (todosSeleccionados) {
+        // Seleccionar todos los productos visibles
+        productosFiltrados.forEach(p => productosSeleccionados.add(p.id));
+      } else {
+        // Deseleccionar todos
+        productosSeleccionados.clear();
+      }
+      
+      // Sincronizar checkboxes
+      selectAll.checked = todosSeleccionados;
+      selectAllHeader.checked = todosSeleccionados;
+      
+      // Actualizar checkboxes individuales
+      document.querySelectorAll('.product-checkbox').forEach(checkbox => {
+        checkbox.checked = todosSeleccionados;
+      });
+      
+      actualizarContadorSeleccionados();
+    }
+
+    // Seleccionar producto individual
+    function toggleSeleccionProducto(id, checked) {
+      if (checked) {
+        productosSeleccionados.add(id);
+      } else {
+        productosSeleccionados.delete(id);
+      }
+      
+      // Actualizar estado de "Seleccionar todos"
+      const todosSeleccionados = productosFiltrados.length > 0 && 
+        productosFiltrados.every(p => productosSeleccionados.has(p.id));
+      
+      selectAll.checked = todosSeleccionados;
+      selectAllHeader.checked = todosSeleccionados;
+      
+      actualizarContadorSeleccionados();
+    }
+
+    // Actualizar contador de seleccionados
+    function actualizarContadorSeleccionados() {
+      selectedCount.textContent = `${productosSeleccionados.size} productos seleccionados`;
+      
+      // Mostrar/ocultar panel de acciones masivas
+      if (productosSeleccionados.size > 0) {
+        bulkActions.style.display = 'flex';
+      } else {
+        bulkActions.style.display = 'none';
+      }
+    }
+
     // Filtrar productos según criterios
     function filtrarProductos() {
       paginaActual = 1; // Reiniciar a la primera página al filtrar
+      productosSeleccionados.clear();
+      actualizarContadorSeleccionados();
       renderizarProductos();
     }
 
@@ -1374,7 +1569,7 @@
       if (productos.length === 0) {
         tablaProductos.innerHTML = `
           <tr>
-            <td colspan="8" style="text-align: center; padding: 30px;">
+            <td colspan="9" style="text-align: center; padding: 30px;">
               No hay productos registrados. Haz clic en "Nuevo Producto" para agregar uno.
             </td>
           </tr>
@@ -1393,7 +1588,7 @@
       if (searchTerm) {
         productosFiltrados = productosFiltrados.filter(p => 
           p.nombre.toLowerCase().includes(searchTerm) || 
-          p.codigoBarras.includes(searchTerm)
+          (p.codigoBarras && p.codigoBarras.includes(searchTerm))
         );
       }
       
@@ -1422,9 +1617,14 @@
       productosPagina.forEach(producto => {
         const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
         const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : producto.estado;
+        const estaSeleccionado = productosSeleccionados.has(producto.id);
         
         tablaProductos.innerHTML += `
           <tr>
+            <td>
+              <input type="checkbox" class="product-checkbox" ${estaSeleccionado ? 'checked' : ''} 
+                onchange="toggleSeleccionProducto('${producto.id}', this.checked)">
+            </td>
             <td><img src="${producto.imagen}" class="product-img" alt="${producto.nombre}"></td>
             <td>${producto.nombre}</td>
             <td>${producto.categoria}</td>
@@ -1505,8 +1705,11 @@
     function actualizarEstadisticas() {
       const totalProductos = productos.length;
       const productosStockBajo = productos.filter(p => p.stock <= p.stockMinimo).length;
+      
+      // Calcular valor total en Bs y $ (suma de precio * stock para cada producto)
       const valorTotalBs = productos.reduce((sum, p) => sum + (p.precioBs * p.stock), 0);
       const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
+      
       const categoriasUnicas = new Set(productos.map(p => p.categoria)).size;
       
       panelEstadisticas.innerHTML = `
@@ -1521,14 +1724,14 @@
           <div class="stat-desc">Necesitan reposición</div>
         </div>
         <div class="stat-card">
-          <div class="stat-title">Valor Total</div>
+          <div class="stat-title">Valor Total (Bs)</div>
           <div class="stat-value">${(valorTotalBs / 1000000).toFixed(1)}M Bs</div>
-          <div class="stat-desc">≈ ${valorTotalDollar.toFixed(2)} $</div>
+          <div class="stat-desc">Inventario total en Bolívares</div>
         </div>
         <div class="stat-card">
-          <div class="stat-title">Categorías</div>
-          <div class="stat-value">${categoriasUnicas}</div>
-          <div class="stat-desc">Diferentes tipos</div>
+          <div class="stat-title">Valor Total ($)</div>
+          <div class="stat-value">${valorTotalDollar.toFixed(2)} $</div>
+          <div class="stat-desc">Inventario total en Dólares</div>
         </div>
       `;
     }
@@ -1605,13 +1808,15 @@
       document.getElementById('productModal').style.display = 'flex';
       panelGestionCategorias.style.display = 'none';
       panelGestionProveedores.style.display = 'none';
+      productoEditando = null;
+      modalTitulo.textContent = 'Agregar Nuevo Producto';
+      document.getElementById('productId').value = '';
+      formProducto.reset();
+      previewImage.style.display = 'none';
     }
     
     function closeModal() {
       document.getElementById('productModal').style.display = 'none';
-      productoEditando = null;
-      modalTitulo.textContent = 'Agregar Nuevo Producto';
-      document.getElementById('productId').value = '';
     }
     
     // Cerrar modal al hacer clic fuera del contenido
