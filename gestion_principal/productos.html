@@ -256,12 +256,13 @@
       box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
     }
     
-    /* Filtros */
+    /* Filtros - MODIFICADO: Ahora es horizontal */
     .filters {
       display: flex;
       gap: 15px;
       margin-bottom: 20px;
       flex-wrap: wrap;
+      align-items: flex-end;
     }
     
     .filter-item {
@@ -883,7 +884,7 @@
       </button>
     </div>
     
-    <!-- Filtros -->
+    <!-- Filtros - MODIFICADO: Ahora es horizontal -->
     <div class="filters">
       <div class="filter-item">
         <label>Categoría</label>
@@ -1651,14 +1652,14 @@
       paginacion.appendChild(btnSiguiente);
     }
 
-    // Actualizar panel de estadísticas
+    // Actualizar panel de estadísticas - MODIFICADO: Ahora calcula Precio ($) * Stock
     function actualizarEstadisticas() {
       const totalProductos = productos.length;
       const productosStockBajo = productos.filter(p => p.stock <= p.stockMinimo).length;
       
-      // Calcular valor total correctamente (precio * stock)
+      // MODIFICADO: Ahora calcula Precio ($) * Stock para el valor total
       const valorTotalBs = productos.reduce((sum, p) => sum + (p.precioBs * p.stock), 0);
-      const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
+      const valorTotalDollar = productos.reduce((sum, p) => sum + (p.precioDollar * p.stock), 0);
       
       const categoriasUnicas = new Set(productos.map(p => p.categoria)).size;
       
@@ -1676,12 +1677,12 @@
         <div class="stat-card">
           <div class="stat-title">Valor Total (Bs)</div>
           <div class="stat-value">${valorTotalBs.toLocaleString()} Bs</div>
-          <div class="stat-desc">Valor total del inventario</div>
+          <div class="stat-desc">Precio Bs * Stock</div>
         </div>
         <div class="stat-card">
           <div class="stat-title">Valor Total ($)</div>
           <div class="stat-value">${valorTotalDollar.toFixed(2)} $</div>
-          <div class="stat-desc">Valor total del inventario</div>
+          <div class="stat-desc">Precio $ * Stock</div>
         </div>
         <div class="stat-card">
           <div class="stat-title">Categorías Diferentes</div>
@@ -1792,7 +1793,7 @@
       const datos = productos.map(p => {
         // Calcular el valor total por producto
         const valorTotalBs = p.precioBs * p.stock;
-        const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
+        const valorTotalDollar = p.precioDollar * p.stock;
         
         return {
           'Nombre': p.nombre,
