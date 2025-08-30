@@ -42,6 +42,7 @@
       font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
       color: var(--text-primary);
       background-color: var(--background);
+      font-size: 14px;
     }
 
     body {
@@ -52,13 +53,14 @@
       background-attachment: fixed;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    
-    /* Cabecera */
+
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
-      padding: 16px 24px;
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -66,659 +68,391 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    
+
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
-    
+
     .logo h1 {
       margin: 0;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     }
-    
+
     .logo-icon {
-      font-size: 28px;
-      color: white;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 12px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
       box-shadow: var(--shadow);
+      object-fit: cover;
     }
-    
-    /* Conversor de tasa */
+
     .tasa-conversor {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: rgba(255, 255, 255, 0.15);
-      padding: 8px 15px;
+      padding: 6px 12px;
       border-radius: 20px;
     }
-    
+
     .tasa-conversor label {
-      font-size: 14px;
+      font-size: 12px;
       color: white;
     }
-    
+
     .tasa-conversor input {
-      width: 100px;
-      padding: 6px 10px;
+      width: 80px;
+      padding: 5px 8px;
       border: none;
       border-radius: 5px;
       background: white;
       text-align: center;
       font-weight: 600;
+      font-size: 12px;
     }
-    
+
     .tasa-conversor button {
       background: white;
       border: none;
       border-radius: 5px;
-      padding: 6px 12px;
+      padding: 5px 10px;
       cursor: pointer;
       color: var(--primary);
       font-weight: 600;
       transition: var(--transition);
+      font-size: 12px;
     }
-    
+
     .tasa-conversor button:hover {
       background: var(--primary-light);
       color: white;
     }
-    
-    /* Contenido principal */
+
     .main-content {
       flex: 1;
-      padding: 24px;
+      padding: 20px;
       overflow-y: auto;
       background-color: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(15px);
-      margin: 20px;
+      margin: 15px;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
+      max-width: 100%;
+      box-sizing: border-box;
     }
-    
+
     .main-content h2 {
-      font-size: 1.8rem;
-      margin-bottom: 24px;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
       color: var(--text-primary);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       font-weight: 700;
     }
-    
+
     .main-content h2 i {
       color: var(--primary);
       background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
-      padding: 12px;
-      border-radius: 10px;
+      padding: 10px;
+      border-radius: 8px;
     }
-    
-    /* Barra de herramientas */
+
     .toolbar {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 12px;
     }
-    
+
     .search-box {
       display: flex;
       align-items: center;
       background: var(--card-bg);
       border-radius: 30px;
-      padding: 8px 20px;
+      padding: 6px 16px;
       box-shadow: var(--shadow);
       flex: 1;
-      max-width: 450px;
+      max-width: 400px;
       transition: var(--transition);
       border: 1px solid transparent;
     }
-    
+
     .search-box:focus-within {
       border-color: var(--primary-light);
       box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
-    
+
     .search-box input {
       border: none;
-      padding: 10px;
+      padding: 8px;
       width: 100%;
       outline: none;
       background: transparent;
-      font-size: 16px;
+      font-size: 14px;
     }
-    
+
     .action-buttons {
       display: flex;
-      gap: 12px;
+      gap: 10px;
+      align-items: center;
     }
-    
+
     .btn {
-      padding: 12px 24px;
+      padding: 10px 20px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-weight: 600;
       transition: var(--transition);
-      font-size: 16px;
+      font-size: 14px;
       box-shadow: var(--shadow);
+      height: 40px;
     }
-    
+
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
     }
-    
+
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
     }
-    
+
     .btn-secondary {
       background: linear-gradient(135deg, var(--secondary), #8a96a1);
       color: white;
     }
-    
+
     .btn-secondary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
     }
-    
-    /* Filtros */
+
     .filters {
       display: flex;
-      gap: 20px;
-      margin-bottom: 24px;
+      gap: 15px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
-    
+
     .filter-item {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
-    
+
     .filter-item label {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-primary);
     }
-    
+
     .filter-item select {
-      padding: 12px 16px;
+      padding: 10px 14px;
       border-radius: 10px;
       border: 1px solid #e2e8f0;
       background: var(--card-bg);
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 500;
       box-shadow: var(--shadow);
       transition: var(--transition);
-      min-width: 200px;
+      min-width: 180px;
     }
-    
+
     .filter-item select:focus {
       outline: none;
       border-color: var(--primary-light);
       box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
     }
-    
-    /* Tabla de productos */
+
     .table-container {
       border-radius: var(--border-radius);
-      overflow: hidden;
+      overflow-x: auto;
       box-shadow: var(--shadow);
       background: var(--card-bg);
-      margin-top: 20px;
+      margin-top: 15px;
+      width: 100%;
     }
-    
+
     .products-table {
       width: 100%;
+      min-width: 600px;
       border-collapse: separate;
       border-spacing: 0;
     }
-    
+
     .products-table th, .products-table td {
-      padding: 18px;
+      padding: 12px 10px;
       text-align: left;
       border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
     }
-    
+
     .products-table th {
       background-color: #f7f9fc;
       font-weight: 600;
       color: var(--text-secondary);
-      font-size: 16px;
+      font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    
+
     .products-table tr:last-child td {
       border-bottom: none;
     }
-    
-    .products-table tr {
-      transition: var(--transition);
-    }
-    
-    .products-table tr:hover {
-      background-color: #f7f9fc;
-    }
-    
+
     .product-img {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 8px;
       box-shadow: var(--shadow);
     }
-    
+
     .status {
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 30px;
-      font-size: 14px;
+      font-size: 12px;
       display: inline-block;
       font-weight: 600;
     }
-    
+
     .status-active {
       background-color: rgba(40, 167, 69, 0.15);
       color: var(--success);
     }
-    
+
     .status-low {
       background-color: rgba(220, 53, 69, 0.15);
       color: var(--danger);
     }
-    
+
     .action-cell {
       display: flex;
-      gap: 12px;
+      gap: 6px;
+      flex-wrap: wrap;
     }
-    
+
     .action-btn {
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 18px;
-      width: 40px;
-      height: 40px;
+      font-size: 16px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
     }
-    
+
     .edit-btn {
       color: var(--primary);
       background-color: rgba(76, 175, 80, 0.1);
     }
-    
-    .edit-btn:hover {
-      background-color: rgba(76, 175, 80, 0.2);
-      transform: scale(1.1);
-    }
-    
+
     .delete-btn {
       color: var(--danger);
       background-color: rgba(220, 53, 69, 0.1);
     }
-    
-    .delete-btn:hover {
-      background-color: rgba(220, 53, 69, 0.2);
-      transform: scale(1.1);
-    }
-    
-    /* Panel de estadísticas */
+
     .stats-panel {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 25px;
     }
-    
+
     .stat-card {
       background: var(--card-bg);
-      padding: 24px;
+      padding: 20px;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
       transition: var(--transition);
       border-left: 4px solid var(--primary);
     }
-    
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-    
+
     .stat-value {
-      font-size: 32px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--primary);
-      margin: 12px 0;
+      margin: 8px 0;
     }
-    
+
     .stat-title {
-      font-size: 16px;
+      font-size: 14px;
       color: var(--text-secondary);
       font-weight: 600;
     }
-    
+
     .stat-desc {
-      font-size: 14px;
+      font-size: 12px;
       color: var(--text-secondary);
     }
-    
-    /* Paginación */
+
     .pagination {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 20px;
-      gap: 10px;
+      margin-top: 15px;
+      gap: 8px;
     }
-    
+
     .pagination button {
-      padding: 8px 16px;
+      padding: 6px 12px;
       border: 1px solid #e2e8f0;
       background: white;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
       transition: var(--transition);
+      font-size: 13px;
     }
-    
-    .pagination button:hover:not(:disabled) {
-      background: var(--primary-light);
-      color: white;
-    }
-    
+
     .pagination button.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
     }
-    
+
     .pagination button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
-    
+
     .pagination-info {
-      margin: 0 15px;
-      font-size: 14px;
+      margin: 0 12px;
+      font-size: 13px;
       color: var(--text-secondary);
-    }
-    
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(5px);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-    
-    .modal-content {
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: var(--border-radius);
-      width: 90%;
-      max-width: 650px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-      animation: modalFadeIn 0.3s ease;
-    }
-    
-    @keyframes modalFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    
-    .modal-header h3 {
-      font-size: 1.8rem;
-      color: var(--text-primary);
-      font-weight: 700;
-    }
-    
-    .close-modal {
-      background: none;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-      color: var(--text-secondary);
-      transition: var(--transition);
-    }
-    
-    .close-modal:hover {
-      color: var(--danger);
-      transform: rotate(90deg);
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: 600;
-      color: var(--text-primary);
-      font-size: 16px;
-    }
-    
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 14px 18px;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      box-sizing: border-box;
-      font-size: 16px;
-      transition: var(--transition);
-      background: var(--card-bg);
-      font-weight: 500;
-    }
-    
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
-    }
-    
-    .form-row {
-      display: flex;
-      gap: 20px;
-    }
-    
-    .form-row .form-group {
-      flex: 1;
-    }
-    
-    .modal-footer {
-      margin-top: 24px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      padding-top: 20px;
-      border-top: 1px solid #e2e8f0;
     }
 
-    /* Gestión de categorías y proveedores */
-    .category-management, .supplier-management {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    
-    .category-management select, .supplier-management select {
-      flex: 1;
-    }
-    
-    .category-panel, .supplier-panel {
-      display: none;
-      margin-top: 10px;
-      padding: 15px;
-      background: #f8f9fa;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-    }
-    
-    .category-list, .supplier-list {
-      max-height: 120px;
-      overflow-y: auto;
-      margin-top: 10px;
-    }
-    
-    .category-item, .supplier-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      font-size: 16px;
-    }
-    
-    .category-item:last-child, .supplier-item:last-child {
-      border-bottom: none;
-    }
-    
-    /* Dropdown de exportación */
-    .export-dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .export-dropdown-content {
-      display: none;
-      position: absolute;
-      right: 0;
-      background-color: white;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 5px;
-    }
-    
-    .export-dropdown-content button {
-      width: 100%;
-      text-align: left;
-      padding: 12px 16px;
-      border: none;
-      background: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .export-dropdown-content button:hover {
-      background-color: #f1f1f1;
-    }
-    
-    .export-dropdown:hover .export-dropdown-content {
-      display: block;
-    }
-    
-    /* Responsive */
     @media (max-width: 768px) {
-      .form-row {
-        flex-direction: column;
-        gap: 0;
-      }
-      
-      .filters {
-        flex-direction: column;
-      }
-      
-      .toolbar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .search-box {
-        max-width: 100%;
-      }
-      
-      .action-buttons {
-        justify-content: center;
-      }
-      
-      .stats-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .category-management, .supplier-management {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .filter-item select {
-        min-width: 100%;
-      }
-      
-      .export-dropdown-content {
-        right: auto;
-        left: 0;
-      }
-      
-      .pagination {
-        flex-wrap: wrap;
-      }
-      
-      header {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px;
-      }
-      
-      .tasa-conversor {
-        width: 100%;
-        justify-content: center;
+      .action-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Cabecera -->
   <header>
     <div class="logo">
-      <i class="fas fa-store logo-icon"></i>
+      <img src="https://aa-app-d.github.io/AA-Bodegon/AA-Bodegon.jpg" class="logo-icon" alt="AA-BODEGÓN Logo">
       <h1>AA-BODEGÓN - Productos</h1>
     </div>
     <div class="tasa-conversor">
@@ -728,11 +462,9 @@
     </div>
   </header>
 
-  <!-- Contenido principal -->
   <div class="main-content">
-    <h2><i class="fas fa-box"></i> Gestión de Productos</h2>
-    
-    <!-- Barra de herramientas -->
+    <h2><i class="fas fa-boxes"></i> Gestión de Productos</h2>
+
     <div class="toolbar">
       <div class="search-box">
         <i class="fas fa-search"></i>
@@ -754,8 +486,7 @@
         </div>
       </div>
     </div>
-    
-    <!-- Filtros -->
+
     <div class="filters">
       <div class="filter-item">
         <label>Categoría</label>
@@ -784,8 +515,7 @@
         </select>
       </div>
     </div>
-    
-    <!-- Tabla de productos -->
+
     <div class="table-container">
       <table class="products-table">
         <thead>
@@ -800,24 +530,16 @@
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody id="tablaProductos">
-          <!-- Los productos se cargarán dinámicamente -->
-        </tbody>
+        <tbody id="tablaProductos"></tbody>
       </table>
     </div>
-    
-    <!-- Paginación -->
-    <div class="pagination" id="paginacion">
-      <!-- Los controles de paginación se generarán dinámicamente -->
-    </div>
-    
-    <!-- Panel de estadísticas -->
-    <div class="stats-panel" id="panelEstadisticas">
-      <!-- Las estadísticas se cargarán dinámicamente -->
-    </div>
+
+    <div class="pagination" id="paginacion"></div>
+
+    <div class="stats-panel" id="panelEstadisticas"></div>
   </div>
 
-  <!-- Modal para agregar/editar producto -->
+  <!-- Modal -->
   <div class="modal" id="productModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -827,84 +549,43 @@
       <form id="formProducto">
         <input type="hidden" id="productId">
         <div class="form-group">
-          <label for="productName">Nombre del Producto</label>
+          <label>Nombre del Producto</label>
           <input type="text" id="productName" placeholder="Ej: Arroz Mary" required>
         </div>
         <div class="form-group">
-          <label for="productCategory">Categoría</label>
-          <div class="category-management">
-            <select id="productCategory" required>
-              <option value="">Seleccione una categoría</option>
-            </select>
-            <button type="button" class="action-btn edit-btn" id="btnGestionCategorias">
-              <i class="fas fa-cog"></i>
-            </button>
-          </div>
-          <div class="category-panel" id="panelGestionCategorias">
-            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-              <input type="text" id="inputNuevaCategoria" placeholder="Nueva categoría" style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
-              <button type="button" class="btn btn-primary" id="btnAgregarCategoria" style="padding: 10px 16px;">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-            <div class="category-list" id="listaCategorias">
-              <!-- Las categorías se cargarán dinámicamente -->
-            </div>
-          </div>
+          <label>Categoría</label>
+          <select id="productCategory" required></select>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="productPriceBs">Precio en Bolívares</label>
+            <label>Precio en Bolívares</label>
             <input type="number" id="productPriceBs" placeholder="0.00" step="0.01" required oninput="calcularPrecioDolar()">
           </div>
           <div class="form-group">
-            <label for="productPriceDollar">Precio en Dólares</label>
+            <label>Precio en Dólares</label>
             <input type="number" id="productPriceDollar" placeholder="0.00" step="0.01" required oninput="calcularPrecioBs()">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="productStock">Stock Actual</label>
+            <label>Stock Actual</label>
             <input type="number" id="productStock" placeholder="0" required>
           </div>
           <div class="form-group">
-            <label for="productMinStock">Stock Mínimo</label>
+            <label>Stock Mínimo</label>
             <input type="number" id="productMinStock" placeholder="0" required>
           </div>
         </div>
         <div class="form-group">
-          <label for="productBarcode">Código de Barras</label>
-          <input type="text" id="productBarcode" placeholder="Ej: 1234567890123" onchange="buscarPorCodigoBarras()">
+          <label>Código de Barras</label>
+          <input type="text" id="productBarcode" placeholder="Ej: 1234567890123">
         </div>
         <div class="form-group">
-          <label for="productSupplier">Proveedor</label>
-          <div class="supplier-management">
-            <select id="productSupplier">
-              <option value="">Seleccione un proveedor</option>
-            </select>
-            <button type="button" class="action-btn edit-btn" id="btnGestionProveedores">
-              <i class="fas fa-cog"></i>
-            </button>
-          </div>
-          <div class="supplier-panel" id="panelGestionProveedores">
-            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-              <input type="text" id="inputNuevoProveedor" placeholder="Nuevo proveedor" style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
-              <button type="button" class="btn btn-primary" id="btnAgregarProveedor" style="padding: 10px 16px;">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-            <div class="supplier-list" id="listaProveedores">
-              <!-- Los proveedores se cargarán dinámicamente -->
-            </div>
-          </div>
+          <label>Proveedor</label>
+          <select id="productSupplier"></select>
         </div>
         <div class="form-group">
-          <label for="productImage">Imagen del Producto</label>
-          <input type="file" id="productImage" accept="image/*" onchange="previsualizarImagen()">
-          <img id="previewImage" src="" alt="Vista previa" style="max-width: 100px; max-height: 100px; margin-top: 10px; display: none;">
-        </div>
-        <div class="form-group">
-          <label for="productStatus">Estado</label>
+          <label>Estado</label>
           <select id="productStatus" required>
             <option value="Activo">Activo</option>
             <option value="Inactivo">Inactivo</option>
@@ -918,598 +599,154 @@
     </div>
   </div>
 
-  <script>
-    // Tasas de cambio (valor inicial según BCV)
-    let TASA_CAMBIO = 36.7765;
+  <div class="back-button" onclick="goBack()">
+    <i class="fas fa-arrow-left"></i>
+  </div>
 
-    // Configuración de paginación
-    const PRODUCTOS_POR_PAGINA = 10; // Límite de productos por página
+  <script>
+    let TASA_CAMBIO = 36.7765;
+    const PRODUCTOS_POR_PAGINA = 10;
     let paginaActual = 1;
     let productosFiltrados = [];
-
-    // Referencias a elementos del DOM
-    const modal = document.getElementById('productModal');
-    const formProducto = document.getElementById('formProducto');
-    const modalTitulo = document.getElementById('modalTitulo');
-    const productId = document.getElementById('productId');
-    const selectCategoria = document.getElementById('productCategory');
-    const selectCategoriaFiltro = document.getElementById('filtroCategoria');
-    const btnGestionCategorias = document.getElementById('btnGestionCategorias');
-    const panelGestionCategorias = document.getElementById('panelGestionCategorias');
-    const btnAgregarCategoria = document.getElementById('btnAgregarCategoria');
-    const inputNuevaCategoria = document.getElementById('inputNuevaCategoria');
-    const listaCategorias = document.getElementById('listaCategorias');
-    const selectProveedor = document.getElementById('productSupplier');
-    const btnGestionProveedores = document.getElementById('btnGestionProveedores');
-    const panelGestionProveedores = document.getElementById('panelGestionProveedores');
-    const btnAgregarProveedor = document.getElementById('btnAgregarProveedor');
-    const inputNuevoProveedor = document.getElementById('inputNuevoProveedor');
-    const listaProveedores = document.getElementById('listaProveedores');
-    const tablaProductos = document.getElementById('tablaProductos');
-    const panelEstadisticas = document.getElementById('panelEstadisticas');
-    const paginacion = document.getElementById('paginacion');
-    const searchInput = document.getElementById('searchInput');
-    const filtroCategoria = document.getElementById('filtroCategoria');
-    const filtroEstado = document.getElementById('filtroEstado');
-    const filtroOrden = document.getElementById('filtroOrden');
-    const previewImage = document.getElementById('previewImage');
-    const tasaCambioInput = document.getElementById('tasaCambioInput');
-
-    // Inicializar datos
     let productos = JSON.parse(localStorage.getItem('productos')) || [];
     let categorias = JSON.parse(localStorage.getItem('categorias')) || ['Alimentos', 'Bebidas', 'Limpieza', 'Licores'];
     let proveedores = JSON.parse(localStorage.getItem('proveedores')) || ['Distribuidora Mary', 'Polar', 'Empresas Lindas', 'Importaciones JR'];
-    let productoEditando = null;
 
-    // Inicializar la aplicación
     function inicializar() {
-      // Cargar tasa de cambio guardada o usar la predeterminada
       const tasaGuardada = localStorage.getItem('tasaCambio');
       if (tasaGuardada) {
         TASA_CAMBIO = parseFloat(tasaGuardada);
-        tasaCambioInput.value = TASA_CAMBIO;
+        document.getElementById('tasaCambioInput').value = TASA_CAMBIO;
       }
-      
-      configurarGestionCategorias();
-      configurarGestionProveedores();
       actualizarSelectCategorias();
       actualizarSelectProveedores();
       renderizarProductos();
       actualizarEstadisticas();
-      
-      // Event listeners
-      formProducto.addEventListener('submit', guardarProducto);
+      document.getElementById('formProducto').addEventListener('submit', guardarProducto);
     }
 
-    // Actualizar tasa de cambio
     function actualizarTasaCambio() {
-      const nuevaTasa = parseFloat(tasaCambioInput.value);
+      const nuevaTasa = parseFloat(document.getElementById('tasaCambioInput').value);
       if (!isNaN(nuevaTasa) && nuevaTasa > 0) {
         TASA_CAMBIO = nuevaTasa;
         localStorage.setItem('tasaCambio', TASA_CAMBIO);
-        
-        // Recalcular precios en dólares para todos los productos
-        productos.forEach(producto => {
-          producto.precioDollar = producto.precioBs / TASA_CAMBIO;
-        });
-        
-        guardarProductos();
+        productos.forEach(p => p.precioDollar = p.precioBs / TASA_CAMBIO);
+        localStorage.setItem('productos', JSON.stringify(productos));
         renderizarProductos();
         actualizarEstadisticas();
-        
-        alert(`Tasa de cambio actualizada a ${TASA_CAMBIO} Bs/$`);
+        alert(`Tasa actualizada a ${TASA_CAMBIO} Bs/$`);
       } else {
-        alert('Por favor ingrese una tasa de cambio válida');
+        alert('Tasa inválida');
       }
     }
 
-    // Configurar gestión de categorías en el modal
-    function configurarGestionCategorias() {
-      // Toggle del panel de gestión
-      btnGestionCategorias.addEventListener('click', () => {
-        panelGestionCategorias.style.display = panelGestionCategorias.style.display === 'none' ? 'block' : 'none';
-        if (panelGestionCategorias.style.display === 'block') {
-          renderizarListaCategorias();
-        }
-      });
-
-      // Agregar nueva categoría
-      btnAgregarCategoria.addEventListener('click', agregarCategoriaDesdeInput);
-      inputNuevaCategoria.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          agregarCategoriaDesdeInput();
-        }
-      });
-    }
-
-    // Configurar gestión de proveedores en el modal
-    function configurarGestionProveedores() {
-      // Toggle del panel de gestión
-      btnGestionProveedores.addEventListener('click', () => {
-        panelGestionProveedores.style.display = panelGestionProveedores.style.display === 'none' ? 'block' : 'none';
-        if (panelGestionProveedores.style.display === 'block') {
-          renderizarListaProveedores();
-        }
-      });
-
-      // Agregar nuevo proveedor
-      btnAgregarProveedor.addEventListener('click', agregarProveedorDesdeInput);
-      inputNuevoProveedor.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          agregarProveedorDesdeInput();
-        }
-      });
-    }
-
-    // Renderizar lista de categorías
-    function renderizarListaCategorias() {
-      listaCategorias.innerHTML = '';
-      categorias.forEach((categoria, index) => {
-        const div = document.createElement('div');
-        div.className = 'category-item';
-        
-        div.innerHTML = `
-          <span>${categoria}</span>
-          <button type="button" class="action-btn delete-btn" data-index="${index}">
-            <i class="fas fa-trash"></i>
-          </button>
-        `;
-        
-        listaCategorias.appendChild(div);
-      });
-
-      // Agregar event listeners para eliminar
-      document.querySelectorAll('#listaCategorias .delete-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const index = parseInt(e.currentTarget.getAttribute('data-index'));
-          eliminarCategoria(index);
-        });
-      });
-    }
-
-    // Renderizar lista de proveedores
-    function renderizarListaProveedores() {
-      listaProveedores.innerHTML = '';
-      proveedores.forEach((proveedor, index) => {
-        const div = document.createElement('div');
-        div.className = 'supplier-item';
-        
-        div.innerHTML = `
-          <span>${proveedor}</span>
-          <button type="button" class="action-btn delete-btn" data-index="${index}">
-            <i class="fas fa-trash"></i>
-          </button>
-        `;
-        
-        listaProveedores.appendChild(div);
-      });
-
-      // Agregar event listeners para eliminar
-      document.querySelectorAll('#listaProveedores .delete-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const index = parseInt(e.currentTarget.getAttribute('data-index'));
-          eliminarProveedor(index);
-        });
-      });
-    }
-
-    function agregarCategoriaDesdeInput() {
-      const nuevaCategoria = inputNuevaCategoria.value.trim();
-      if (nuevaCategoria && !categorias.includes(nuevaCategoria)) {
-        categorias.push(nuevaCategoria);
-        guardarCategorias();
-        actualizarSelectCategorias();
-        inputNuevaCategoria.value = '';
-        renderizarListaCategorias();
-        
-        // Seleccionar la nueva categoría automáticamente
-        selectCategoria.value = nuevaCategoria;
-      }
-    }
-
-    function agregarProveedorDesdeInput() {
-      const nuevoProveedor = inputNuevoProveedor.value.trim();
-      if (nuevoProveedor && !proveedores.includes(nuevoProveedor)) {
-        proveedores.push(nuevoProveedor);
-        guardarProveedores();
-        actualizarSelectProveedores();
-        inputNuevoProveedor.value = '';
-        renderizarListaProveedores();
-        
-        // Seleccionar el nuevo proveedor automáticamente
-        selectProveedor.value = nuevoProveedor;
-      }
-    }
-
-    function eliminarCategoria(index) {
-      if (confirm(`¿Estás seguro de eliminar la categoría "${categorias[index]}"?`)) {
-        categorias.splice(index, 1);
-        guardarCategorias();
-        actualizarSelectCategorias();
-        renderizarListaCategorias();
-      }
-    }
-
-    function eliminarProveedor(index) {
-      if (confirm(`¿Estás seguro de eliminar el proveedor "${proveedores[index]}"?`)) {
-        proveedores.splice(index, 1);
-        guardarProveedores();
-        actualizarSelectProveedores();
-        renderizarListaProveedores();
-      }
-    }
-
-    // Guardar categorías en localStorage
-    function guardarCategorias() {
-      localStorage.setItem('categorias', JSON.stringify(categorias));
-    }
-
-    // Guardar proveedores en localStorage
-    function guardarProveedores() {
-      localStorage.setItem('proveedores', JSON.stringify(proveedores));
-    }
-
-    // Actualizar selects de categorías
     function actualizarSelectCategorias() {
-      // Limpiar selects
-      selectCategoria.innerHTML = '<option value="">Seleccione una categoría</option>';
-      selectCategoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
-      
-      // Agregar categorías
-      categorias.forEach(categoria => {
-        selectCategoria.innerHTML += `<option value="${categoria}">${categoria}</option>`;
-        selectCategoriaFiltro.innerHTML += `<option value="${categoria}">${categoria}</option>`;
+      const catSel = document.getElementById('productCategory');
+      const catFil = document.getElementById('filtroCategoria');
+      catSel.innerHTML = '<option value="">Seleccione una categoría</option>';
+      catFil.innerHTML = '<option value="">Todas las categorías</option>';
+      categorias.forEach(c => {
+        catSel.innerHTML += `<option value="${c}">${c}</option>`;
+        catFil.innerHTML += `<option value="${c}">${c}</option>`;
       });
     }
 
-    // Actualizar selects de proveedores
     function actualizarSelectProveedores() {
-      // Limpiar selects
-      selectProveedor.innerHTML = '<option value="">Seleccione un proveedor</option>';
-      
-      // Agregar proveedores
-      proveedores.forEach(proveedor => {
-        selectProveedor.innerHTML += `<option value="${proveedor}">${proveedor}</option>`;
-      });
+      const provSel = document.getElementById('productSupplier');
+      provSel.innerHTML = '<option value="">Seleccione un proveedor</option>';
+      proveedores.forEach(p => provSel.innerHTML += `<option value="${p}">${p}</option>`);
     }
 
-    // Guardar productos en localStorage
-    function guardarProductos() {
-      localStorage.setItem('productos', JSON.stringify(productos));
-    }
-
-    // Generar ID único
-    function generarId() {
-      return Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }
-
-    // Calcular precio en dólares basado en bolívares
-    function calcularPrecioDolar() {
-      const precioBs = parseFloat(document.getElementById('productPriceBs').value) || 0;
-      const precioDollar = precioBs / TASA_CAMBIO;
-      document.getElementById('productPriceDollar').value = precioDollar.toFixed(2);
-    }
-
-    // Calcular precio en bolívares basado en dólares
-    function calcularPrecioBs() {
-      const precioDollar = parseFloat(document.getElementById('productPriceDollar').value) || 0;
-      const precioBs = precioDollar * TASA_CAMBIO;
-      document.getElementById('productPriceBs').value = precioBs.toFixed(2);
-    }
-
-    // Previsualizar imagen seleccionada
-    function previsualizarImagen() {
-      const fileInput = document.getElementById('productImage');
-      const file = fileInput.files[0];
-      
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          previewImage.src = e.target.result;
-          previewImage.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      } else {
-        previewImage.style.display = 'none';
-      }
-    }
-
-    // Buscar producto por código de barras
-    function buscarPorCodigoBarras() {
-      const codigoBarras = document.getElementById('productBarcode').value.trim();
-      if (!codigoBarras) return;
-      
-      // Buscar en productos existentes
-      const productoExistente = productos.find(p => p.codigoBarras === codigoBarras);
-      
-      if (productoExistente) {
-        // Llenar el formulario con los datos del producto
-        document.getElementById('productName').value = productoExistente.nombre;
-        document.getElementById('productCategory').value = productoExistente.categoria;
-        document.getElementById('productPriceBs').value = productoExistente.precioBs;
-        document.getElementById('productPriceDollar').value = productoExistente.precioDollar;
-        document.getElementById('productStock').value = productoExistente.stock;
-        document.getElementById('productMinStock').value = productoExistente.stockMinimo;
-        document.getElementById('productSupplier').value = productoExistente.proveedor;
-        document.getElementById('productStatus').value = productoExistente.estado;
-        
-        // Mostrar mensaje informativo
-        alert(`Producto "${productoExistente.nombre}" encontrado. Los datos han sido cargados en el formulario.`);
-      }
-    }
-
-    // Guardar producto (nuevo o editado)
-    function guardarProducto(e) {
-      e.preventDefault();
-      
-      // Obtener la imagen si se ha seleccionado una
-      let imagenUrl = 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80';
-      const fileInput = document.getElementById('productImage');
-      if (fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          imagenUrl = e.target.result;
-          finalizarGuardado(imagenUrl);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-      } else {
-        finalizarGuardado(imagenUrl);
-      }
-    }
-
-    function finalizarGuardado(imagenUrl) {
-      const producto = {
-        id: productId.value || generarId(),
-        nombre: document.getElementById('productName').value,
-        categoria: document.getElementById('productCategory').value,
-        precioBs: parseFloat(document.getElementById('productPriceBs').value) || 0,
-        precioDollar: parseFloat(document.getElementById('productPriceDollar').value) || 0,
-        stock: parseInt(document.getElementById('productStock').value) || 0,
-        stockMinimo: parseInt(document.getElementById('productMinStock').value) || 0,
-        codigoBarras: document.getElementById('productBarcode').value,
-        proveedor: document.getElementById('productSupplier').value,
-        estado: document.getElementById('productStatus').value,
-        imagen: imagenUrl
-      };
-      
-      if (productoEditando) {
-        // Editar producto existente
-        const index = productos.findIndex(p => p.id === productoEditando.id);
-        if (index !== -1) {
-          productos[index] = producto;
-        }
-      } else {
-        // Agregar nuevo producto
-        productos.push(producto);
-      }
-      
-      guardarProductos();
-      renderizarProductos();
-      actualizarEstadisticas();
-      formProducto.reset();
-      previewImage.style.display = 'none';
-      closeModal();
-      productoEditando = null;
-    }
-
-    // Editar producto
-    function editarProducto(id) {
-      productoEditando = productos.find(p => p.id === id);
-      if (!productoEditando) return;
-      
-      // Llenar el formulario con los datos del producto
-      document.getElementById('productId').value = productoEditando.id;
-      document.getElementById('productName').value = productoEditando.nombre;
-      document.getElementById('productCategory').value = productoEditando.categoria;
-      document.getElementById('productPriceBs').value = productoEditando.precioBs;
-      document.getElementById('productPriceDollar').value = productoEditando.precioDollar;
-      document.getElementById('productStock').value = productoEditando.stock;
-      document.getElementById('productMinStock').value = productoEditando.stockMinimo;
-      document.getElementById('productBarcode').value = productoEditando.codigoBarras;
-      document.getElementById('productSupplier').value = productoEditando.proveedor;
-      document.getElementById('productStatus').value = productoEditando.estado;
-      
-      // Mostrar imagen actual
-      previewImage.src = productoEditando.imagen;
-      previewImage.style.display = 'block';
-      
-      // Cambiar título del modal
-      modalTitulo.textContent = 'Editar Producto';
-      
-      // Abrir modal
-      openModal();
-    }
-
-    // Eliminar producto
-    function eliminarProducto(id) {
-      if (confirm('¿Estás seguro de eliminar este producto?')) {
-        productos = productos.filter(p => p.id !== id);
-        guardarProductos();
-        renderizarProductos();
-        actualizarEstadisticas();
-      }
-    }
-
-    // Filtrar productos según criterios
-    function filtrarProductos() {
-      paginaActual = 1; // Reiniciar a la primera página al filtrar
-      renderizarProductos();
-    }
-
-    // Ordenar productos según el criterio seleccionado
-    function ordenarProductos() {
-      renderizarProductos();
-    }
-
-    // Ordenar lista de productos
-    function ordenarProductosLista(lista) {
-      const orden = filtroOrden.value;
-      
-      switch (orden) {
-        case 'nombre-asc':
-          lista.sort((a, b) => a.nombre.localeCompare(b.nombre));
-          break;
-        case 'nombre-desc':
-          lista.sort((a, b) => b.nombre.localeCompare(a.nombre));
-          break;
-        case 'precio-mayor':
-          lista.sort((a, b) => b.precioBs - a.precioBs);
-          break;
-        case 'precio-menor':
-          lista.sort((a, b) => a.precioBs - b.precioBs);
-          break;
-        case 'stock-mayor':
-          lista.sort((a, b) => b.stock - a.stock);
-          break;
-        case 'stock-menor':
-          lista.sort((a, b) => a.stock - b.stock);
-          break;
-      }
-    }
-
-    // Renderizar productos en la tabla con paginación
     function renderizarProductos() {
-      tablaProductos.innerHTML = '';
-      
-      if (productos.length === 0) {
-        tablaProductos.innerHTML = `
-          <tr>
-            <td colspan="8" style="text-align: center; padding: 30px;">
-              No hay productos registrados. Haz clic en "Nuevo Producto" para agregar uno.
-            </td>
-          </tr>
-        `;
-        paginacion.innerHTML = '';
-        return;
+      const tbody = document.getElementById('tablaProductos');
+      tbody.innerHTML = '';
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const catFilter = document.getElementById('filtroCategoria').value;
+      const estadoFilter = document.getElementById('filtroEstado').value;
+
+      let list = [...productos];
+      if (search) list = list.filter(p => p.nombre.toLowerCase().includes(search) || p.codigoBarras.includes(search));
+      if (catFilter) list = list.filter(p => p.categoria === catFilter);
+      if (estadoFilter) {
+        if (estadoFilter === 'Stock Bajo') list = list.filter(p => p.stock <= p.stockMinimo);
+        else list = list.filter(p => p.estado === estadoFilter);
       }
-      
-      // Aplicar filtros
-      const searchTerm = searchInput.value.toLowerCase();
-      const categoriaFiltro = filtroCategoria.value;
-      const estadoFiltro = filtroEstado.value;
-      
-      productosFiltrados = [...productos];
-      
-      if (searchTerm) {
-        productosFiltrados = productosFiltrados.filter(p => 
-          p.nombre.toLowerCase().includes(searchTerm) || 
-          p.codigoBarras.includes(searchTerm)
-        );
-      }
-      
-      if (categoriaFiltro) {
-        productosFiltrados = productosFiltrados.filter(p => p.categoria === categoriaFiltro);
-      }
-      
-      if (estadoFiltro) {
-        if (estadoFiltro === 'Stock Bajo') {
-          productosFiltrados = productosFiltrados.filter(p => p.stock <= p.stockMinimo);
-        } else {
-          productosFiltrados = productosFiltrados.filter(p => p.estado === estadoFiltro);
-        }
-      }
-      
-      // Aplicar ordenamiento
-      ordenarProductosLista(productosFiltrados);
-      
-      // Calcular paginación
-      const totalPaginas = Math.ceil(productosFiltrados.length / PRODUCTOS_POR_PAGINA);
+
+      list.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      productosFiltrados = list;
+
+      const totalPaginas = Math.ceil(list.length / PRODUCTOS_POR_PAGINA);
       const inicio = (paginaActual - 1) * PRODUCTOS_POR_PAGINA;
       const fin = inicio + PRODUCTOS_POR_PAGINA;
-      const productosPagina = productosFiltrados.slice(inicio, fin);
-      
-      // Renderizar productos de la página actual
-      productosPagina.forEach(producto => {
-        const statusClass = producto.stock <= producto.stockMinimo ? 'status-low' : 'status-active';
-        const statusText = producto.stock <= producto.stockMinimo ? 'Stock Bajo' : producto.estado;
-        
-        tablaProductos.innerHTML += `
+      const pagina = list.slice(inicio, fin);
+
+      pagina.forEach(p => {
+        const statusClass = p.stock <= p.stockMinimo ? 'status-low' : 'status-active';
+        const statusText = p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado;
+        tbody.innerHTML += `
           <tr>
-            <td><img src="${producto.imagen}" class="product-img" alt="${producto.nombre}"></td>
-            <td>${producto.nombre}</td>
-            <td>${producto.categoria}</td>
-            <td>${producto.precioBs.toLocaleString()} Bs</td>
-            <td>${producto.precioDollar.toFixed(2)} $</td>
-            <td>${producto.stock} unidades</td>
+            <td><img src="${p.imagen}" class="product-img" alt="${p.nombre}"></td>
+            <td>${p.nombre}</td>
+            <td>${p.categoria}</td>
+            <td>${p.precioBs.toLocaleString()} Bs</td>
+            <td>${p.precioDollar.toFixed(2)} $</td>
+            <td>${p.stock}</td>
             <td><span class="status ${statusClass}">${statusText}</span></td>
             <td class="action-cell">
-              <button class="action-btn edit-btn" onclick="editarProducto('${producto.id}')"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete-btn" onclick="eliminarProducto('${producto.id}')"><i class="fas fa-trash"></i></button>
+              <button class="action-btn edit-btn" onclick="editarProducto('${p.id}')"><i class="fas fa-edit"></i></button>
+              <button class="action-btn delete-btn" onclick="eliminarProducto('${p.id}')"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
         `;
       });
-      
-      // Renderizar controles de paginación
+
       renderizarPaginacion(totalPaginas);
     }
 
-    // Renderizar controles de paginación
-    function renderizarPaginacion(totalPaginas) {
-      paginacion.innerHTML = '';
-      
-      if (totalPaginas <= 1) return;
-      
-      // Botón Anterior
-      const btnAnterior = document.createElement('button');
-      btnAnterior.innerHTML = '<i class="fas fa-chevron-left"></i>';
-      btnAnterior.disabled = paginaActual === 1;
-      btnAnterior.addEventListener('click', () => {
-        if (paginaActual > 1) {
-          paginaActual--;
-          renderizarProductos();
-        }
-      });
-      paginacion.appendChild(btnAnterior);
-      
-      // Páginas
-      const maxBotones = 5;
-      let inicioPagina = Math.max(1, paginaActual - Math.floor(maxBotones / 2));
-      let finPagina = Math.min(totalPaginas, inicioPagina + maxBotones - 1);
-      
-      if (finPagina - inicioPagina + 1 < maxBotones) {
-        inicioPagina = Math.max(1, finPagina - maxBotones + 1);
+    function renderizarPaginacion(total) {
+      const pag = document.getElementById('paginacion');
+      pag.innerHTML = '';
+      if (total <= 1) return;
+
+      const anterior = document.createElement('button');
+      anterior.innerHTML = '<i class="fas fa-chevron-left"></i>';
+      anterior.disabled = paginaActual === 1;
+      anterior.onclick = () => { if (paginaActual > 1) { paginaActual--; renderizarProductos(); } };
+      pag.appendChild(anterior);
+
+      for (let i = 1; i <= total; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.classList.toggle('active', i === paginaActual);
+        btn.onclick = () => { paginaActual = i; renderizarProductos(); };
+        pag.appendChild(btn);
       }
-      
-      for (let i = inicioPagina; i <= finPagina; i++) {
-        const btnPagina = document.createElement('button');
-        btnPagina.textContent = i;
-        btnPagina.classList.toggle('active', i === paginaActual);
-        btnPagina.addEventListener('click', () => {
-          paginaActual = i;
-          renderizarProductos();
-        });
-        paginacion.appendChild(btnPagina);
-      }
-      
-      // Información de paginación
+
       const info = document.createElement('div');
       info.className = 'pagination-info';
-      info.textContent = `Página ${paginaActual} de ${totalPaginas} - ${productosFiltrados.length} productos`;
-      paginacion.appendChild(info);
-      
-      // Botón Siguiente
-      const btnSiguiente = document.createElement('button');
-      btnSiguiente.innerHTML = '<i class="fas fa-chevron-right"></i>';
-      btnSiguiente.disabled = paginaActual === totalPaginas;
-      btnSiguiente.addEventListener('click', () => {
-        if (paginaActual < totalPaginas) {
-          paginaActual++;
-          renderizarProductos();
-        }
-      });
-      paginacion.appendChild(btnSiguiente);
+      info.textContent = `Página ${paginaActual} de ${total}`;
+      pag.appendChild(info);
+
+      const siguiente = document.createElement('button');
+      siguiente.innerHTML = '<i class="fas fa-chevron-right"></i>';
+      siguiente.disabled = paginaActual === total;
+      siguiente.onclick = () => { if (paginaActual < total) { paginaActual++; renderizarProductos(); } };
+      pag.appendChild(siguiente);
     }
 
-    // Actualizar panel de estadísticas
     function actualizarEstadisticas() {
       const totalProductos = productos.length;
       const productosStockBajo = productos.filter(p => p.stock <= p.stockMinimo).length;
       const valorTotalBs = productos.reduce((sum, p) => sum + (p.precioBs * p.stock), 0);
       const valorTotalDollar = valorTotalBs / TASA_CAMBIO;
-      const categoriasUnicas = new Set(productos.map(p => p.categoria)).size;
-      
-      panelEstadisticas.innerHTML = `
+      const categoriasActivas = new Set(productos.filter(p => p.estado === 'Activo').map(p => p.categoria)).size;
+
+      let textoBs;
+      if (valorTotalBs >= 1_000_000) textoBs = (valorTotalBs / 1_000_000).toFixed(2) + ' M Bs';
+      else if (valorTotalBs >= 1_000) textoBs = (valorTotalBs / 1_000).toFixed(2) + ' K Bs';
+      else textoBs = valorTotalBs.toLocaleString() + ' Bs';
+
+      document.getElementById('panelEstadisticas').innerHTML = `
         <div class="stat-card">
           <div class="stat-title">Total de Productos</div>
           <div class="stat-value">${totalProductos}</div>
@@ -1521,113 +758,143 @@
           <div class="stat-desc">Necesitan reposición</div>
         </div>
         <div class="stat-card">
-          <div class="stat-title">Valor Total</div>
-          <div class="stat-value">${(valorTotalBs / 1000000).toFixed(1)}M Bs</div>
-          <div class="stat-desc">≈ ${valorTotalDollar.toFixed(2)} $</div>
+          <div class="stat-title">Categorías Activas</div>
+          <div class="stat-value">${categoriasActivas}</div>
+          <div class="stat-desc">Con productos activos</div>
         </div>
         <div class="stat-card">
-          <div class="stat-title">Categorías</div>
-          <div class="stat-value">${categoriasUnicas}</div>
-          <div class="stat-desc">Diferentes tipos</div>
+          <div class="stat-title">Valor Total (Bs)</div>
+          <div class="stat-value">${textoBs}</div>
+          <div class="stat-desc">Valor total del inventario</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Valor Total ($)</div>
+          <div class="stat-value">${valorTotalDollar.toLocaleString()} $</div>
+          <div class="stat-desc">Valor total del inventario</div>
         </div>
       `;
     }
 
-    // Exportar a PDF
+    function generarId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    function calcularPrecioDolar() {
+      const bs = parseFloat(document.getElementById('productPriceBs').value) || 0;
+      document.getElementById('productPriceDollar').value = (bs / TASA_CAMBIO).toFixed(2);
+    }
+
+    function calcularPrecioBs() {
+      const usd = parseFloat(document.getElementById('productPriceDollar').value) || 0;
+      document.getElementById('productPriceBs').value = (usd * TASA_CAMBIO).toFixed(2);
+    }
+
+    function openModal() {
+      document.getElementById('productModal').style.display = 'flex';
+      document.getElementById('modalTitulo').textContent = 'Agregar Nuevo Producto';
+      document.getElementById('productId').value = '';
+      document.getElementById('formProducto').reset();
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    function editarProducto(id) {
+      const p = productos.find(prod => prod.id === id);
+      if (!p) return;
+      document.getElementById('productId').value = p.id;
+      document.getElementById('productName').value = p.nombre;
+      document.getElementById('productCategory').value = p.categoria;
+      document.getElementById('productPriceBs').value = p.precioBs;
+      document.getElementById('productPriceDollar').value = p.precioDollar;
+      document.getElementById('productStock').value = p.stock;
+      document.getElementById('productMinStock').value = p.stockMinimo;
+      document.getElementById('productBarcode').value = p.codigoBarras;
+      document.getElementById('productSupplier').value = p.proveedor;
+      document.getElementById('productStatus').value = p.estado;
+      document.getElementById('modalTitulo').textContent = 'Editar Producto';
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function eliminarProducto(id) {
+      if (confirm('¿Eliminar este producto?')) {
+        productos = productos.filter(p => p.id !== id);
+        localStorage.setItem('productos', JSON.stringify(productos));
+        renderizarProductos();
+        actualizarEstadisticas();
+      }
+    }
+
+    function guardarProducto(e) {
+      e.preventDefault();
+      const id = document.getElementById('productId').value || generarId();
+      const producto = {
+        id,
+        nombre: document.getElementById('productName').value,
+        categoria: document.getElementById('productCategory').value,
+        precioBs: parseFloat(document.getElementById('productPriceBs').value) || 0,
+        precioDollar: parseFloat(document.getElementById('productPriceDollar').value) || 0,
+        stock: parseInt(document.getElementById('productStock').value) || 0,
+        stockMinimo: parseInt(document.getElementById('productMinStock').value) || 0,
+        codigoBarras: document.getElementById('productBarcode').value,
+        proveedor: document.getElementById('productSupplier').value,
+        estado: document.getElementById('productStatus').value,
+        imagen: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=100&q=80'
+      };
+      const index = productos.findIndex(p => p.id === id);
+      if (index >= 0) productos[index] = producto;
+      else productos.push(producto);
+      localStorage.setItem('productos', JSON.stringify(productos));
+      renderizarProductos();
+      actualizarEstadisticas();
+      closeModal();
+    }
+
     function exportarPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      
-      // Título
       doc.setFontSize(20);
       doc.text('AA-BODEGÓN - Reporte de Productos', 14, 15);
-      
-      // Fecha
       doc.setFontSize(12);
       doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 25);
-      
-      // Tabla
       doc.autoTable({
         startY: 30,
         head: [['Nombre', 'Categoría', 'Precio Bs', 'Precio $', 'Stock', 'Estado']],
-        body: productos.map(p => [
-          p.nombre,
-          p.categoria,
-          p.precioBs.toLocaleString(),
-          p.precioDollar.toFixed(2),
-          p.stock,
-          p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
-        ])
+        body: productos.map(p => [p.nombre, p.categoria, p.precioBs.toLocaleString(), p.precioDollar.toFixed(2), p.stock, p.estado])
       });
-      
-      // Guardar PDF
       doc.save(`AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.pdf`);
     }
 
-    // Exportar a Excel
     function exportarExcel() {
-      // Preparar datos
       const datos = productos.map(p => ({
         'Nombre': p.nombre,
         'Categoría': p.categoria,
         'Precio Bs': p.precioBs,
         'Precio $': p.precioDollar,
         'Stock': p.stock,
-        'Stock Mínimo': p.stockMinimo,
-        'Código Barras': p.codigoBarras,
-        'Proveedor': p.proveedor,
-        'Estado': p.stock <= p.stockMinimo ? 'Stock Bajo' : p.estado
+        'Estado': p.estado
       }));
-      
-      // Crear libro de trabajo
       const libro = XLSX.utils.book_new();
       const hoja = XLSX.utils.json_to_sheet(datos);
-      
-      // Añadir hoja al libro
       XLSX.utils.book_append_sheet(libro, hoja, 'Productos');
-      
-      // Guardar archivo
       XLSX.writeFile(libro, `AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
 
-    // Exportar a JPG
     function exportarJPG() {
       html2canvas(document.querySelector('.table-container')).then(canvas => {
-        const enlace = document.createElement('a');
-        enlace.download = `AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.jpg`;
-        enlace.href = canvas.toDataURL('image/jpeg', 0.9);
-        enlace.click();
+        const a = document.createElement('a');
+        a.download = `AA-BODEGON_Productos_${new Date().toISOString().split('T')[0]}.jpg`;
+        a.href = canvas.toDataURL('image/jpeg', 0.9);
+        a.click();
       });
     }
 
-    // Funciones para abrir y cerrar el modal
-    function openModal() {
-      document.getElementById('productModal').style.display = 'flex';
-      panelGestionCategorias.style.display = 'none';
-      panelGestionProveedores.style.display = 'none';
+    function goBack() {
+      window.history.back();
     }
-    
-    function closeModal() {
-      document.getElementById('productModal').style.display = 'none';
-      productoEditando = null;
-      modalTitulo.textContent = 'Agregar Nuevo Producto';
-      document.getElementById('productId').value = '';
-    }
-    
-    // Cerrar modal al hacer clic fuera del contenido
-    window.onclick = function(event) {
-      const modal = document.getElementById('productModal');
-      if (event.target === modal) {
-        closeModal();
-      }
-    };
 
-    // Iniciar cuando el DOM esté cargado
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', inicializar);
-    } else {
-      inicializar();
-    }
+    inicializar();
   </script>
 </body>
 </html>
